@@ -1,0 +1,21 @@
+{
+  "name": "amazon",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "amqplib": "^0.4.1",
+    "bcrypt": "^0.8.5",
+    "connect-mongo": "^1.1.0",
+    "ejs": "*",
+    "express": "3.2.6",
+    "express-session": "^1.13.0",
+    "mocha": "^2.4.5",
+    "mongodb": "^2.1.10",
+    "mongoose": "^4.4.9",
+    "mysql": "^2.10.2",
+    "request": "^2.71.0"
+  }
+}
