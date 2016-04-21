@@ -7,7 +7,8 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , admin = require('./routes/admin');
 
 var app = express();
 
@@ -21,14 +22,17 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
-
+	
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+  app.use(express.errorHandler	());
 }
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/admin/home',admin.home);
+app.get('/admin/farmers/list',admin.farmersList);
+app.get('/admin/products/list',admin.productsList);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
