@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon-Fresh</title>
+    <% include lib.ejs %>
+  </head>
+  <body>
+  	<% include menu.ejs %>
+    <div style="height: 50px; display: block;"></div>
+    
+  	<div class="container">
+      <div class="col-lg-12">
+        <div class="signup-wrapper">
+          <h3>Create New Account</h3>
+          <form class="reg-form" method="post">
+            <fieldset class="form-group has-feedback">
+              <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
+              <span class="glyphicon form-control-feedback"></span>
+            </fieldset>
+            <fieldset class="form-group has-feedback">
+              <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
+              <span class="glyphicon form-control-feedback"></span>
+            </fieldset>
+            <fieldset class="form-group has-feedback">
+              <input type="email" class="form-control" id="email" placeholder="Email Address" name="email">
+              <span class="glyphicon form-control-feedback"></span>
+              <span class="emailregistered">Email has already been registered!</span>
+            </fieldset>
+            <fieldset class="form-group has-feedback">
+              <input type="password" class="form-control" id="pass" placeholder="Password" name="pass">
+              <span class="glyphicon form-control-feedback"></span>
+              <span class="min6char">Password must be more than 5 characters!</span>
+            </fieldset>
+            <fieldset class="form-group has-feedback">
+              <input type="password" class="form-control" id="verify-pass" placeholder="Verify Password" name="verify-pass">
+              <span class="glyphicon form-control-feedback"></span>
+            </fieldset>
+            <fieldset>
+              <input type="submit" onclick="return registerSubmit();" class="btn btn-success submit-reg" value="Countinue">
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <% include js-lib.ejs %>
+  </body>
+</html>

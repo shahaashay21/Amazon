@@ -16,6 +16,8 @@
     "mongodb": "^2.1.10",
     "mongoose": "^4.4.9",
     "mysql": "^2.10.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "request": "^2.71.0"
   }
 }

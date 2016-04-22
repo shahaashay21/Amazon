@@ -1,0 +1,39 @@
+<div class="container-fluid" id="menu-wrapper">
+	<div class="row">
+		<div class="col-xs-8">
+			<ul id="ul-menu">
+				<li>
+					<img src="img/Amazon-logo.png" class="pull-left">	
+				</li>
+				<% if(typeof uid != 'undefined') {%>
+				<li>
+					<a href="#">Hi, Aashay <span class="caret"></span></a>
+				</li>
+				<li>
+					<div class="separator">|</div>
+					<a href="#">Your Deliveries</a>
+				</li>
+				<li>
+					<div class="separator">|</div>
+					<a href="#">Messages</a>
+				</li>
+				<li>
+					<div class="separator">|</div>
+					<a href="#">Your Lists</a>
+				</li>
+				<li>
+					<div class="separator">|</div>
+					<a href="#">Past Purchases</a>
+				</li>
+				<% }else{ %>
+				<li>
+					<span>
+						Already an AmazonFresh customer?
+						<a href="/login" style="text-decoration: underline;">Sign in</a>
+					</span>
+				</li>
+				<% } %>
+			</ul>
+		</div>
+	</div>
+</div>
