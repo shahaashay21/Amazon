@@ -75,7 +75,6 @@ app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
 app.get('/login', login.signIn);
 app.get('/signup', login.signUp);
-app.post('/logout', login.logOut);
 app.get('/logout', function(req,res) {
   req.session.destroy();
   res.redirect('/');
