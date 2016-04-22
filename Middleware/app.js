@@ -33,6 +33,10 @@ app.get('/users', user.list);
 app.get('/admin/home',admin.home);
 app.get('/admin/farmers/list',admin.farmersList);
 app.get('/admin/products/list',admin.productsList);
+app.get('/admin/trucks/list',admin.trucksList);
+app.get('/admin/drivers/list',admin.driversList);
+app.get('/admin/customers/list',admin.customersList);
+app.get('/admin/orders/list',admin.ordersList);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
