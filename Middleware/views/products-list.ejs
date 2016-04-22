@@ -85,7 +85,7 @@
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
+      <div ng-app="adminModule" ng-controller="adminController" ng-init="getproducts();" class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -115,65 +115,16 @@
                         <th>Product by Farmer</th>
                         <th>Product Info</th>
                         <th>Ratings</th>
-                        <th>Updated At</th>
+                        <th>Price</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Gecko</td>
-                        <td>Firefox 3.0</td>
-                        <td>Win 2k+ / OSX.3+</td>
-                        <td>1.9</td>
-                        <td>A</td>
-                      </tr>
-                      <tr>
-                        <td>Gecko</td>
-                        <td>Camino 1.0</td>
-                        <td>OSX.2+</td>
-                        <td>1.8</td>
-                        <td>A</td>
-                      </tr>
-                      <tr>
-                        <td>Gecko</td>
-                        <td>Camino 1.5</td>
-                        <td>OSX.3+</td>
-                        <td>1.8</td>
-                        <td>A</td>
-                      </tr>
-                      <tr>
-                        <td>Gecko</td>
-                        <td>Netscape 7.2</td>
-                        <td>Win 95+ / Mac OS 8.6-9.2</td>
-                        <td>1.7</td>
-                        <td>A</td>
-                      </tr>
-                      <tr>
-                        <td>Gecko</td>
-                        <td>Netscape Browser 8</td>
-                        <td>Win 98SE+</td>
-                        <td>1.7</td>
-                        <td>A</td>
-                      </tr>
-                      <tr>
-                        <td>Gecko</td>
-                        <td>Netscape Navigator 9</td>
-                        <td>Win 98+ / OSX.2+</td>
-                        <td>1.8</td>
-                        <td>A</td>
-                      </tr>
-                      <tr>
-                        <td>Gecko</td>
-                        <td>Mozilla 1.0</td>
-                        <td>Win 95+ / OSX.1+</td>
-                        <td>1</td>
-                        <td>A</td>
-                      </tr>
-                      <tr>
-                        <td>Tasman</td>
-                        <td>Internet Explorer 5.2</td>
-                        <td>Mac OS 8-X</td>
-                        <td>1</td>
-                        <td>C</td>
+                      <tr ng-repeat="product in products">
+                        <td>{{product.name}}</td>
+                        <td>{{product.byfarmer}}</td>
+                        <td>{{product.details}}</td>
+                        <td>{{product.ratings}}</td>
+                        <td>{{product.price}}</td>
                       </tr>
                     </tbody>
                     <tfoot>
@@ -182,7 +133,7 @@
                         <th>Product by Farmer</th>
                         <th>Product Info</th>
                         <th>Ratings</th>
-                        <th>Updated At</th>
+                        <th>Price</th>
                       </tr>
                     </tfoot>
                   </table>
