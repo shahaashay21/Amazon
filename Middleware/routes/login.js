@@ -4,7 +4,7 @@
 */
 
 //REQUIRE FILES
-var bcrypt = require('bcrypt');
+var bcrypt = require('./bCrypt');
 
 //Collections
 var User = require('./model/user');
@@ -81,7 +81,7 @@ exports.regUser = function(req,res){
 						user.fname = fname;
 						user.lname = lname;
 						user.email = email;
-						user.pass = hash;	
+						user.pass = hash;
 						user.save(function (err){
 							console.log(err);
 							if(!err){

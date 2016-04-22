@@ -8,7 +8,7 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , admin = require('./routes/admin');
+  , admin = require('./routes/admin')
   , login = require('./routes/login');
 
 //JUST FOR PASSPORT LOGIN
