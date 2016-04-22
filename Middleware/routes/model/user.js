@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
-var cusSchema = mongoose.Schema({
-	c_id: {type: Number, index: true},
+var userSchema = mongoose.Schema({
+	c_id: {type: Number, required: true, index: true},
 	fname: {type: String, required: true},
 	lname: {type: String, required: true},
 	email: {type: String, required: true},
@@ -14,8 +14,8 @@ var cusSchema = mongoose.Schema({
 	cardDetails: [String],
 	createdAt: Date,
 	updatedAt: Date,
-},{collection: 'cus'});
+},{collection: 'users'});
 
-var Cus = mongoose.model('Cus', cusSchema);
+var User = mongoose.model('User', userSchema);
 
-module.exports = Cus;
+module.exports = User;

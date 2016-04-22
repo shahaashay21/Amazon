@@ -1,11 +1,71 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>Amazon-Fresh</title>
+    <% include lib.ejs %>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  	<% include menu.ejs %>
+    <div style="height: 50px; display: block;"></div>
+    <div class="container-fluid">
+      <div class="col-xs-9">
+        <div class="col-xs-12">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search AmazonFresh">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Go!</button>
+            </span>
+          </div><!-- /input-group -->
+        </div>
+
+        <div class="col-xs-12" style="margin-top: 10px;">
+          <div class="tiles">
+            <span class="subdue">Browse</span>
+            <span>Categories</span>
+          </div>
+          <ul class="item-wrapper">
+           <% for(var i=0; i<14; i++) { %>
+            <li>
+              <img src="img/fruit.jpg" class="item-img">
+              <ul class="cat-list">
+                <div class="cat-list-name">
+                  <a href="#">FRESH FRUIT >></a>
+                </div>
+                <li>
+                  <a href="#">Apples</a>
+                </li>
+                <li>
+                  <a href="#">Banans</a>
+                </li>
+                <li>
+                  <a href="#">Berries</a>
+                </li>
+                <li>
+                  <a href="#">Citrus</a>
+                </li>
+                <li>
+                  <a href="#">Packaged Fruit</a>
+                </li>
+                <li>
+                  <a href="#">Organic Fruit</a>
+                </li>
+                <li>
+                  <a href="#" class="shop-all">Shop All ></a>
+                </li>
+              </ul>
+            </li>
+           <% } %>
+          </ul>
+
+
+
+      </div>
+      <div class="col-xs-3">
+        <!-- CART WILL BE HERE -->
+      </div>
+    </div>
+  	
+    
+    <% include js-lib.ejs %>
   </body>
 </html>

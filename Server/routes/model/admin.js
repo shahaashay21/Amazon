@@ -13,7 +13,7 @@ var adminSchema = mongoose.Schema({
 	contacts: [String],
 	createdAt: Date,
 	updatedAt: Date,
-},{collection: 'admin'});
+},{collection: 'admin', _id: false});
 
 var Admin = mongoose.model('Admin', adminSchema);
 
