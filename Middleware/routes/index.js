@@ -4,7 +4,6 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'AmazonFresh' });
 	// req.session.uid = '123';
 	// req.session.destroy(function(err) {
 	// 	if(req.session){
