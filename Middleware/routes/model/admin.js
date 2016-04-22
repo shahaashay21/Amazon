@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
-var cusSchema = mongoose.Schema({
-	c_id: {type: Number, index: true},
+var adminSchema = mongoose.Schema({
+	c_id: {type: Number, required: true, index: true},
 	fname: {type: String, required: true},
 	lname: {type: String, required: true},
 	email: {type: String, required: true},
@@ -11,11 +11,10 @@ var cusSchema = mongoose.Schema({
 	state: String,
 	zipCode: Number,
 	contacts: [String],
-	cardDetails: [String],
 	createdAt: Date,
 	updatedAt: Date,
-},{collection: 'cus'});
+},{collection: 'admin'});
 
-var Cus = mongoose.model('Cus', cusSchema);
+var Admin = mongoose.model('Admin', adminSchema);
 
-module.exports = Cus;
+module.exports = Admin;

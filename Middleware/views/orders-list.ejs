@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Farmers | Data Tables</title>
+    <title>Orders | Data Tables</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -75,12 +75,12 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class="active"><a href="/admin/farmers/list"><i class="fa fa-circle-o"></i> Farmers List</a></li>
+                <li><a href="/admin/farmers/list"><i class="fa fa-circle-o"></i> Farmers List</a></li>
                 <li><a href="/admin/products/list"><i class="fa fa-circle-o"></i> Products List</a></li>
                 <li><a href="/admin/trucks/list"><i class="fa fa-circle-o"></i> Trucks List</a></li>
                 <li><a href="/admin/drivers/list"><i class="fa fa-circle-o"></i> Drivers List</a></li>
                 <li><a href="/admin/customers/list"><i class="fa fa-circle-o"></i> Customers List</a></li>
-                <li><a href="/admin/orders/list"><i class="fa fa-circle-o"></i> Orders List</a></li>
+                <li class="active"><a href="/admin/orders/list"><i class="fa fa-circle-o"></i> Orders List</a></li>
               </ul>
             </li>
           </ul>
@@ -89,17 +89,17 @@
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div ng-app="adminModule" ng-controller="adminController" ng-init="getfarmers();" class="content-wrapper">
+      <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Farmers Data Tables
+            Orders Data Tables
             <small>All data</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#">Tables</a></li>
-            <li class="active">Farmers table</li>
+            <li class="active">Orders table</li>
           </ol>
         </section>
 
@@ -109,34 +109,164 @@
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Framer Data Table</h3>
+                  <h3 class="box-title">Orders Data Table</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-hover table-striped">
                     <thead>
                       <tr>
-                        <th>Farmer Name</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Ratings</th>
-                        <th>Joined At</th>
+                        <th>Order Id</th>
+                        <th>Customer Id</th>
+                        <th>Driver Id</th>
+                        <th>Contacts</th>
+                        <th>Date</th>
+                        <th>Sub Total</th>
+                        <th>Tax</th>
+                        <th>Shipping Cost</th>
+                        <th>E.D.T.</th>
+                        <th>Pick-Up</th>
+                        <th>Drop</th>
+                        <th>Distance</th>
+                        <th>Time</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="farmer in farmers">
-                        <td>{{farmer.full_name}}</td>
-                        <td>{{farmer.email}}</td>
-                        <td>{{farmer.address}}</td>
-                        <td>{{farmer.ratings}}</td>
-                        <td>{{farmer.createdAt}}</td>
+                      <tr>
+                        <td>order1</td>
+                        <td>customer2</td>
+                        <td>driver4</td>
+                        <td>1234567890</td>
+                        <td>04/21/2016</td>
+                        <td>39.99</td>
+                        <td>3.99</td>
+                        <td>5</td>
+                        <td>04/22/2016</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>56 Miles</td>
+                        <td>3:00 P.M.(PST)</td>
                       </tr>
+                      <tr>
+                        <td>order2</td>
+                        <td>customer5</td>
+                        <td>driver3</td>
+                        <td>1234567890</td>
+                        <td>04/21/2016</td>
+                        <td>39.99</td>
+                        <td>3.99</td>
+                        <td>5</td>
+                        <td>04/22/2016</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>56 Miles</td>
+                        <td>3:00 P.M.(PST)</td>
+                      </tr>
+                      <tr>
+                        <td>order3</td>
+                        <td>customer6</td>
+                        <td>driver4</td>
+                        <td>1234567890</td>
+                        <td>04/21/2016</td>
+                        <td>39.99</td>
+                        <td>3.99</td>
+                        <td>5</td>
+                        <td>04/22/2016</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>56 Miles</td>
+                        <td>3:00 P.M.(PST)</td>
+                      </tr>
+                      <tr>
+                        <td>order4</td>
+                        <td>customer8</td>
+                        <td>driver2</td>
+                        <td>1234567890</td>
+                        <td>04/21/2016</td>
+                        <td>39.99</td>
+                        <td>3.99</td>
+                        <td>5</td>
+                        <td>04/22/2016</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>56 Miles</td>
+                        <td>3:00 P.M.(PST)</td>
+                      </tr>
+                      <tr>
+                        <td>order5</td>
+                        <td>customer5</td>
+                        <td>driver4</td>
+                        <td>1234567890</td>
+                        <td>04/21/2016</td>
+                        <td>39.99</td>
+                        <td>3.99</td>
+                        <td>5</td>
+                        <td>04/22/2016</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>56 Miles</td>
+                        <td>3:00 P.M.(PST)</td>
+                      </tr>
+                      <tr>
+                        <td>order6</td>
+                        <td>customer3</td>
+                        <td>driver8</td>
+                        <td>1234567890</td>
+                        <td>04/21/2016</td>
+                        <td>39.99</td>
+                        <td>3.99</td>
+                        <td>5</td>
+                        <td>04/22/2016</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>56 Miles</td>
+                        <td>3:00 P.M.(PST)</td>
+                      </tr>
+                      <tr>
+                        <td>order7</td>
+                        <td>customer2</td>
+                        <td>driver4</td>
+                        <td>1234567890</td>
+                        <td>04/21/2016</td>
+                        <td>39.99</td>
+                        <td>3.99</td>
+                        <td>5</td>
+                        <td>04/22/2016</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>56 Miles</td>
+                        <td>3:00 P.M.(PST)</td>
+                      </tr>
+                      <tr>
+                        <td>order8</td>
+                        <td>customer2</td>
+                        <td>driver4</td>
+                        <td>1234567890</td>
+                        <td>04/21/2016</td>
+                        <td>39.99</td>
+                        <td>3.99</td>
+                        <td>5</td>
+                        <td>04/22/2016</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>56 Miles</td>
+                        <td>3:00 P.M.(PST)</td>
+                      </tr>
+                    </tbody>
                     <tfoot>
                       <tr>
-                        <th>Farmer Name</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Ratings</th>
-                        <th>Joined At</th>
+                        <th>Order Id</th>
+                        <th>Customer Id</th>
+                        <th>Driver Id</th>
+                        <th>Contacts</th>
+                        <th>Date</th>
+                        <th>Sub Total</th>
+                        <th>Tax</th>
+                        <th>Shipping Cost</th>
+                        <th>E.D.T.</th>
+                        <th>Pick-Up</th>
+                        <th>Drop</th>
+                        <th>Distance</th>
+                        <th>Time</th>
                       </tr>
                     </tfoot>
                   </table>
