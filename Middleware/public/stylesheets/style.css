@@ -177,3 +177,19 @@ a:hover, a:focus{
 	margin-left: 10px;
 	display: none;
 }
+
+
+/*FOOTER*/
+#footer-wrapper{
+	background-color: #3B3E44;
+	height: 160px;
+	width: 100%;
+	margin-top: 50px;
+}
+
+#footer-wrapper ul{
+	list-style-type: none;
+	color: #fff;
+	margin-top: 30px;
+	float: left
+}

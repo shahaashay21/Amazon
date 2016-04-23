@@ -73,6 +73,9 @@ app.get('/admin/trucks/list',admin.trucksList);
 app.get('/admin/drivers/list',admin.driversList);
 app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
+app.get('/frame', function(req,res){
+  res.render('frame');
+})
 app.get('/login', login.signIn);
 app.get('/signup', login.signUp);
 app.get('/logout', function(req,res) {
