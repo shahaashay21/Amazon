@@ -75,8 +75,12 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li ><a href="/admin/farmers/list"><i class="fa fa-circle-o"></i> Farmers List</a></li>
-                <li class="active"> <a href="/admin/products/list"><i class="fa fa-circle-o"></i> Products List</a></li>
+                <li><a href="/admin/farmers/list"><i class="fa fa-circle-o"></i> Farmers List</a></li>
+                <li class="active"><a href="/admin/products/list"><i class="fa fa-circle-o"></i> Products List</a></li>
+                <li><a href="/admin/trucks/list"><i class="fa fa-circle-o"></i> Trucks List</a></li>
+                <li><a href="/admin/drivers/list"><i class="fa fa-circle-o"></i> Drivers List</a></li>
+                <li><a href="/admin/customers/list"><i class="fa fa-circle-o"></i> Customers List</a></li>
+                <li><a href="/admin/orders/list"><i class="fa fa-circle-o"></i> Orders List</a></li>
               </ul>
             </li>
           </ul>
@@ -111,7 +115,12 @@
                   <table id="example1" class="table table-bordered table-hover table-striped">
                     <thead>
                       <tr>
+                        <th>Product Id</th>
                         <th>Product Name</th>
+                        <th>Category Id</th>
+                        <th>Price</th>
+                        <th>Weight</th>
+                        <th>Average Ratings</th>
                         <th>Product by Farmer</th>
                         <th>Product Info</th>
                         <th>Ratings</th>
@@ -125,15 +134,103 @@
                         <td>{{product.details}}</td>
                         <td>{{product.ratings}}</td>
                         <td>{{product.price}}</td>
+                        <th>Updated At</th>
+                      </tr>
+                      <tr>
+                        <td>product1</td>
+                        <td>Greenhouse Roma Tomatoes</td>
+                        <td>category1</td>
+                        <td>2.99</td>
+                        <td>1.5 lb</td>
+                        <td>3.5</td>
+                        <td>product aisle</td>
+                        <td>04/21/2016</td>
+                      </tr>
+                      <tr>
+                        <td>product2</td>
+                        <td>Organic Bananas</td>
+                        <td>category2</td>
+                        <td>1.98</td>
+                        <td>5-7 Bananas</td>
+                        <td>4</td>
+                        <td>product aisle</td>
+                        <td>03/17/2016</td>
+                      </tr>
+
+                      <tr>
+                        <td>product3</td>
+                        <td>Greenhouse Roma Tomatoes</td>
+                        <td>category1</td>
+                        <td>2.99</td>
+                        <td>1.5 lb</td>
+                        <td>3.5</td>
+                        <td>product aisle</td>
+                        <td>04/21/2016</td>
+                      </tr>
+                      <tr>
+                        <td>product4</td>
+                        <td>Organic Bananas</td>
+                        <td>category2</td>
+                        <td>1.98</td>
+                        <td>5-7 Bananas</td>
+                        <td>4</td>
+                        <td>product aisle</td>
+                        <td>04/18/2016</td>
+                      </tr>
+                      <tr>
+                        <td>product5</td>
+                        <td>Greenhouse Roma Tomatoes</td>
+                        <td>category1</td>
+                        <td>2.99</td>
+                        <td>1.5 lb</td>
+                        <td>3.5</td>
+                        <td>product aisle</td>
+                        <td>04/21/2016</td>
+                      </tr>
+                      <tr>
+                        <td>product6</td>
+                        <td>Greenhouse Roma Tomatoes</td>
+                        <td>category1</td>
+                        <td>2.99</td>
+                        <td>1.5 lb</td>
+                        <td>3.5</td>
+                        <td>product aisle</td>
+                        <td>04/21/2016</td>
+                      </tr>
+                      <tr>
+                        <td>product7</td>
+                        <td>Greenhouse Roma Tomatoes</td>
+                        <td>category1</td>
+                        <td>2.99</td>
+                        <td>1.5 lb</td>
+                        <td>3.5</td>
+                        <td>product aisle</td>
+                        <td>04/21/2016</td>
+                      </tr>
+                      <tr>
+                        <td>product8</td>
+                        <td>Greenhouse Roma Tomatoes</td>
+                        <td>category1</td>
+                        <td>2.99</td>
+                        <td>1.5 lb</td>
+                        <td>3.5</td>
+                        <td>product aisle</td>
+                        <td>03/11/2016</td>
                       </tr>
                     </tbody>
                     <tfoot>
                       <tr>
+                        <th>Product Id</th>
                         <th>Product Name</th>
+                        <th>Category Id</th>
+                        <th>Price</th>
+                        <th>Weight</th>
+                        <th>Average Ratings</th>
                         <th>Product by Farmer</th>
                         <th>Product Info</th>
                         <th>Ratings</th>
                         <th>Price</th>
+                        <th>Updated At</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -146,7 +243,7 @@
       <footer class="main-footer">
         <% include ./partials/admin-footer %>
       </footer>
-      <% include ./partials/admin-aside %> 
+      <% include ./partials/admin-aside %>
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>

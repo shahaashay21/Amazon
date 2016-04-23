@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon-Fresh</title>
+    <% include lib.ejs %>
+  </head>
+  <body>
+  	<% include menu.ejs %>
+    <div style="height: 50px; display: block;"></div>
+    
+    <div class="container">
+      <div class="login-wrapper">
+        <div style="margin-bottom: 40px;">
+          <h3><b>Sign In</b></h3>
+        </div>
+        <form action="/login" method="post" class="pull-left">
+          <fieldset class="form-group has-feedback">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email-login" placeholder="Enter email" name="username">
+            <span class="glyphicon form-control-feedback"></span>
+            <small class="text-muted">We'll never share your email with anyone else.</small>
+          </fieldset>
+          <fieldset class="form-group has-feedback">
+            <label for="pass">Password</label>
+            <input type="password" class="form-control" id="pass-login" placeholder="Password" width="100%" name="password">
+            <span class="glyphicon form-control-feedback"></span>
+          </fieldset>
+          <div class="pull-right" style="margin-top: -10px">
+            <span class="forgot-pass">
+              <a href="#">Forgot password?</a>
+            </span>
+          </div>
+          <input type="submit" class="signin-btn" value="Sign In" onclick="return loginSubmit()">
+          <div style="margin-top: 10px; font-size: 12px;">
+            <span>
+              New Amazon.com customer? 
+            </span>
+            <span>
+              <a href="/signup" style="text-decoration: underline;">Create a new Amazon account</a>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  	
+    
+    <% include footer.ejs %>
+    <% include js-lib.ejs %>
+  </body>
+</html>

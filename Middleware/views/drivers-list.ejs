@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Farmers | Data Tables</title>
+    <title>Drivers | Data Tables</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -75,10 +75,10 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class="active"><a href="/admin/farmers/list"><i class="fa fa-circle-o"></i> Farmers List</a></li>
+                <li><a href="/admin/farmers/list"><i class="fa fa-circle-o"></i> Farmers List</a></li>
                 <li><a href="/admin/products/list"><i class="fa fa-circle-o"></i> Products List</a></li>
                 <li><a href="/admin/trucks/list"><i class="fa fa-circle-o"></i> Trucks List</a></li>
-                <li><a href="/admin/drivers/list"><i class="fa fa-circle-o"></i> Drivers List</a></li>
+                <li class="active"><a href="/admin/drivers/list"><i class="fa fa-circle-o"></i> Drivers List</a></li>
                 <li><a href="/admin/customers/list"><i class="fa fa-circle-o"></i> Customers List</a></li>
                 <li><a href="/admin/orders/list"><i class="fa fa-circle-o"></i> Orders List</a></li>
               </ul>
@@ -89,17 +89,17 @@
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div ng-app="adminModule" ng-controller="adminController" ng-init="getfarmers();" class="content-wrapper">
+      <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Farmers Data Tables
+            Drivers Data Tables
             <small>All data</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#">Tables</a></li>
-            <li class="active">Farmers table</li>
+            <li class="active">Drivers table</li>
           </ol>
         </section>
 
@@ -109,34 +109,140 @@
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Framer Data Table</h3>
+                  <h3 class="box-title">Drivers Data Table</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-hover table-striped">
                     <thead>
                       <tr>
-                        <th>Farmer Name</th>
+                        <th>Driver Id</th>
+                        <th>Truck Id</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>Address</th>
-                        <th>Ratings</th>
-                        <th>Joined At</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>ZIP</th>
+                        <th>Contacts</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="farmer in farmers">
-                        <td>{{farmer.full_name}}</td>
-                        <td>{{farmer.email}}</td>
-                        <td>{{farmer.address}}</td>
-                        <td>{{farmer.ratings}}</td>
-                        <td>{{farmer.createdAt}}</td>
+                      <tr>
+                        <td>driver1</td>
+                        <td>truck2</td>
+                        <td>John Appeased</td>
+                        <td>john.appeased@gmail.com</td>
+                        <td>1 Washington Sq</td>
+                        <td>San Jose</td>
+                        <td>CA</td>
+                        <td>95112</td>
+                        <td>14088889999,
+                            18889994444,
+                            17075557777</td>
                       </tr>
+                      <tr>
+                        <td>driver2</td>
+                        <td>truck7</td>
+                        <td>War Hammer</td>
+                        <td>war.hammer@hotmail.com</td>
+                        <td>1 Washington Sq</td>
+                        <td>San Jose</td>
+                        <td>CA</td>
+                        <td>95112</td>
+                        <td>14088889999,
+                          18889994444,
+                          17075557777</td>
+                      </tr>
+                      <tr>
+                        <td>driver3</td>
+                        <td>truck10</td>
+                        <td>John Appeased</td>
+                        <td>john.appeased@gmail.com</td>
+                        <td>1 Washington Sq</td>
+                        <td>San Jose</td>
+                        <td>CA</td>
+                        <td>95112</td>
+                        <td>14088889999,
+                          18889994444,
+                          17075557777</td>
+                      </tr>
+                      <tr>
+                        <td>driver4</td>
+                        <td>truck3</td>
+                        <td>John Appeased</td>
+                        <td>john.appeased@gmail.com</td>
+                        <td>1 Washington Sq</td>
+                        <td>San Jose</td>
+                        <td>CA</td>
+                        <td>95112</td>
+                        <td>14088889999,
+                          18889994444,
+                          17075557777</td>
+                      </tr>
+                      <tr>
+                        <td>driver5</td>
+                        <td>truck14</td>
+                        <td>John Appeased</td>
+                        <td>john.appeased@gmail.com</td>
+                        <td>1 Washington Sq</td>
+                        <td>San Jose</td>
+                        <td>CA</td>
+                        <td>95112</td>
+                        <td>14088889999,
+                          18889994444,
+                          17075557777</td>
+                      </tr>
+                      <tr>
+                        <td>driver6</td>
+                        <td>truck11</td>
+                        <td>John Appeased</td>
+                        <td>john.appeased@gmail.com</td>
+                        <td>1 Washington Sq</td>
+                        <td>San Jose</td>
+                        <td>CA</td>
+                        <td>95112</td>
+                        <td>14088889999,
+                          18889994444,
+                          17075557777</td>
+                      </tr>
+                      <tr>
+                        <td>driver7</td>
+                        <td>truck4</td>
+                        <td>John Appeased</td>
+                        <td>john.appeased@gmail.com</td>
+                        <td>1 Washington Sq</td>
+                        <td>San Jose</td>
+                        <td>CA</td>
+                        <td>95112</td>
+                        <td>14088889999,
+                          18889994444,
+                          17075557777</td>
+                      </tr>
+                      <tr>
+                        <td>driver8</td>
+                        <td>truck9</td>
+                        <td>John Appeased</td>
+                        <td>john.appeased@gmail.com</td>
+                        <td>1 Washington Sq</td>
+                        <td>San Jose</td>
+                        <td>CA</td>
+                        <td>95112</td>
+                        <td>14088889999,
+                          18889994444,
+                          17075557777</td>
+                      </tr>
+                    </tbody>
                     <tfoot>
                       <tr>
-                        <th>Farmer Name</th>
+                        <th>Driver Id</th>
+                        <th>Truck Id</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>Address</th>
-                        <th>Ratings</th>
-                        <th>Joined At</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>ZIP</th>
+                        <th>Contacts</th>
                       </tr>
                     </tfoot>
                   </table>

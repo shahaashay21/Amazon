@@ -16,7 +16,7 @@ var farmerSchema = mongoose.Schema({
 	intro: String,
 	createdAt: Date,
 	updatedAt: Date,
-},{collection: 'farmers'});
+},{collection: 'farmers', _id: false});
 
 var Farmer = mongoose.model('Farmer', farmerSchema);
 
