@@ -4,7 +4,8 @@
 */
 
 //REQUIRE FILES
-var bcrypt = require('./bCrypt');
+// var bcrypt = require('./bCrypt');
+var bcrypt = require('bcrypt');
 
 //Collections
 var User = require('./model/user');
@@ -47,7 +48,7 @@ exports.regUser = function(req,res){
 	err = 0;
 	ret = {};
 	if(!email && !pass && !fname && !lname){
-		console.log('here');
+		// console.log('here');
 		err = 1;
 		ret['nullfield'] = 'Field can not be empty';
 	}
