@@ -5,10 +5,10 @@
 				<li>
 					<img src="img/Amazon-logo.png" class="pull-left">	
 				</li>
-				<% if(typeof uid != 'undefined') {%>
+				<% if(typeof user != 'undefined') {%>
 				<li>
 					<div class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, Aashay <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, <%= user.fname %> <span class="caret"></span></a>
 						<ul class="dropdown-menu dropdown-username">
 							<li>
 								<a href="#">Your Account</a>

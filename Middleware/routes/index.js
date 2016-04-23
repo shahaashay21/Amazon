@@ -12,8 +12,9 @@ exports.index = function(req, res){
 	// 		res.render('index');
 	// 	}
 	// });
-	if(typeof req.session.uid != 'undefined'){
-		res.render('index', { uid: req.session.uid });
+	if(typeof req.session.user != 'undefined'){
+		console.log(req.session.user);
+		res.render('index', { user: req.session.user });
 	}else{
 		res.render('index');
 	}
