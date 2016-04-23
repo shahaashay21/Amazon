@@ -128,7 +128,10 @@ a:hover, a:focus{
 	text-decoration: underline;
 }
 .signin-btn{
-	background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #d0de9f, #8fc12b) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) -moz-linear-gradient(top , #d0de9f, #8fc12b) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) -o-linear-gradient(top , #d0de9f, #8fc12b) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) -webkit-linear-gradient(top , #d0de9f, #8fc12b) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) linear-gradient(top , #d0de9f, #8fc12b) repeat scroll 0 0;
 	border: #bbcc9a #7e9947 #669900;
 	border-radius: 3px;
 	cursor: pointer;
@@ -141,7 +144,10 @@ a:hover, a:focus{
 	font-size: 12px
 }
 .signin-btn:hover{
-	background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #b1d961, #84b228) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) -moz-linear-gradient(top , #b1d961, #84b228) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) -o-linear-gradient(top , #b1d961, #84b228) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) -webkit-linear-gradient(top , #b1d961, #84b228) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) linear-gradient(top , #b1d961, #84b228) repeat scroll 0 0;
 }
 
 /*SIGN UP PAGE*/
