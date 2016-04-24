@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var adminSchema = mongoose.Schema({
-	c_id: {type: Number, index: true},
+	c_id: {type: Number, required: true, index: true},
 	fname: {type: String, required: true},
 	lname: {type: String, required: true},
 	email: {type: String, required: true},
@@ -13,7 +13,7 @@ var adminSchema = mongoose.Schema({
 	contacts: [String],
 	createdAt: Date,
 	updatedAt: Date,
-},{collection: 'admin', _id: false});
+},{collection: 'admin'});
 
 var Admin = mongoose.model('Admin', adminSchema);
 

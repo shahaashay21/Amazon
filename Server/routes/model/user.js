@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var userSchema = mongoose.Schema({
-	c_id: {type: Number, index: true},
+	c_id: {type: Number, required: true, index: true},
 	fname: {type: String, required: true},
 	lname: {type: String, required: true},
 	email: {type: String, required: true},
@@ -14,7 +14,7 @@ var userSchema = mongoose.Schema({
 	cardDetails: [String],
 	createdAt: Date,
 	updatedAt: Date,
-},{collection: 'users', _id: false});
+},{collection: 'users'});
 
 var User = mongoose.model('User', userSchema);
 
