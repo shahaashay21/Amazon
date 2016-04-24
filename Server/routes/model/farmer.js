@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var farmerSchema = mongoose.Schema({
-	f_id: {type: Number, index: true},
+	f_id: {type: Number, required: true, index: true},
 	fname: {type: String, required: true},
 	lname: {type: String, required: true},
 	email: {type: String, required: true},
@@ -16,7 +16,7 @@ var farmerSchema = mongoose.Schema({
 	intro: String,
 	createdAt: Date,
 	updatedAt: Date,
-},{collection: 'farmers', _id: false});
+},{collection: 'farmers'});
 
 var Farmer = mongoose.model('Farmer', farmerSchema);
 
