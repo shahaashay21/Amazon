@@ -20,6 +20,9 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
 
+    <script src="/angularjs/angular.min.js"></script>
+    <script src="/angularjs/adminModule.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -124,19 +127,24 @@
                         <th>Product by Farmer</th>
                         <th>Product Info</th>
                         <th>Ratings</th>
-                        <th>Price</th>
+                        <th>Unit</th>
+                        <th>Updated At</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr ng-repeat="product in products">
+                        <td>{{product.p_id}}</td>
                         <td>{{product.name}}</td>
-                        <td>{{product.byfarmer}}</td>
-                        <td>{{product.details}}</td>
-                        <td>{{product.ratings}}</td>
+                        <td>{{product.cat_id}}</td>
                         <td>{{product.price}}</td>
-                        <th>Updated At</th>
+                        <td>{{product.weight}}</td>
+                        <td>"product.ratings"</td>
+                        <td>"product.byfarmer"</td>
+                        <td>{{product.details}}</td>
+                        <td>{{product.unit}}</td>
+                        <th>"product.updatedAt"</th>
                       </tr>
-                      <tr>
+<!--                       <tr>
                         <td>product1</td>
                         <td>Greenhouse Roma Tomatoes</td>
                         <td>category1</td>
@@ -217,7 +225,8 @@
                         <td>product aisle</td>
                         <td>03/11/2016</td>
                       </tr>
-                    </tbody>
+ -->                    
+                      </tbody>
                     <tfoot>
                       <tr>
                         <th>Product Id</th>
@@ -229,7 +238,7 @@
                         <th>Product by Farmer</th>
                         <th>Product Info</th>
                         <th>Ratings</th>
-                        <th>Price</th>
+                        <th>Unit</th>
                         <th>Updated At</th>
                       </tr>
                     </tfoot>
@@ -267,15 +276,15 @@
     <!-- page script -->
     <script>
       $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
+        //$("#example1").DataTable();
+        /*$('#example2').DataTable({
           "paging": true,
           "lengthChange": false,
           "searching": false,
           "ordering": true,
           "info": true,
           "autoWidth": false
-        });
+        });*/
       });
     </script>
   </body>

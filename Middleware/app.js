@@ -9,6 +9,8 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , admin = require('./routes/admin')
+  , farmer = require('./routes/farmer')
+  , product = require('./routes/product')
   , login = require('./routes/login');
 
 //JUST FOR PASSPORT LOGIN
@@ -73,6 +75,21 @@ app.get('/admin/trucks/list',admin.trucksList);
 app.get('/admin/drivers/list',admin.driversList);
 app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
+
+
+
+app.get('/farmer/all',farmer.getFarmers);
+app.post('/farmer/create',farmer.createFarmer);
+app.delete('/farmer/delete',farmer.deleteFarmer);
+app.post('/farmer/edit',farmer.editFarmer);
+
+app.get('/product/all',product.getProducts);
+app.post('/product/create',product.createProduct);
+app.delete('/product/delete',product.deleteProduct);
+app.post('/product/edit',product.editProduct);
+
+
+
 app.get('/frame', function(req,res){
   res.render('frame');
 })

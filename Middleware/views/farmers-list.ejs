@@ -19,6 +19,8 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
+    <script src="/angularjs/angular.min.js"></script>
+    <script src="/angularjs/adminModule.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -115,6 +117,7 @@
                   <table id="example1" class="table table-bordered table-hover table-striped">
                     <thead>
                       <tr>
+                        <th>Farmer Id</th>
                         <th>Farmer Name</th>
                         <th>Email</th>
                         <th>Address</th>
@@ -124,7 +127,8 @@
                     </thead>
                     <tbody>
                       <tr ng-repeat="farmer in farmers">
-                        <td>{{farmer.full_name}}</td>
+                        <td>{{farmer.f_id}}</td>
+                        <td>{{farmer.fname + " " + farmer.lname}}</td>
                         <td>{{farmer.email}}</td>
                         <td>{{farmer.address}}</td>
                         <td>{{farmer.ratings}}</td>
@@ -132,6 +136,7 @@
                       </tr>
                     <tfoot>
                       <tr>
+                        <th>Farmer Id</th>
                         <th>Farmer Name</th>
                         <th>Email</th>
                         <th>Address</th>
@@ -173,8 +178,8 @@
     <!-- page script -->
     <script>
       $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
+//        $("#example1").DataTable();
+/*        $('#example2').DataTable({
           "paging": true,
           "lengthChange": false,
           "searching": false,
@@ -182,7 +187,7 @@
           "info": true,
           "autoWidth": false
         });
-      });
+*/      });
     </script>
   </body>
 </html>

@@ -1,5 +1,6 @@
 
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var orderSchema = mongoose.Schema({
 	o_id: {type: Number, required: true, index: true},
