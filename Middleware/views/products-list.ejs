@@ -89,7 +89,7 @@
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
+      <div ng-app="adminModule" ng-controller="adminController" ng-init="getproducts();" class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -122,10 +122,20 @@
                         <th>Weight</th>
                         <th>Average Ratings</th>
                         <th>Product by Farmer</th>
-                        <th>Updated At</th>
+                        <th>Product Info</th>
+                        <th>Ratings</th>
+                        <th>Price</th>
                       </tr>
                     </thead>
                     <tbody>
+                      <tr ng-repeat="product in products">
+                        <td>{{product.name}}</td>
+                        <td>{{product.byfarmer}}</td>
+                        <td>{{product.details}}</td>
+                        <td>{{product.ratings}}</td>
+                        <td>{{product.price}}</td>
+                        <th>Updated At</th>
+                      </tr>
                       <tr>
                         <td>product1</td>
                         <td>Greenhouse Roma Tomatoes</td>
@@ -217,6 +227,9 @@
                         <th>Weight</th>
                         <th>Average Ratings</th>
                         <th>Product by Farmer</th>
+                        <th>Product Info</th>
+                        <th>Ratings</th>
+                        <th>Price</th>
                         <th>Updated At</th>
                       </tr>
                     </tfoot>
@@ -230,7 +243,7 @@
       <footer class="main-footer">
         <% include ./partials/admin-footer %>
       </footer>
-      <% include ./partials/admin-aside %> 
+      <% include ./partials/admin-aside %>
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>

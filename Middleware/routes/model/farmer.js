@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
-var adminSchema = mongoose.Schema({
-	c_id: {type: Number, index: true},
+var farmerSchema = mongoose.Schema({
+	f_id: {type: Number, required: true, index: true},
 	fname: {type: String, required: true},
 	lname: {type: String, required: true},
 	email: {type: String, required: true},
@@ -11,10 +11,13 @@ var adminSchema = mongoose.Schema({
 	state: String,
 	zipCode: Number,
 	contacts: [String],
+	ratings: [Schema.Types.Mixed],
+	reviews: [Schema.Types.Mixed],
+	intro: String,
 	createdAt: Date,
 	updatedAt: Date,
-},{collection: 'admin', _id: false});
+},{collection: 'farmers'});
 
-var Admin = mongoose.model('Admin', adminSchema);
+var Farmer = mongoose.model('Farmer', farmerSchema);
 
-module.exports = Admin;
+module.exports = Farmer;
