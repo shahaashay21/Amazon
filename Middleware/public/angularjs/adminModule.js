@@ -1,8 +1,6 @@
 var user = angular.module('adminModule',[]);
 user.controller('adminController',['$scope','$http','$sce', function($scope,$http,$sce){
 	
-
-
 	$scope.getfarmers = function(){
 		$http({
 			method : "GET",

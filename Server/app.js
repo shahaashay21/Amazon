@@ -5,9 +5,13 @@
 
 var express = require('express')
   //, routes = require('./routes')
-  , user = require('./routes/user')
+  , user = require('./services/user')
+  , farmer = require('./services/farmer')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , amqp = require('amqp')
+  , util = require('util')
+  , mongoose = require('mongoose');
 
 var app = express();
 
@@ -30,6 +34,57 @@ if ('development' == app.get('env')) {
 //app.get('/', routes.index);
 app.get('/users', user.list);
 
+
+var mongoConnectURL = "mongodb://localhost:27017/amazon";
+var cnn = amqp.createConnection({host:'127.0.0.1'});
+
+// connect to the mongo collection session and then createServer
+mongoose.connect(mongoConnectURL, function() {
+  console.log('Connected to mongo at: ' + mongoConnectURL);
+});
+
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+
+cnn.on('ready', function(){
+
+	console.log("listening on farmer_queue");
+
+	cnn.queue('farmer_queue', function(q){
+		q.subscribe(function(message, headers, deliveryInfo, m){
+			util.log(util.format( deliveryInfo.routingKey, message));
+			//util.log("Message: "+JSON.stringify(message));
+			//util.log("DeliveryInfo: "+JSON.stringify(deliveryInfo));
+
+			switch (message.service) {
+				case "getFarmers":
+					util.log("getFarmers");
+					farmer.getFarmers(message, function(err,res){
+						//util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+				
+				case "createFarmer":
+
+					break;
+
+				case "deleteFarmer":
+
+					break;
+
+				case "editFarmer":
+
+					break;
+			}
+		});
+	});
 });

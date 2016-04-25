@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var farmerSchema = mongoose.Schema({
 	f_id: {type: Number, required: true, index: true},
+	isActive : {type: Boolean, default: true},
 	fname: {type: String, required: true},
 	lname: {type: String, required: true},
 	email: {type: String, required: true},
