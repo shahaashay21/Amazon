@@ -7,6 +7,7 @@ var express = require('express')
   //, routes = require('./routes')
   , user = require('./services/user')
   , farmer = require('./services/farmer')
+  , product = require('./services/product')
   , http = require('http')
   , path = require('path')
   , amqp = require('amqp')
@@ -74,15 +75,104 @@ cnn.on('ready', function(){
 					break;
 				
 				case "createFarmer":
-
+					util.log("createFarmer");
+					farmer.createFarmer(message, function(err,res){
+						//util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
 					break;
 
 				case "deleteFarmer":
-
+					util.log("deleteFarmer");
+					farmer.deleteFarmer(message, function(err,res){
+						//util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
 					break;
 
 				case "editFarmer":
+					util.log("editFarmer");
+					farmer.editFarmer(message, function(err,res){
+						//util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+			}
+		});
+	});
 
+	cnn.queue('product_queue', function(q){
+		q.subscribe(function(message, headers, deliveryInfo, m){
+			util.log(util.format( deliveryInfo.routingKey, message));
+			//util.log("Message: "+JSON.stringify(message));
+			//util.log("DeliveryInfo: "+JSON.stringify(deliveryInfo));
+
+			switch (message.service) {
+				case "getProducts":
+					util.log("getProducts");
+					product.getProducts(message, function(err,res){
+						//util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+				
+				case "createProduct":
+					util.log("createProduct");
+					product.createProduct(message, function(err,res){
+						//util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case "deleteProduct":
+					util.log("deleteProduct");
+					product.deleteProduct(message, function(err,res){
+						//util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case "editProduct":
+					util.log("editProduct");
+					product.editProduct(message, function(err,res){
+						//util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
 					break;
 			}
 		});

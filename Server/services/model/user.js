@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var userSchema = mongoose.Schema({
 	c_id: {type: Number, required: true, index: true},

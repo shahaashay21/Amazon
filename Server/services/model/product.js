@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var productSchema = mongoose.Schema({
 	p_id: {type: Number, required: true, index: true},
@@ -11,6 +12,7 @@ var productSchema = mongoose.Schema({
 	description: String,
 	ratings: [Schema.Types.Mixed],
 	reviews: [Schema.Types.Mixed],
+	isActive: {type: Boolean, default: true}
 },{collection: 'products'});
 
 var Product = mongoose.model('Product', productSchema);

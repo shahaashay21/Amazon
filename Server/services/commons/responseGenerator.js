@@ -4,6 +4,7 @@
 var _ = require('underscore')
 exports.success = 1;
 exports.failure = 0;
+var resGen = require('./responseGenerator');
 
 exports.responseGenerator = function (status_code,data){
 
@@ -29,5 +30,5 @@ exports.responseGenerator = function (status_code,data1,data2){
 
 exports.error = function(err,res){
 	console.log(err);
-	res.responseGenerator(401,null);
+	res(null,resGen.responseGenerator(401,null));
 }

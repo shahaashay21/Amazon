@@ -17,10 +17,9 @@ exports.getFarmers = function(req, res){
 		}
 		else
 		{
-
+   			doc = JSON.parse(doc);
 			if(doc.status == 200){
 				console.log("reply from getFarmers");
-       			doc = JSON.parse(doc);
 				res.send(doc);
 			}
 			else
@@ -34,7 +33,8 @@ exports.getFarmers = function(req, res){
 exports.createFarmer = function(req,res){
 	
 	var msg_payload = {
-		"service" : "createFarmer", 
+		"service" : "createFarmer",
+		"f_id" : req.param("f_id"), 
 		"fname" : req.param("fname"),
 		"lname" : req.param("lname"),
 		"email" : req.param("email"),
@@ -49,16 +49,15 @@ exports.createFarmer = function(req,res){
   	mq.make_request('farmer_queue', msg_payload, function(err,doc){
 		if(err)
 		{
-		    console.log(err);
+		    console.log("createFarmer error middleware");
 			res.send(resGen.responseGenerator(401, null));
 		}
 		else
 		{
-
+			doc = JSON.parse(doc);
 			if(doc.status == 200){
 				console.log("reply from createFarmer" + doc);
-       			doc = JSON.parse(doc);
-				res.send(doc);
+       			res.send(doc);
 			}
 			else
 			{
@@ -71,7 +70,7 @@ exports.createFarmer = function(req,res){
 exports.deleteFarmer = function(req,res){
 	var msg_payload = {
 		"service" : "deleteFarmer", 
-		"fid" : req.param("fid"),
+		"f_id" : req.param("f_id"),
 		"sid":req.sessionID
 	};
 
@@ -83,11 +82,10 @@ exports.deleteFarmer = function(req,res){
 		}
 		else
 		{
-
+			doc = JSON.parse(doc);	
 			if(doc.status == 200){
 				console.log("reply from deleteFarmer" + doc);
-       			doc = JSON.parse(doc);
-				res.send(doc);
+       			res.send(doc);
 			}
 			else
 			{
@@ -100,7 +98,7 @@ exports.deleteFarmer = function(req,res){
 exports.editFarmer = function(req,res){
 	var msg_payload = {
 		"service" : "editFarmer", 
-		"fid" : req.param("fid"),
+		"f_id" : req.param("f_id"),
 		"fname" : req.param("fname"),
 		"lname" : req.param("lname"),
 		"email" : req.param("email"),
@@ -120,10 +118,9 @@ exports.editFarmer = function(req,res){
 		}
 		else
 		{
-
+   			doc = JSON.parse(doc);
 			if(doc.status == 200){
 				console.log("reply from editFarmer" + doc);
-       			doc = JSON.parse(doc);
 				res.send(doc);
 			}
 			else

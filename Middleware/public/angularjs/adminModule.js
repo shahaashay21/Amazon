@@ -12,7 +12,7 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 			}
 		});
 	}
-
+	
 	$scope.getproducts = function(){
 		$http({
 			method : "GET",

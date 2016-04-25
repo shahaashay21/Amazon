@@ -4,12 +4,10 @@ var resGen = require('./commons/responseGenerator');
 
 exports.getFarmers = function(req, res){
 
-	Farmer.find({isActive:true},function(err,results){
+	Farmer.find({isActive:true},{pass:0},function(err,results){
 		if(err)
 		{
-			console.log(err);
-			//throw err;
-			res(null,resGen.responseGenerator(401,null));
+			resGen.error(err,res);
 		}
 		else
 		{
@@ -21,7 +19,7 @@ exports.getFarmers = function(req, res){
 			else
 			{
 				console.log("no data");
-				res(null,resGen.responseGenerator(401, null));
+				resGen.error(null,res);
 			}
 		}
 	});
@@ -32,19 +30,20 @@ exports.createFarmer = function(req, res){
 	var farmer = Farmer({
 		fname : req.fname,
 		lname : req.lname,
-		"email" : req.email,
-		"pass" : req.pass,
-		"address" : req.address,
-		"city" : req.city,
-		"zipcode" : req.zipcode,
-		"intro" : req.intro,
+		email : req.email,
+		pass : req.pass,
+		address : req.address,
+		city : req.city,
+		zipcode : req.zipcode,
+		intro : req.intro,
+		f_id : req.f_id
 	});
+
 	farmer.save(function(err,results){
 		if(err)
 		{
-			console.log(err);
-			//throw err;
-			res(null, resGen.responseGenerator(401,null));
+			console.log("err at save");
+			resGen.error(err,res);
 		}
 		else
 		{
@@ -56,7 +55,7 @@ exports.createFarmer = function(req, res){
 			else
 			{
 				console.log("no data");
-				res(null,resGen.responseGenerator(401, null));
+				resGen.error(null,res);
 			}
 		}
 	});
@@ -64,7 +63,7 @@ exports.createFarmer = function(req, res){
 
 exports.editFarmer = function(req, res){
 
-	Farmer.findOne({fid:req.fid},{pass:0},function(err,result){
+	Farmer.findOne({f_id:req.f_id},{pass:0},function(err,result){
 		if(err)
 		{
 			resGen.error(err,res);
@@ -99,7 +98,7 @@ exports.editFarmer = function(req, res){
 
 exports.deleteFarmer = function(req, res){
 
-	Farmer.find({fid:req.fid},function(err,result){
+	Farmer.find({f_id:req.f_id},function(err,result){
 		if(err)
 		{
 			resGen.error(err,res);

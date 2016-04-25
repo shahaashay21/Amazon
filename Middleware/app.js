@@ -10,6 +10,7 @@ var express = require('express')
   , path = require('path')
   , admin = require('./routes/admin')
   , farmer = require('./routes/farmer')
+  , product = require('./routes/product')
   , login = require('./routes/login');
 
 //JUST FOR PASSPORT LOGIN
@@ -82,10 +83,10 @@ app.post('/farmer/create',farmer.createFarmer);
 app.delete('/farmer/delete',farmer.deleteFarmer);
 app.post('/farmer/edit',farmer.editFarmer);
 
-//app.get('/product/all',product.getProducts);
-//app.post('/product/create',product.createProduct);
-//app.delete('/product/delete',product.deleteProduct);
-//app.post('/product/edit',product.editProduct);
+app.get('/product/all',product.getProducts);
+app.post('/product/create',product.createProduct);
+app.delete('/product/delete',product.deleteProduct);
+app.post('/product/edit',product.editProduct);
 
 
 
