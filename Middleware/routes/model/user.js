@@ -1,4 +1,7 @@
 var mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
+var connection = mongoose.createConnection("mongodb://localhost/amazon");
+autoIncrement.initialize(connection);
 
 var userSchema = mongoose.Schema({
 	c_id: {type: Number, required: true, index: true},
@@ -12,10 +15,20 @@ var userSchema = mongoose.Schema({
 	zipCode: Number,
 	contacts: [String],
 	cardDetails: [String],
-	createdAt: Date,
-	updatedAt: Date,
-},{collection: 'users'});
+},
+{
+	collection: 'users',
+    timestamps: true,
+    versionKey: false
+});
 
-var User = mongoose.model('User', userSchema);
+
+userSchema.plugin(autoIncrement.plugin, {
+	model: 'User',
+    field: 'c_id',
+    startAt: 100000001,
+    incrementBy: 1});
+
+var User = connection.model('User', userSchema);
 
 module.exports = User;

@@ -9,7 +9,7 @@ var bcrypt = require('bcrypt-nodejs');
 
 //Collections
 var User = require('./model/user');
-var Counter = require('./model/counter');
+//var Counter = require('./model/counter');
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 
@@ -71,26 +71,23 @@ exports.regUser = function(req,res){
 		res.end(JSON.stringify(ret));
 	}else{
 		bcrypt.hash(pass, 5, function(err, hash) {
-			Counter.findOneAndUpdate({table_name: 'users'},{$inc: {lastid: 1}},function(err,id){
-				User.findOne({email: email},'email', function(err,useremail){
-					console.log(useremail);
-					if(useremail){
-						res.end(JSON.stringify('available'));
-					}else{
-						var user = new User();
-						user.c_id = id.lastid;
-						user.fname = fname;
-						user.lname = lname;
-						user.email = email;
-						user.pass = hash;
-						user.save(function (err){
-							console.log(err);
-							if(!err){
-								res.end(JSON.stringify('Registered'));
-							}
-						});
-					}
-				});
+			User.findOne({email: email},'email', function(err,useremail){
+				console.log(useremail);
+				if(useremail){
+					res.end(JSON.stringify('available'));
+				}else{
+					var user = new User();
+					user.fname = fname;
+					user.lname = lname;
+					user.email = email;
+					user.pass = hash;
+					user.save(function (err){
+						console.log(err);
+						if(!err){
+							res.end(JSON.stringify('Registered'));
+						}
+					});
+				}
 			});
 		});
 	}
