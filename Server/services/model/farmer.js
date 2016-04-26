@@ -20,7 +20,7 @@ var farmerSchema = mongoose.Schema({
 	reviews: [Schema.Types.Mixed],
 	intro: String,
 },{
-	collection: 'farmers'
+	collection: 'farmers',
     timestamps: true,
     versionKey: false
 });

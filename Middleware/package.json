@@ -9,6 +9,9 @@
     "amqplib": "^0.4.1",
     "connect-mongo": "^1.1.0",
     "ejs": "*",
+    "underscore": "^1.8.3",
+    "amqp": "^0.2.4",
+    "mongoose-auto-increment": "^5.0.1",
     "express": "3.2.6",
     "express-session": "^1.13.0",
     "mocha": "^2.4.5",
@@ -20,6 +23,7 @@
     "passport-remember-me": "0.0.1",
     "redis": "^2.6.0-1",
     "request": "^2.71.0",
-    "sequelize": "^3.21.0"
+    "sequelize": "^3.21.0",
+    "bcrypt-nodejs": "^0.0.3"
   }
 }
