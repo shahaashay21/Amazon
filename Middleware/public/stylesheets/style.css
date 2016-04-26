@@ -11,6 +11,9 @@ a:hover, a:focus{
 	text-decoration: none;
 	outline: none;
 }
+.no-padding{
+	padding: 0px;
+}
 #menu-wrapper{
 	background-color: #3B3E44;
 	height: 45px;
@@ -61,6 +64,16 @@ a:hover, a:focus{
 }
 
 
+/*Carousel*/
+.item{
+	height: 360px;
+	width: 640px;
+}
+.item img{
+	height: 100%;
+	width: 100%;
+}
+
 /* ITEMS */
 .item-wrapper{
 	list-style-type: none;
@@ -84,6 +97,7 @@ a:hover, a:focus{
 	font-size: 16px;
 	color: #000;
 	font-family: Georgia,"Times New Roman",Times,serif;
+	margin-left: 6px;
 }
 .tiles .subdue{
 	color: #777

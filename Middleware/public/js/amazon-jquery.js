@@ -1,6 +1,9 @@
 $(document).ready(function(e){
 	
-	
+	//Carousel
+	$('.carousel').carousel({
+	  interval: 3000
+	})
 	//INITIALIZE TOOLTIP
 	$('[data-toggle="tooltip"]').tooltip();
 
