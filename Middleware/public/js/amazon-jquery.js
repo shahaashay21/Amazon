@@ -1,5 +1,7 @@
 $(document).ready(function(e){
 	
+	//UNSLIDER
+	$('.my-slider').unslider();
 	//INITIALIZE TOOLTIP
 	$('[data-toggle="tooltip"]').tooltip();
 

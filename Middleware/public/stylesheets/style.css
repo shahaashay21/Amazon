@@ -154,7 +154,7 @@ a:hover, a:focus{
 .signup-wrapper{
 	background-image: url("/img/signup-back.png");
 	width: 100%;
-	height: 450px;
+	height: 500px;
 	margin: 40px auto;
 	border-radius: 5px;
 	box-shadow: 0 1px 5px rgba(50, 50, 50, 0.5);

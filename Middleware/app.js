@@ -82,6 +82,9 @@ app.get('/logout', function(req,res) {
   req.session.destroy();
   res.redirect('/');
 });
+app.get('/search', function(req,res){
+  res.render('ProductSearch');
+})
 
 
 function isAuthenticated(req, res, next) {
