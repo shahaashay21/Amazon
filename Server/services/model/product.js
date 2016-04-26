@@ -15,6 +15,7 @@ var productSchema = mongoose.Schema({
 	weight: {type: String, required: true},
 	details: {type: String},
 	unit: String,
+	short_description: String,
 	description: String,
 	ratings: [Schema.Types.Mixed],
 	reviews: [Schema.Types.Mixed],
