@@ -19,7 +19,7 @@ require('./routes/passport')(passport);
 
 
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/amazon?poolSize=5");
+mongoose.connect("mongodb://localhost/amazon");
 
 var mongoURL = "mongodb://localhost:27017/amazon";
 var expressSession = require("express-session");

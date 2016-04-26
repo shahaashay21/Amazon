@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var autoIncrement = require('mongoose-auto-increment');
+var connection = mongoose.createConnection("mongodb://localhost/amazon");
+autoIncrement.initialize(connection);
 
 var farmerSchema = mongoose.Schema({
 	f_id: {type: Number, required: true, index: true},
@@ -12,13 +15,22 @@ var farmerSchema = mongoose.Schema({
 	city: String,
 	state: String,
 	zipCode: Number,
-	contacts: [String],
+	contacts: [Number],
 	ratings: [Schema.Types.Mixed],
 	reviews: [Schema.Types.Mixed],
 	intro: String,
-	createdAt: Date,
-	updatedAt: Date,
-},{collection: 'farmers'});
+},{
+	collection: 'farmers'
+    timestamps: true,
+    versionKey: false
+});
+
+
+farmerSchema.plugin(autoIncrement.plugin, {
+	model: 'Farmer',
+    field: 'f_id',
+    startAt: 200000001,
+    incrementBy: 1});
 
 var Farmer = mongoose.model('Farmer', farmerSchema);
 
