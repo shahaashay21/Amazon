@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
+
 var autoIncrement = require('mongoose-auto-increment');
 var connection = mongoose.createConnection("mongodb://localhost/amazon");
 autoIncrement.initialize(connection);
 
-var userSchema = mongoose.Schema({
-	c_id: {type: Number, required: true, index: true},
+var adminSchema = mongoose.Schema({
+	a_id: {type: Number, required: true, index: true},
 	fname: {type: String, required: true},
 	lname: {type: String, required: true},
 	email: {type: String, required: true},
@@ -13,22 +14,21 @@ var userSchema = mongoose.Schema({
 	city: String,
 	state: String,
 	zipCode: Number,
-	contacts: [String],
-	cardDetails: [String],
-},
-{
-	collection: 'users',
+	contacts: [Number],
+	createdAt: Date,
+	updatedAt: Date,
+},{
+	collection: 'admin',
     timestamps: true,
     versionKey: false
 });
 
-
-userSchema.plugin(autoIncrement.plugin, {
-	model: 'User',
-    field: 'c_id',
-    startAt: 100000001,
+adminSchema.plugin(autoIncrement.plugin, {
+	model: 'Admin',
+    field: 'a_id',
+    startAt: 300000001,
     incrementBy: 1});
 
-var User = connection.model('User', userSchema);
+var Admin = connection.model('Admin', adminSchema);
 
-module.exports = User;
+module.exports = Admin;

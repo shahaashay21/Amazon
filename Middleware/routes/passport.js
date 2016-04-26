@@ -1,5 +1,5 @@
 //REQUIRE FILES
-var bcrypt = require('./bCrypt');
+var bcrypt = require('bcrypt-nodejs');
 
 //Collections
 var User = require('./model/user');
