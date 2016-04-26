@@ -117,7 +117,7 @@ a:hover, a:focus{
 /*LOGIN PAGE*/
 .login-wrapper{
 	width: 310px;
-	margin: 110px auto;
+	margin: 60px auto;
 }
 .login-wrapper .form-control{
 	width: 310px;
@@ -148,6 +148,17 @@ a:hover, a:focus{
 	background: rgba(0, 0, 0, 0) -o-linear-gradient(top , #b1d961, #84b228) repeat scroll 0 0;
 	background: rgba(0, 0, 0, 0) -webkit-linear-gradient(top , #b1d961, #84b228) repeat scroll 0 0;
 	background: rgba(0, 0, 0, 0) linear-gradient(top , #b1d961, #84b228) repeat scroll 0 0;
+}
+.wrong-login{
+	width: 600px;
+	margin: 20px auto;
+	border: 1px solid #a31919;
+	color: #a31919;
+	background: #ffffdd none repeat scroll 0 0;
+	padding: 10px;
+	font-size: 12px;
+	visibility: hidden;
+
 }
 
 /*SIGN UP PAGE*/

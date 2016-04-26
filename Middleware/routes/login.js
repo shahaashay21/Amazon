@@ -21,7 +21,16 @@ Sign in page
 */
 exports.signIn = function(req, res){
 	if(typeof req.session.uid == 'undefined'){
-		res.render('signIn');
+		if(typeof req.session.wrongSignIn){
+			if(req.session.wrongSignIn == true){
+				req.session.wrongSignIn = false;
+				res.render('signIn', {'wrong': true});
+			}else{
+				res.render('signIn');	
+			}
+		}else{
+			res.render('signIn');
+		}
 	}else{
 		res.redirect('/');
 	}

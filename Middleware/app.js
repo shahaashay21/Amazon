@@ -129,16 +129,18 @@ app.post('/login', function(req, res, next) {
     }
 
     if(!user) {
-      return res.redirect('/login');
+      req.session.wrongSignIn = true;
+      res.redirect('/login');
     }
-
-    req.logIn(user, {session: false}, function(err) {
-      if(err) {
-        return next(err);
-      }
-      req.session.user = user;
-      return res.redirect('/');
-    })
+    else{
+      req.logIn(user, {session: false}, function(err) {
+        if(err) {
+          return next(err);
+        }
+        req.session.user = user;
+        return res.redirect('/');
+      })
+    }
   })(req, res, next);
 });
 

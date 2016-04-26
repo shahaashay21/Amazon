@@ -5,24 +5,28 @@
 			<span>Products</span>
 		</div>
 		<% for(var i=0; i<10; i++){ %>
-		<div class="col-xs-3">
+		<div class="col-xs-3" style="margin: 0 -10px;">
 			<div class="product-wrapper">
 				<div class="itemInnerBorader">
-					<img src="img/tomato.jpg" class="" style="width: 140px; height: 140px; margin: 35px 35px 20px;">
+					<a href="">
+						<img src="img/tomato.jpg" class="" style="width: 140px; height: 140px; margin: 35px 35px 20px;">
+					</a>
 					<div class="productDetails">
 						<div>
 							<b>$4.49</b>
 							<span class="unitPrice"> ($4.49/lb) </span>
 						</div>
 						<div class="shortDetail">
-							Organic Greenhouse Red On-The-Vine Tomatoes, 1 lb
+							<a href="#">
+								Organic Greenhouse Red On-The-Vine Tomatoes, 1 lb
+							</a>
 						</div>
 						<div class="bottomProduct">
 							<div class="form-group pull-left">
 								<select class="form-control productQuant">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
+									<% for(var j=1; j<=10; j++){ %>
+									<option value=<%= j %>><%= j %></option>
+									<% } %>
 								</select>
 							</div>
 							<button class="add-to-cart">Add to Cart</button>
