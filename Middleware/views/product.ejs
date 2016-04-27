@@ -4,21 +4,21 @@
 			<span class="subdue">Browse</span>
 			<span>Products</span>
 		</div>
-		<% for(var i=0; i<10; i++){ %>
+		<% for(var i=0; i<products.length; i++){ %>
 		<div class="col-xs-3 no-padding">
 			<div class="product-wrapper">
 				<div class="itemInnerBorader">
 					<a href="">
-						<img src="img/tomato.jpg" class="" style="width: 140px; height: 140px; margin: 35px 35px 20px;">
+						<img src="<%= products[i].product_img %>" class="" style="width: 140px; height: 140px; margin: 35px 35px 20px;">
 					</a>
 					<div class="productDetails">
 						<div>
-							<b>$4.49</b>
-							<span class="unitPrice"> ($4.49/lb) </span>
+							<b>$<%= products[i].price %></b>
+							<span class="unitPrice"> ($<%= products[i].price_unit %>/<%= products[i].unit %>) </span>
 						</div>
 						<div class="shortDetail capitalize">
 							<a href="#">
-								organic greenhouse red on-the-vine tomatoes, 1 lb
+								<%= products[i].name %>, <%= products[i].weight %> <%= products[i].unit %>
 							</a>
 						</div>
 						<div class="bottomProduct">
