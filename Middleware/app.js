@@ -8,8 +8,11 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , admin = require('./routes/admin')
-  , login = require('./routes/login');
+  , farmer = require('./routes/farmer')
+  , product = require('./routes/product')
+  , login = require('./routes/login')
+  //ADMIN
+  , admin = require('./routes/admin');
 
 //JUST FOR PASSPORT LOGIN
 var passport = require('passport');
@@ -17,7 +20,7 @@ require('./routes/passport')(passport);
 
 
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/amazon?poolSize=5");
+mongoose.connect("mongodb://localhost/amazon");
 
 var mongoURL = "mongodb://localhost:27017/amazon";
 var expressSession = require("express-session");
@@ -66,13 +69,32 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 
+//ADMIN API
 app.get('/admin/home',admin.home);
+app.get('/admin/login',admin.login);
+app.get('/admin/logout', admin.logout);
+app.post('/admin/checkLogin', admin.checkLogin);
 app.get('/admin/farmers/list',admin.farmersList);
 app.get('/admin/products/list',admin.productsList);
 app.get('/admin/trucks/list',admin.trucksList);
 app.get('/admin/drivers/list',admin.driversList);
 app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
+
+
+
+app.get('/farmer/all',farmer.getFarmers);
+app.post('/farmer/create',farmer.createFarmer);
+app.delete('/farmer/delete',farmer.deleteFarmer);
+app.post('/farmer/edit',farmer.editFarmer);
+
+app.get('/product/all',product.getProducts);
+app.post('/product/create',product.createProduct);
+app.delete('/product/delete',product.deleteProduct);
+app.post('/product/edit',product.editProduct);
+
+
+
 app.get('/frame', function(req,res){
   res.render('frame');
 })
@@ -82,6 +104,9 @@ app.get('/logout', function(req,res) {
   req.session.destroy();
   res.redirect('/');
 });
+app.get('/search', function(req,res){
+  res.render('ProductSearch');
+})
 
 
 function isAuthenticated(req, res, next) {

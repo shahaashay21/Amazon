@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon-Fresh</title>
+
+    <% include lib.ejs %>
+
+    <!-- Loading the AngularJS file from /public/angularJS folder -->
+    <script src="../angularjs/adminlogin.js"></script>
+
+  </head>
+  <body ng-app="adminloginapp" ng-controller = "adminlogincontroller">
+  	
+    <div style="height: 50px; display: block;"></div>
+    
+    <div class="container">
+      <div class="login-wrapper">
+        
+        <div class='login-error-wrapper'>
+          <!-- Email=blank password=either blank or filled -->
+          <div ng-show="isBlankEmail">
+            <img src="../img/signin-error.jpg" height="25" width="25" style="margin-top: 25px; margin-left: 20px;" />
+            <strong>There was a problem</strong>
+            <label>Missing e-mail. Please correct and try again.</label>
+          </div>
+
+          <!-- Email=filled password=blank -->
+          <div ng-show="!isBlankEmail && isBlankPassword">
+            <img src="../img/signin-error.jpg" height="25" width="25" style="margin-top: 25px; margin-left: 20px;" />
+            <strong>There was a problem</strong>
+            <label>Please enter your password.</label>
+          </div>
+
+          <!-- Email=filled password=filled -->
+          <div ng-show="!isBlankEmail && !isBlankPassword && isIncorrectDetails">
+            <img src="../img/signin-error.jpg" height="25" width="25" style="margin-top: 25px; margin-left: 20px;" />
+            <strong>There was a problem</strong>
+            <label>Your email or password was incorrect. Please try again.</label>
+          </div>        
+        </div>
+
+        <div style="margin-bottom: 40px;">
+          <h3><b>Admin Sign In</b></h3>
+        </div>
+        <form class="pull-left">
+          <fieldset class="form-group has-feedback">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" placeholder="Enter email" name="username" ng-model="email">
+            <span class="glyphicon form-control-feedback"></span>
+            
+          </fieldset>
+          <fieldset class="form-group has-feedback">
+            <label for="pass">Password</label>
+            <input type="password" class="form-control" placeholder="Password" width="100%" name="password" ng-model="pass">
+            <span class="glyphicon form-control-feedback"></span>
+          </fieldset>
+          <div class="pull-right" style="margin-top: -10px">
+            <span class="forgot-pass">
+              <a href="#">Forgot password?</a>
+            </span>
+          </div>
+          <input type="submit" class="signin-btn" value="Sign In" ng-click="loginSubmit();">
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
