@@ -120,5 +120,20 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 			}
 		});
 	};
+
+	//add farmer
+	$scope.addFarmer = function(){
+		console.log("addFarmer ::");
+
+		$http({
+			method : "POST",
+			url : "/admin/addFarmer"
+		}).success(function(res) {
+			if(res.status == 200) {
+				console.log("success on add farmer :" + res.data);
+				return;
+			}
+		});
+	}
 	//editableOptions.theme = 'bs3';
 }]);

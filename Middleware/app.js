@@ -78,6 +78,7 @@ app.get('/admin/trucks/list',admin.trucksList);
 app.get('/admin/drivers/list',admin.driversList);
 app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
+//app.post('/admin/addFarmer', admin.addFarmer);
 
 
 

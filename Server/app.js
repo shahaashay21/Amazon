@@ -179,7 +179,7 @@ cnn.on('ready', function(){
 			}
 		});
 	});
-
+	
 	console.log("listening on admin_queue");
 
 	cnn.queue('admin-queue', function(q) {
@@ -225,4 +225,5 @@ cnn.on('ready', function(){
 			}
 		});
 	});
+
 });
