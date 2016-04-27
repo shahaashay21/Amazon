@@ -69,20 +69,20 @@ exports.editProduct = function(req, res){
 		else
 		{
 			if(result){
-				result.name = req.name ? req.name : result.name;
-				result.cat_id = req.cat_id ? req.cat_id : result.cat_id;
-				result.price = req.price ? req.price : result.price;
-				result.weight = req.weight ? req.weight : result.weight;
-				result.details = req.details ? req.details : result.details;
-				result.unit = req.unit ? req.unit : result.unit;
-				result.description = req.description ? req.description : result.description;
-				result.save(function(err,res){
+				result.name = req.name;
+				result.cat_id = req.cat_id;
+				result.price = req.price;
+				result.weight = req.weight;
+				result.details = req.details;
+				result.unit = req.unit;
+				//result.description = req.description;
+				result.save(function(err,doc){
 					if(err){
 						resGen.error(err,res);
 					} else {
 						console.log("product edited");
-						console.log(res);
-						res(null,resGen.responseGenerator(200, res));						
+						console.log(doc);
+						res(null,resGen.responseGenerator(200, doc));						
 					}
 				});
 			}
@@ -113,7 +113,7 @@ exports.deleteProduct = function(req, res){
 					} else {
 						console.log("product inactive now");
 						console.log(doc);
-						res(null,resGen.responseGenerator(200, doc));						
+						res(null,resGen.responseGenerator(200, doc.isActive));						
 					}
 				});
 			}
