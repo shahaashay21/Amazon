@@ -8,11 +8,12 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , admin = require('./routes/admin')
   , farmer = require('./routes/farmer')
   , product = require('./routes/product')
-  , login = require('./routes/login');
-
+  , login = require('./routes/login')
+	//ADMIN
+  , admin = require('./routes/admin');
+  
 //JUST FOR PASSPORT LOGIN
 var passport = require('passport');
 require('./routes/passport')(passport);
@@ -68,13 +69,18 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 
+//ADMIN API
 app.get('/admin/home',admin.home);
+app.get('/admin/login',admin.login);
+app.get('/admin/logout', admin.logout);
+app.post('/admin/checkLogin', admin.checkLogin);
 app.get('/admin/farmers/list',admin.farmersList);
 app.get('/admin/products/list',admin.productsList);
 app.get('/admin/trucks/list',admin.trucksList);
 app.get('/admin/drivers/list',admin.driversList);
 app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
+app.post('/admin/addFarmer', admin.addFarmer);
 
 
 

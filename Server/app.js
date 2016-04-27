@@ -8,6 +8,7 @@ var express = require('express')
   , user = require('./services/user')
   , farmer = require('./services/farmer')
   , product = require('./services/product')
+  , admin = require('./services/admin')
   , http = require('http')
   , path = require('path')
   , amqp = require('amqp')
@@ -172,6 +173,27 @@ cnn.on('ready', function(){
 							contentEncoding: 'utf-8',
 							correlationId: m.correlationId
 						});
+					});
+					break;
+			}
+		});
+	});
+	
+	console.log("listening on admin_queue");
+
+	cnn.queue('admin-queue', function(q) {
+		q.subscribe(function(message, headers, deliveryInfo, m){
+			util.log(util.format( deliveryInfo.routingKey, message));
+
+			switch(message.service) {
+				case "checkLogin":
+					util.log("checkLogin");
+					admin.checkLogin(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						})
 					});
 					break;
 			}
