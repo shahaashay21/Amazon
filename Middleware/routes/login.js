@@ -5,11 +5,12 @@
 
 //REQUIRE FILES
 // var bcrypt = require('./bCrypt');
-var bcrypt = require('bcrypt');
+ var bcrypt = require('bcrypt-nodejs');
+//var bcrypt = require('bcrypt');
 
 //Collections
 var User = require('./model/user');
-var Counter = require('./model/counter');
+//var Counter = require('./model/counter');
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 
@@ -20,7 +21,16 @@ Sign in page
 */
 exports.signIn = function(req, res){
 	if(typeof req.session.uid == 'undefined'){
-		res.render('signIn');
+		if(typeof req.session.wrongSignIn){
+			if(req.session.wrongSignIn == true){
+				req.session.wrongSignIn = false;
+				res.render('signIn', {'wrong': true});
+			}else{
+				res.render('signIn');	
+			}
+		}else{
+			res.render('signIn');
+		}
 	}else{
 		res.redirect('/');
 	}
@@ -70,28 +80,24 @@ exports.regUser = function(req,res){
 	if(err == 1){
 		res.end(JSON.stringify(ret));
 	}else{
-		bcrypt.hash(pass, 5, function(err, hash) {
-			Counter.findOneAndUpdate({table_name: 'users'},{$inc: {lastid: 1}},function(err,id){
-				User.findOne({email: email},'email', function(err,useremail){
-					console.log(useremail);
-					if(useremail){
-						res.end(JSON.stringify('available'));
-					}else{
-						var user = new User();
-						user.c_id = id.lastid;
-						user.fname = fname;
-						user.lname = lname;
-						user.email = email;
-						user.pass = hash;
-						user.save(function (err){
-							console.log(err);
-							if(!err){
-								res.end(JSON.stringify('Registered'));
-							}
-						});
+		var hash = bcrypt.hashSync(pass);
+		User.findOne({email: email},'email', function(err,useremail){
+			console.log(useremail);
+			if(useremail){
+				res.end(JSON.stringify('available'));
+			}else{
+				var user = new User();
+				user.fname = fname;
+				user.lname = lname;
+				user.email = email;
+				user.pass = hash;
+				user.save(function (err){
+					console.log(err);
+					if(!err){
+						res.end(JSON.stringify('Registered'));
 					}
 				});
-			});
+			}
 		});
 	}
 };

@@ -74,7 +74,7 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
-				
+
 				case "createFarmer":
 					util.log("createFarmer");
 					farmer.createFarmer(message, function(err,res){
@@ -136,7 +136,7 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
-				
+
 				case "createProduct":
 					util.log("createProduct");
 					product.createProduct(message, function(err,res){
