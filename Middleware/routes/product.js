@@ -31,9 +31,9 @@ exports.getProducts = function(req, res){
 };
 
 exports.createProduct = function(req,res){
-	
+
 	var msg_payload = {
-		"service" : "createProduct", 
+		"service" : "createProduct",
 		"p_id" : req.param("p_id"),
 		"name" : req.param("name"),
 		"cat_id" : req.param("cat_id"),
@@ -57,7 +57,7 @@ exports.createProduct = function(req,res){
 			doc = JSON.parse(doc);
 			if(doc.status == 200){
 				console.log("reply from createProduct" + doc);
-       			
+
 				res.send(doc);
 			}
 			else
@@ -70,7 +70,7 @@ exports.createProduct = function(req,res){
 
 exports.deleteProduct = function(req,res){
 	var msg_payload = {
-		"service" : "deleteProduct", 
+		"service" : "deleteProduct",
 		"p_id" : req.param("p_id"),
 		"sid":req.sessionID
 	};
@@ -87,7 +87,7 @@ exports.deleteProduct = function(req,res){
 			doc = JSON.parse(doc);
 			if(doc.status == 200){
 				console.log("reply from deleteProduct" + doc);
-       			
+
 				res.send(doc);
 			}
 			else
@@ -100,7 +100,7 @@ exports.deleteProduct = function(req,res){
 
 exports.editProduct = function(req,res){
 	var msg_payload = {
-		"service" : "editProduct", 
+		"service" : "editProduct",
 		"p_id" : req.param("p_id"),
 		"name" : req.param("name"),
 		"cat_id" : req.param("cat_id"),
@@ -121,7 +121,7 @@ exports.editProduct = function(req,res){
 		else
 		{
 
-			doc = JSON.parse(doc);	
+			doc = JSON.parse(doc);
 			if(doc.status == 200){
 				console.log("reply from editProduct" + doc);
        			res.send(doc);

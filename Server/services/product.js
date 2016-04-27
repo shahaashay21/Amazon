@@ -82,7 +82,7 @@ exports.editProduct = function(req, res){
 					} else {
 						console.log("product edited");
 						console.log(doc);
-						res(null,resGen.responseGenerator(200, doc));						
+						res(null,resGen.responseGenerator(200, doc));
 					}
 				});
 			}
@@ -113,7 +113,7 @@ exports.deleteProduct = function(req, res){
 					} else {
 						console.log("product inactive now");
 						console.log(doc);
-						res(null,resGen.responseGenerator(200, doc.isActive));						
+						res(null,resGen.responseGenerator(200, doc.isActive));
 					}
 				});
 			}

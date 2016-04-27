@@ -27,13 +27,11 @@ exports.checkLogin = function(req, res) {
 	var pass = req.param("pass");
 
 	if(email != '' && pass != '') {
-		
 		//messege payload for sending to server
 		msg_payload = {"service" : "checkLogin", "email" : email, "pass" : pass};
 
 		//making request to the server
 		mq.make_request('admin-queue', msg_payload,function(err, results) {
-			
 			if(err) {
 				console.log("Error occurred while requesting to server for checkLogin : " + err);
 				var json_resposes = {"statusCode" : 401, "error" : "Could not connect to server"};
@@ -42,7 +40,7 @@ exports.checkLogin = function(req, res) {
 				var dataParsed = JSON.parse(results);
 				if(dataParsed.statusCode == 200) {
 					req.session.email = email;
-					req.session.fname = dataParsed.fname;
+					//req.session.fname = dataParsed.fname;
 					req.session.lname = dataParsed.lname;
 					req.session.createdAt = dataParsed.createdAt;
 					res.send(JSON.parse(results));
@@ -67,7 +65,6 @@ exports.home = function(req, res){
   	 fname : req.session.fname, 
   	 lname : req.session.lname, 
   	 createdAt : req.session.createdAt
-  	});
   }
   else
   	res.redirect('/admin/login');
@@ -153,16 +150,3 @@ exports.ordersList = function(req,res){
   } else
     res.redirect('/admin/login');
 };
-
-//add farmer
-exports.addFarmer = function(req, res) {
-  if(req.session.email) {
-    res.render('admin-addFarmer', {
-      email : req.session.email, 
-      fname : req.session.fname, 
-      lname : req.session.lname, 
-      createdAt : req.session.createdAt
-    });
-  } else
-    res.redirect('/admin/login');
-}

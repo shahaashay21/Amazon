@@ -31,10 +31,10 @@ exports.getFarmers = function(req, res){
 };
 
 exports.createFarmer = function(req,res){
-	
+
 	var msg_payload = {
 		"service" : "createFarmer",
-		"f_id" : req.param("f_id"), 
+		"f_id" : req.param("f_id"),
 		"fname" : req.param("fname"),
 		"lname" : req.param("lname"),
 		"email" : req.param("email"),
@@ -69,7 +69,7 @@ exports.createFarmer = function(req,res){
 
 exports.deleteFarmer = function(req,res){
 	var msg_payload = {
-		"service" : "deleteFarmer", 
+		"service" : "deleteFarmer",
 		"f_id" : req.param("f_id"),
 		"sid":req.sessionID
 	};
@@ -82,7 +82,7 @@ exports.deleteFarmer = function(req,res){
 		}
 		else
 		{
-			doc = JSON.parse(doc);	
+			doc = JSON.parse(doc);
 			if(doc.status == 200){
 				console.log("reply from deleteFarmer" + doc);
        			res.send(doc);
@@ -98,7 +98,7 @@ exports.deleteFarmer = function(req,res){
 exports.editFarmer = function(req,res){
 	var msg_payload = {
 		"service" : "editFarmer",
-		"f_id": req.param("f_id"), 
+		"f_id": req.param("f_id"),
 		"fname" : req.param("fname"),
 		"lname" : req.param("lname"),
 		"email" : req.param("email"),

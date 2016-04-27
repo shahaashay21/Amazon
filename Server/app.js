@@ -74,7 +74,7 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
-				
+
 				case "createFarmer":
 					util.log("createFarmer");
 					farmer.createFarmer(message, function(err,res){
@@ -136,7 +136,7 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
-				
+
 				case "createProduct":
 					util.log("createProduct");
 					product.createProduct(message, function(err,res){
@@ -178,7 +178,11 @@ cnn.on('ready', function(){
 			}
 		});
 	});
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 73e9451c24d209339264b41a2bf304017beb1729
 	console.log("listening on admin_queue");
 
 	cnn.queue('admin-queue', function(q) {
@@ -199,4 +203,8 @@ cnn.on('ready', function(){
 			}
 		});
 	});
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 73e9451c24d209339264b41a2bf304017beb1729

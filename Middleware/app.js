@@ -11,9 +11,9 @@ var express = require('express')
   , farmer = require('./routes/farmer')
   , product = require('./routes/product')
   , login = require('./routes/login')
-	//ADMIN
+  //ADMIN
   , admin = require('./routes/admin');
-  
+
 //JUST FOR PASSPORT LOGIN
 var passport = require('passport');
 require('./routes/passport')(passport);
@@ -51,9 +51,6 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 // app.use(passport.session());
-
-
-
 
 
 app.use(app.router);
