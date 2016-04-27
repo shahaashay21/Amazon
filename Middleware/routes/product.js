@@ -107,7 +107,7 @@ exports.editProduct = function(req,res){
 		"price" : req.param("price"),
 		"weight" : req.param("weight"),
 		"details" : req.param("details"),
-		"description" : req.param("description"),
+		//"description" : req.param("description"),
 		"unit" : req.param("unit"),
 		"sid":req.sessionID
 	};
