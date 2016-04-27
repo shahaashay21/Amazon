@@ -5,7 +5,11 @@ var connection = mongoose.createConnection("mongodb://localhost/amazon");
 autoIncrement.initialize(connection);
 
 var productSchema = mongoose.Schema({
-	p_id: {type: Number, required: true, index: true},
+	p_id: {
+		type: Number,
+		required: true,
+		index: true
+	},
 	name: {type: String, required: true},
 	cat_id: {
 		type: Number,
@@ -34,6 +38,6 @@ productSchema.plugin(autoIncrement.plugin, {
     startAt: 500000001,
     incrementBy: 1});
 
-var Product = connection.model('Product', productSchema);
+var Product = mongoose.model('Product', productSchema);
 
 module.exports = Product;

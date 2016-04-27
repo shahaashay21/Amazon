@@ -11,6 +11,7 @@ var express = require('express')
   , farmer = require('./routes/farmer')
   , product = require('./routes/product')
   , login = require('./routes/login')
+  , cart = require('./routes/cart')
   //ADMIN
   , admin = require('./routes/admin');
 
@@ -148,6 +149,8 @@ app.post('/login', function(req, res, next) {
 
 
 app.post('/reg', login.regUser);
+app.post('/additem', cart.addItem);
+app.post('/cart', cart.cartItems);
 
 
 http.createServer(app).listen(app.get('port'), function(){

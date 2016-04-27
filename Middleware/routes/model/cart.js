@@ -6,10 +6,10 @@ var cartSchema = mongoose.Schema({
 		required: true, 
 		index: true
 	},
-	p_id: [{
+	p_id: {
 		type: Number, 
 		ref: 'Product.p_id'
-	}],
+	},
 	qty: Number,
 },{
 	collection: 'cart',

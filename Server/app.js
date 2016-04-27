@@ -9,6 +9,7 @@ var express = require('express')
   , farmer = require('./services/farmer')
   , product = require('./services/product')
   , admin = require('./services/admin')
+  , cart = require('./services/cart')
   , http = require('http')
   , path = require('path')
   , amqp = require('amqp')
@@ -196,6 +197,31 @@ cnn.on('ready', function(){
 						})
 					});
 					break;
+			}
+		});
+	});
+
+	cnn.queue('cart', function(q){
+		q.subscribe(function(message, headers, deliveryInfo, m){
+			switch(message.route){
+				case "addItem":
+					cart.addItem(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case "cartItems":
+					cart.cartItems(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					})
 			}
 		});
 	});

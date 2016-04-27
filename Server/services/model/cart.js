@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Product = require('../model/product');
 
 var cartSchema = mongoose.Schema({
 	c_id: {
@@ -6,10 +7,10 @@ var cartSchema = mongoose.Schema({
 		required: true, 
 		index: true
 	},
-	p_id: [{
+	p_id: {
 		type: Number, 
-		ref: 'Product.p_id'
-	}],
+		refPath: 'Product.p_id'
+	},
 	qty: Number,
 },{
 	collection: 'cart',

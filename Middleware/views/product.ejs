@@ -9,7 +9,7 @@
 			<div class="product-wrapper">
 				<div class="itemInnerBorader">
 					<a href="">
-						<img src="<%= products[i].product_img %>" class="" style="width: 140px; height: 140px; margin: 35px 35px 20px;">
+						<img src="<%= products[i].product_img %>" class="" style="width: 140px; height: 140px; margin: 35px 45px 20px;">
 					</a>
 					<div class="productDetails">
 						<div>
@@ -23,13 +23,13 @@
 						</div>
 						<div class="bottomProduct">
 							<div class="form-group pull-left">
-								<select class="form-control productQuant">
+								<select class="form-control productQuant" id="product<%= products[i].p_id %>">
 									<% for(var j=1; j<=10; j++){ %>
 									<option value=<%= j %>><%= j %></option>
 									<% } %>
 								</select>
 							</div>
-							<button class="add-to-cart">Add to Cart</button>
+							<button class="add-to-cart" ng-click="addItem(<%= products[i].p_id %>)">Add to Cart</button>
 						</div>
 					</div>
 				</div>
