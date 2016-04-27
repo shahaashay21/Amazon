@@ -65,9 +65,11 @@ exports.home = function(req, res){
   	 fname : req.session.fname, 
   	 lname : req.session.lname, 
   	 createdAt : req.session.createdAt
+    });
   }
-  else
+  else {
   	res.redirect('/admin/login');
+  }
 };
 
 //farmers list page
@@ -81,7 +83,9 @@ exports.farmersList = function(req, res){
   	});
   }
   else
+  {
   	res.redirect('/admin/login');
+  }
 };
 
 //products list page
@@ -94,8 +98,9 @@ exports.productsList = function(req,res){
   		createdAt : req.session.createdAt
   	});
   }
-	else
+	else{
   	res.redirect('/admin/login');
+  }
 };
 
 //trucks list page
@@ -108,8 +113,9 @@ exports.trucksList = function(req,res){
   		createdAt : req.session.createdAt
   	});
   }
-  else
+  else{
     res.redirect('/admin/login');
+  }
 };
 
 //drivers list page
@@ -134,8 +140,9 @@ exports.customersList = function(req,res){
   		lname : req.session.lname, 
   		createdAt : req.session.createdAt
       });
-  } else
+  } else{
     res.redirect('/admin/login');
+  }
 };
 
 //orders list page
@@ -147,6 +154,7 @@ exports.ordersList = function(req,res){
   		lname : req.session.lname, 
   		createdAt : req.session.createdAt
   	});
-  } else
+  } else{
     res.redirect('/admin/login');
+  }
 };
