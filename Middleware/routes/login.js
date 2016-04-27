@@ -5,8 +5,8 @@
 
 //REQUIRE FILES
 // var bcrypt = require('./bCrypt');
-// var bcrypt = require('bcrypt-nodejs');
-var bcrypt = require('bcrypt');
+ var bcrypt = require('bcrypt-nodejs');
+//var bcrypt = require('bcrypt');
 
 //Collections
 var User = require('./model/user');
@@ -80,25 +80,24 @@ exports.regUser = function(req,res){
 	if(err == 1){
 		res.end(JSON.stringify(ret));
 	}else{
-		bcrypt.hash(pass, 5, function(err, hash) {
-			User.findOne({email: email},'email', function(err,useremail){
-				console.log(useremail);
-				if(useremail){
-					res.end(JSON.stringify('available'));
-				}else{
-					var user = new User();
-					user.fname = fname;
-					user.lname = lname;
-					user.email = email;
-					user.pass = hash;
-					user.save(function (err){
-						console.log(err);
-						if(!err){
-							res.end(JSON.stringify('Registered'));
-						}
-					});
-				}
-			});
+		var hash = bcrypt.hashSync(pass);
+		User.findOne({email: email},'email', function(err,useremail){
+			console.log(useremail);
+			if(useremail){
+				res.end(JSON.stringify('available'));
+			}else{
+				var user = new User();
+				user.fname = fname;
+				user.lname = lname;
+				user.email = email;
+				user.pass = hash;
+				user.save(function (err){
+					console.log(err);
+					if(!err){
+						res.end(JSON.stringify('Registered'));
+					}
+				});
+			}
 		});
 	}
 };

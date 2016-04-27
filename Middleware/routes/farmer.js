@@ -97,16 +97,15 @@ exports.deleteFarmer = function(req,res){
 
 exports.editFarmer = function(req,res){
 	var msg_payload = {
-		"service" : "editFarmer", 
-		"f_id" : req.param("f_id"),
+		"service" : "editFarmer",
+		"f_id": req.param("f_id"), 
 		"fname" : req.param("fname"),
 		"lname" : req.param("lname"),
 		"email" : req.param("email"),
-		"pass" : req.param("pass"),
 		"address" : req.param("address"),
-		"city" : req.param("city"),
-		"zipcode" : req.param("zipcode"),
-		"intro" : req.param("intro"),
+		//"city" : req.param("city"),
+		//"zipcode" : req.param("zipcode"),
+		//"intro" : req.param("intro"),
 		"sid":req.sessionID
 	};
 

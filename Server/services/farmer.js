@@ -35,8 +35,8 @@ exports.createFarmer = function(req, res){
 		address : req.address,
 		city : req.city,
 		zipcode : req.zipcode,
-		intro : req.intro,
-		f_id : req.f_id
+		intro : req.intro
+		//,f_id : req.f_id
 	});
 
 	farmer.save(function(err,results){
@@ -71,20 +71,20 @@ exports.editFarmer = function(req, res){
 		else
 		{
 			if(result){
-				result.fname = req.fname ? req.fname : result.fname;
-				result.lname = req.lname ? req.lname : result.lname;
-				result.email = req.email ? req.email : result.email;
-				result.address = req.address ? req.address : result.address;
-				result.city = req.city ? req.city : result.city;
-				result.zipcode = req.zipcode ? req.zipcode : result.zipcode;
-				result.intro = req.intro ? req.intro : result.intro;
-				result.save(function(err,res){
+				result.fname = req.fname;
+				result.lname = req.lname;
+				result.email = req.email;
+				result.address = req.address;
+				//result.city = req.city ? req.city : result.city;
+				//result.zipcode = req.zipcode ? req.zipcode : result.zipcode;
+				//result.intro = req.intro ? req.intro : result.intro;
+				result.save(function(err,doc){
 					if(err){
 						resGen.error(err,res);
 					} else {
 						console.log("farmer edited");
-						console.log(res);
-						res(null,resGen.responseGenerator(200, res));						
+						console.log(doc);
+						res(null,resGen.responseGenerator(200,doc));						
 					}
 				});
 			}
@@ -98,15 +98,15 @@ exports.editFarmer = function(req, res){
 
 exports.deleteFarmer = function(req, res){
 
-	Farmer.find({f_id:req.f_id},function(err,result){
+	Farmer.findOne({f_id:req.f_id},function(err,result){
 		if(err)
 		{
 			resGen.error(err,res);
 		}
 		else
 		{
-			if(results){
-				console.log("all farmers found");
+			if(result){
+				console.log("farmer found");
 				console.log(result);
 				result.isActive = false;
 				result.save(function(err,doc){
@@ -115,7 +115,7 @@ exports.deleteFarmer = function(req, res){
 					} else {
 						console.log("farmer inactive now");
 						console.log(doc);
-						res(null,resGen.responseGenerator(200, doc));						
+						res(null,resGen.responseGenerator(200, doc.isActive));						
 					}
 				});
 			}
