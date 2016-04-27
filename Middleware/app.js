@@ -103,11 +103,17 @@ app.get('/logout', function(req,res) {
   req.session.destroy();
   res.redirect('/');
 });
-app.get('/search', function(req,res){
-  res.render('ProductSearch');
-})
 
 
+app.get('/search', function(req, res){
+  
+  if(typeof req.session.user != 'undefined'){
+    console.log(req.session.user);
+    res.render('ProductSearch', { user: req.session.user });
+  }else{
+    res.render('index');
+  }
+});
 
 
 
