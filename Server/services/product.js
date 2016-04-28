@@ -24,7 +24,26 @@ exports.getProducts = function(req, res){
 		}
 	});
 }
-
+exports.get_prod = function(msg, callback){
+	var res = {};
+	console.log("In servers get prod");
+	Product.find({}, function(err, product) {
+		if(err)
+				{
+				console.log(err);
+				res.code = "401";
+				res.value = "Failed to fetch Product";
+				}
+			else
+				{
+				console.log(product);
+				res.code = "200";
+				res.value = "Product Fetched";
+				res.object = product;
+				}
+		callback(null, res);
+	});
+};
 
 exports.createProduct = function(req, res){
 

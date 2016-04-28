@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon-Fresh</title>
+    <% include lib.ejs %>
+  </head>
+  <body>
+    <% include menu.ejs %>
+    <div style="height: 50px; display: block;"></div>
+
+<div ng-app="Product" ng-controller="formCtrl">
+ 
+ <div class="row">
+    <div class="col-sm-10" >
+    <div class="col-sm-3">
+      <a href="cheese.jpg" class="MagicZoom"><img src="cheese.jpg" style="width: 300px; height: 300px;"></a>
+      <div id="imageCaption"style="font-size: 0.92em;text-align: center;">Roll over image to zoom in</div>
+
+      <div id="thumbnailsWrapper" class="row">
+            <span class="detailPageThumbnail col-sm-2">
+                <img src="https://images-na.ssl-images-amazon.com/images/I/61XTeGpKX4L.01._SR40,40_.jpg" ng-mouseover="change_image()" border="0" class="thumbnail" alt="Product Image">
+            </span>
+        <span class="detailPageThumbnail col-sm-2">
+                <img src="https://images-na.ssl-images-amazon.com/images/I/41KmGy2OGjL.01._SR40,40_.jpg" ng-mouseover="change_image2()" border="0" class="thumbnail" alt="Product Image">
+            </span>
+            <span class="detailPageThumbnail col-sm-2">
+                <img src="https://images-na.ssl-images-amazon.com/images/I/61dthf0L5IL.01._SR40,40_.jpg" ng-mouseover="change_image()" border="0" class="thumbnail" alt="Product Image">
+            </span>
+             <span class="detailPageThumbnail col-sm-2">
+                <img src="https://images-na.ssl-images-amazon.com/images/I/31pdPf1dqfL.01._SR40,40_.jpg" ng-mouseover="change_image()" border="0" class="thumbnail" alt="Product Image">
+            </span>
+            <span class="detailPageThumbnail col-sm-2">
+                <img src="https://images-na.ssl-images-amazon.com/images/I/41QJz62eVuL.01._SR40,40_.jpg" ng-mouseover="change_image()" border="0" class="thumbnail" alt="Product Image">
+            </span>
+            <span class="detailPageThumbnail col-sm-2">
+                <img src="https://images-na.ssl-images-amazon.com/images/I/61lnTKbTciL.01._SR40,40_.jpg" ng-mouseover="change_image()" border="0" class="thumbnail" alt="Product Image">
+            </span>
+    </div>
+
+      </div>
+      <div class="col-sm-9">
+      <br><br>
+      <h3><%= products.object[0].name %>, <%= products.object[0].weight %></h3>
+      <h5 style="font-size: 0.9em">Other products by <a href="/farmer_page"><%= products.object[0].farmer_name %></a></h5>
+      <p><span class="stars"><span style="width: 52.8px;"></span></span></p>
+<div class="price">
+                <span class="value"><h4><strong>$<%= products.object[0].price %></strong>  (${{per_oz}}/{{measure_unit}})</h4></span>
+</div><br>
+<div class="row"  ng-show="quantity">
+<select ng-model= "quantity">
+  <option value="1" selected="selected">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="7">7</option>
+  <option value="8">8</option>
+  <option value="9">9</option>
+  <option value="10">10</option>
+</select>
+<button type="button" ng-click="addcart()" class="btn btn-primary btn-sm" style="background-color: green;border-color: green">Add to Cart</button>
+</div>
+<button type="button" class="btn btn-primary btn-sm" style="background-color: green;border-color: green" ng-model="disabled_button" ng-show="addtocart" disabled>Add to Cart</button>
+<h5 style="font-size: 0.9em">Sold by AmazonFresh. Shipped by AmazonFresh.</h5>
+      </div>
+    </div>
+    <div class="col-sm-2"  style="border: 1px solid #e0ddd6;text-align: center;" ng-show="cart">
+    Deliver to {{fname}}-{{city}} <br><br>
+    <button type="button" ng-click="cart()" style="margin-bottom: 10px;  background-color: green;width: 100%;border-color: green" class="btn btn-primary btn-md">Proceed to Checkout</button>
+    Minimum subtotal for checkout is $50<br>
+    <div>
+               <div class="col-sm-7" style="color: #669900;"><h4>Subtotal ${{cart_total}}</h4></div>
+               <div class="col-sm-5"><h4>({{item_number}} items)</h4></div>
+         </div><br><br>
+    <div  style="border-top: 1px dashed #e0ddd6" ng-show="empty_cart">There are currently no items in your cart. You can add an item by clicking on any <strong>Add to cart</strong> button.</div>
+  </div>
+  <div class="col-sm-2"  style="border: 1px solid #e0ddd6;text-align: center;" ng-show="signin">
+  <br>
+  <h5>AmazonFresh is available exclusively to Prime Fresh members in eligible zip codes.</h5>
+   <button type="button" ng-click="signin()" style="margin-bottom: 10px;  background-color: green;width: 100%;border-color: green" class="btn btn-primary btn-md">Sign in with Amazon account</button>
+  </div>
+<br>
+
+</div>
+
+<div class="row">
+  <div class="col-sm-10">
+  
+  <div id="product_features" style="border-bottom: 1px dashed #e0ddd6" >
+  <% if(typeof products.object[0].features != 'undefined') {
+            if(products.object[0].features != "") {
+      %>
+  <h4>Product Features</h4>
+  <ul style="list-style-type: disc;">
+   products.object[0].features 
+        </ul>
+<% } }%>
+</div>
+
+<div id="product_description" style="border-bottom: 1px dashed #e0ddd6" ng-show="description"> 
+        <% if(typeof products.object[0].description != 'undefined') {
+            if(products.object[0].description != "") {
+      %>
+        <h4>Product Description</h4>
+            <h5><%= products.object[0].description %></h5> 
+<% } }%>
+    </div>
+    <div class="product_details" style="border-bottom: 1px dashed #e0ddd6" ng-show="details">
+  <% if(typeof products.object[0].details != 'undefined') {
+            if(products.object[0].details != "") {
+      %>
+  <h4>Product Details</h4>
+  <h5><%= products.object[0].details %></h5>
+<% } }%>    
+</div>
+<div class="review" >
+          <h4>Customer Ratings and Reviews</h4><br>
+<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" style="background-color: whitesmoke;color: black;border-color: whitesmoke;">Create  a Review</button>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h1 class="modal-title">Create your Review</h1>
+        </div>
+        <div class="modal-body">
+<html>
+<body>
+<div class="review" style="width:80%">	
+    <div class="customerReviews">
+        <form name="TheForm1">
+            <div class="createReview">
+                How do you rate this item? 
+                <span class="custRatingImage">
+                    <img src="https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/customer-reviews/stars-0-0-transparent._V18709861_.gif">
+                </span>
+            </div>
+            <div class="createReview">
+                <br>What is the title of your review? <span class="titleBox"><input class="textField" id="Title" type="text" maxlength="100" size="40" name="title"></span>    
+            </div>
+            <div class="createReview">
+                Write your review <br><br>                   
+<span class="reviewBox"><textarea class="textArea" id="YourReview" cols="100" rows="10" name="review" style="width:80%"></textarea></span> 
+            </div>
+<button type="button" ng-click="create_review()" class="btn btn-primary btn-sm" style="background-color: green;border-color: green">Submit</button>
+        </form>
+    </div>
+</div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  <div style="border: 1px solid;border-color: #DAD8D8; margin-bottom: 10px;" ng-repeat="review in reviews">
+          {{review}}
+            </div>
+  </div><br>
+  <div class="disclaimerText" style="border: 1px solid #95A8A6"> 
+    <strong>Freshness Guarantee:</strong> AmazonFresh guarantees every product will be delivered to your home well within the manufacturer's recommended <i>use by</i>, <i>sell by</i>, <i>best by</i>, or <i>expiration</i> date.
+</div><br>
+<div class="disclaimerText"  style="border: 1px solid #95A8A6">  
+    <strong>Disclaimer:</strong>  While we work to ensure that product information is correct, on occasion manufacturers may alter their ingredient lists. Actual product packaging and materials may contain more and/or different information than that shown on our Web site. We recommend that you do not solely rely on the information presented and that you always read labels, warnings, and directions before using or consuming a product. For additional information about a product, please contact the manufacturer. Content on this site is for reference purposes and is not intended to substitute for advice given by a physician, pharmacist, or other licensed health-care professional. You should not use this information as self-diagnosis or for treating a health problem or disease. Contact your health-care provider immediately if you suspect that you have a medical problem. Information and statements regarding dietary supplements have not been evaluated by the Food and Drug Administration and are not intended to diagnose, treat, cure, or prevent any disease or health condition. AmazonFresh assumes no liability for inaccuracies or misstatements about products.
+</div>
+</div>
+</div>
+ </div>
+ <script> 
+ var session = <%= session %>
+ </script>
+<% include footer.ejs %>
+    <% include js-lib.ejs %>
+</body>
+
+</html>
