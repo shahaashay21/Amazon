@@ -8,7 +8,7 @@ app.controller("amazon",function($scope, $http, $location){
 			url: 'cart',
 			dataType: 'json'
 		}).then(function(res){
-			console.log(res.data);
+			// console.log(res.data);
 			$scope.cartTotal = res.data.grandTotal;
 			$scope.cartQty = res.data.qty;
 			$scope.cartItemDetails = res.data.cartItemDetails;
@@ -23,7 +23,7 @@ app.controller("amazon",function($scope, $http, $location){
 		}else{
 			var quantity = angular.element('#product'+p_id).val();
 		}
-		console.log(quantity);
+		// console.log(quantity);
 		data = {'id': p_id, 'quantity': quantity};
 		url = '/additem';
 		$http({

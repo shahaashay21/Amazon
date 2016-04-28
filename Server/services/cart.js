@@ -4,7 +4,7 @@ var Cart = require('./model/cart');
 
 exports.cartItems = function(req, callback){
 	c_id = req.c_id;
-	console.log(c_id);
+	// console.log(c_id);
 	Cart.find({c_id: c_id}).sort('p_id').exec(function(err, cartItemDetails){
 		p_id_array = [];
 		for(var i=0; i<cartItemDetails.length; i++){
@@ -36,15 +36,14 @@ exports.addItem = function(req, callback){
 	find_query = {p_id: p_id, c_id: c_id};
 
 	//IF QUANTITY IS 0 THEN REMOVE ITEM
-	console.log(Number(quantity));
+	// console.log(Number(quantity));
 	if(Number(quantity) == 0){
-		console.log('HERE IN ');
 		deleteItem(find_query, function(err, ans){
 			callback(null, JSON.stringify('True'));
 		});
 	}else{
 		Cart.findOne(find_query, function(err, available){
-			console.log(available);
+			// console.log(available);
 			if(available){
 				newQuantity = Number(Number(available.qty) + Number(quantity));
 				//AFTER EVALUATION IF QUANTITY IS 0 THEN REMOVE ITEM
@@ -77,7 +76,7 @@ function deleteItem(req, callback){
 	// p_id = req.p_id;
 	// c_id = req.c_id;
 	// find_query = {p_id: p_id, c_id: c_id};
-	console.log('remove item');
+	// console.log('remove item');
 	Cart.remove(req, function(err){
 		callback(null, 'done');
 	});
