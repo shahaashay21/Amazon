@@ -13,27 +13,27 @@
  <div class="row">
     <div class="col-sm-10" >
     <div class="col-sm-3">
-      <a href="cheese.jpg" class="MagicZoom"><img src="cheese.jpg" style="width: 300px; height: 300px;"></a>
+      <a href="<%= products.object[0].image1 %>" class="MagicZoom"><img src="cheese.jpg" style="width: 300px; height: 300px;"></a>
       <div id="imageCaption"style="font-size: 0.92em;text-align: center;">Roll over image to zoom in</div>
 
       <div id="thumbnailsWrapper" class="row">
             <span class="detailPageThumbnail col-sm-2">
-                <img src="https://images-na.ssl-images-amazon.com/images/I/61XTeGpKX4L.01._SR40,40_.jpg" ng-mouseover="change_image()" border="0" class="thumbnail" alt="Product Image">
+                <img src="<%= products.object[0].image1 %>" ng-mouseover="change_image1()" border="0" class="thumbnail" alt="Product Image">
             </span>
         <span class="detailPageThumbnail col-sm-2">
-                <img src="https://images-na.ssl-images-amazon.com/images/I/41KmGy2OGjL.01._SR40,40_.jpg" ng-mouseover="change_image2()" border="0" class="thumbnail" alt="Product Image">
+                <img src="<%= products.object[0].image2 %>" ng-mouseover="change_image2()" border="0" class="thumbnail" alt="Product Image">
             </span>
             <span class="detailPageThumbnail col-sm-2">
-                <img src="https://images-na.ssl-images-amazon.com/images/I/61dthf0L5IL.01._SR40,40_.jpg" ng-mouseover="change_image()" border="0" class="thumbnail" alt="Product Image">
+                <img src="<%= products.object[0].image3 %>" ng-mouseover="change_image3()" border="0" class="thumbnail" alt="Product Image">
             </span>
              <span class="detailPageThumbnail col-sm-2">
-                <img src="https://images-na.ssl-images-amazon.com/images/I/31pdPf1dqfL.01._SR40,40_.jpg" ng-mouseover="change_image()" border="0" class="thumbnail" alt="Product Image">
+                <img src="<%= products.object[0].image4 %>" ng-mouseover="change_image4()" border="0" class="thumbnail" alt="Product Image">
             </span>
             <span class="detailPageThumbnail col-sm-2">
-                <img src="https://images-na.ssl-images-amazon.com/images/I/41QJz62eVuL.01._SR40,40_.jpg" ng-mouseover="change_image()" border="0" class="thumbnail" alt="Product Image">
+                <img src="<%= products.object[0].image5 %>" ng-mouseover="change_image5()" border="0" class="thumbnail" alt="Product Image">
             </span>
             <span class="detailPageThumbnail col-sm-2">
-                <img src="https://images-na.ssl-images-amazon.com/images/I/61lnTKbTciL.01._SR40,40_.jpg" ng-mouseover="change_image()" border="0" class="thumbnail" alt="Product Image">
+                <img src="<%= products.object[0].image6 %>" ng-mouseover="change_image6()" border="0" class="thumbnail" alt="Product Image">
             </span>
     </div>
 
@@ -59,15 +59,15 @@
   <option value="9">9</option>
   <option value="10">10</option>
 </select>
-<button type="button" ng-click="addcart()" class="btn btn-primary btn-sm" style="background-color: green;border-color: green">Add to Cart</button>
+<button type="button" class="checkout-btn" style="width: 102px;height: 31px;color: black;margin: 0px" ng-click="addcart()" class="checkout-btn" >Add to Cart</button>
 </div>
-<button type="button" class="btn btn-primary btn-sm" style="background-color: green;border-color: green" ng-model="disabled_button" ng-show="addtocart" disabled>Add to Cart</button>
+<button type="button" class="checkout-btn" style="width: 102px;height: 31px;color: black;margin: 0px" ng-model="disabled_button" ng-show="addtocart" disabled>Add to Cart</button>
 <h5 style="font-size: 0.9em">Sold by AmazonFresh. Shipped by AmazonFresh.</h5>
       </div>
     </div>
     <div class="col-sm-2"  style="border: 1px solid #e0ddd6;text-align: center;" ng-show="cart">
     Deliver to {{fname}}-{{city}} <br><br>
-    <button type="button" ng-click="cart()" style="margin-bottom: 10px;  background-color: green;width: 100%;border-color: green" class="btn btn-primary btn-md">Proceed to Checkout</button>
+    <button type="button" ng-click="cart()" style="margin-bottom: 10px;width: 100%;" class="checkout-btn btn-md">Proceed to Checkout</button>
     Minimum subtotal for checkout is $50<br>
     <div>
                <div class="col-sm-7" style="color: #669900;"><h4>Subtotal ${{cart_total}}</h4></div>
@@ -78,7 +78,7 @@
   <div class="col-sm-2"  style="border: 1px solid #e0ddd6;text-align: center;" ng-show="signin">
   <br>
   <h5>AmazonFresh is available exclusively to Prime Fresh members in eligible zip codes.</h5>
-   <button type="button" ng-click="signin()" style="margin-bottom: 10px;  background-color: green;width: 100%;border-color: green" class="btn btn-primary btn-md">Sign in with Amazon account</button>
+   <button type="button" ng-click="signin()" style="margin-bottom: 10px;width: 100%;" class="checkout-btn btn-md">Sign in with Amazon account</button>
   </div>
 <br>
 
@@ -116,7 +116,7 @@
 </div>
 <div class="review" >
           <h4>Customer Ratings and Reviews</h4><br>
-<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" style="background-color: whitesmoke;color: black;border-color: whitesmoke;">Create  a Review</button>
+<button type="button" class="btn btn-sm" data-toggle="modal" data-target="#myModal" style="background-color: lightgrey; color: black; border-color: lightgrey;">Create  a Review</button>
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
