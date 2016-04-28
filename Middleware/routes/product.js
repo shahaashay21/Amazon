@@ -133,3 +133,35 @@ exports.editProduct = function(req,res){
 		}
 	});
 };
+
+exports.prod_details = function(req,res){
+	var msg_payload = {
+		"service" : "get_prod",
+		"p_id" : req.param("p_id"),
+		"sid":req.session.user
+	};
+  	mq.make_request('product_queue', msg_payload, function(err,prod){
+		if(err)
+		{
+		    console.log(err);
+			res.send(resGen.responseGenerator(401, null));
+		}
+		else
+		{
+			if(prod.code == 200){
+				console.log(prod);
+				if(typeof req.session.user != 'undefined'){
+					console.log(req.session.user);
+					res.render('product_page', { user: req.session.user, products: prod, session: true });
+				}else{
+					console.log("No session on");
+					res.render('product_page', { products: prod, session: false });
+				}
+			}
+			else
+			{
+				res.send(resGen.responseGenerator(401, null));
+			}
+		}
+	});
+};

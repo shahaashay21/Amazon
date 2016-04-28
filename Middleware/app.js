@@ -91,6 +91,9 @@ app.get('/product/all',product.getProducts);
 app.post('/product/create',product.createProduct);
 app.delete('/product/delete',product.deleteProduct);
 app.post('/product/edit',product.editProduct);
+//app.get('/prod_details', user.prod_details);
+app.get('/product', product.prod_details);
+
 
 
 
