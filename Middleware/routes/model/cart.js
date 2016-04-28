@@ -7,8 +7,7 @@ var cartSchema = mongoose.Schema({
 		index: true
 	},
 	p_id: {
-		type: Number, 
-		ref: 'Product.p_id'
+		type: Number 
 	},
 	qty: Number,
 },{

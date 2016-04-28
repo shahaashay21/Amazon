@@ -2,7 +2,8 @@
 
 var ejs = require("ejs");
 var mq = require('../rpc/client');
-
+var validate = require("validator");
+	
 //var mysql = require('./mysql');
 var resGen = require('./commons/responseGenerator');
 
@@ -31,6 +32,17 @@ exports.getFarmers = function(req, res){
 };
 
 exports.createFarmer = function(req,res){
+	var email = req.param("email");
+	var pass = req.param("pass");
+	var errData = null;
+
+	if(!validate.isEmail(email)){
+		res.send(500);
+	}
+
+	if(pass.length < 6){
+		res.send(500);
+	}
 
 	var msg_payload = {
 		"service" : "createFarmer",
@@ -68,11 +80,16 @@ exports.createFarmer = function(req,res){
 };
 
 exports.deleteFarmer = function(req,res){
+	if(req.param("f_id").length!=9){
+		res.send(500);
+	}
+
 	var msg_payload = {
 		"service" : "deleteFarmer",
 		"f_id" : req.param("f_id"),
 		"sid":req.sessionID
 	};
+
 
   	mq.make_request('farmer_queue', msg_payload, function(err,doc){
 		if(err)
@@ -96,6 +113,16 @@ exports.deleteFarmer = function(req,res){
 };
 
 exports.editFarmer = function(req,res){
+
+	var email = req.param('email');
+	if(!validate.isEmail(email)){
+		res.send(500);
+	}
+
+	if(req.param("f_id").length!=9){
+		res.send(500);
+	}
+
 	var msg_payload = {
 		"service" : "editFarmer",
 		"f_id": req.param("f_id"),
