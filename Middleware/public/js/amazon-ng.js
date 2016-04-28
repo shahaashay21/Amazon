@@ -23,6 +23,10 @@ app.controller("amazon",function($scope, $http, $location){
 			dataType: 'json'
 		}).then(function(res){
 			console.log(res.data);
+			$scope.cartTotal = res.data.grandTotal;
+			$scope.cartQty = res.data.qty;
+			$scope.cartItemDetails = res.data.cartItemDetails;
+			$scope.cartItems = res.data.items;
 		});
 	}
 

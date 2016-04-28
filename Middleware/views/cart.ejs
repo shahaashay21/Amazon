@@ -16,21 +16,21 @@
 		<div class="cart-total">
 			<div class="pull-left">
 				<span style="color: #669900;">
-					Subtotal $55.90
+					Subtotal ${{ cartTotal }}
 				</span>
 			</div>
 			<div class="pull-right">
 				<span>
-					(10 Items)
+					({{ cartQty }} Items)
 				</span>
 			</div>
 		</div>
 		<div class="cart-items">
 			<ul class="no-padding no-margin">
-				<% for(var i=0; i<4; i++){ %>
-				<li>
+				
+				<li ng-repeat="item in cartItems">
 					<div class="changeQuantity">
-						<div class="quantity">4</div>
+						<div class="quantity">{{ cartItemDetails[$index].qty }}</div>
 						<div class="buttons">
 							<div class="plusButton">
 								<span class="glyphicon glyphicon-plus" style="padding-top: 4px"></span>
@@ -55,7 +55,7 @@
 						<div class="glyphicon glyphicon-remove-sign"></div>
 					</div>
 				</li>
-				<% } %>
+				
 			</ul>
 		</div>
 	</div>
