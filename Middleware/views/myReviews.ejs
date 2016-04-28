@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon-Fresh</title>
+    <% include lib.ejs %>
+  </head>
+  <body>
+    <% include menu1.ejs %>
+    <div style="height: 50px; display: block;"></div>
+        <div class="container-fluid">
+      
+
+  <table class="table table-inverse">
+  <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Product Details</th>
+      <th>My Review</th>
+      <th>Rating</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+<% for(var i=0; i<14; i++) { %>  
+    <tr>
+      <th scope="row">Tomato | Farmer Name</th>
+      <td>Greenhouse Roma Tomatoes, 1.5 lb</td>
+      <td>Good Quality</td>
+      <td>5 stars</td>
+    </tr>
+
+
+    <% } %> 
+  </tbody>
+</table>
+
+
+    </div>
+</div>
+            
+
+
+
+        </div> 
+
+    <% include footer.ejs %>
+    <% include js-lib.ejs %>
+  </body>
+</html>

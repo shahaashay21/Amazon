@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon-Fresh</title>
+    <% include lib.ejs %>
+  </head>
+  <body>
+    <% include menu1.ejs %>
+    <div style="height: 50px; display: block;"></div>
+        <div class="container-fluid">
+        
+        <% include search.ejs %>
+</div>
+                <div class="cat-list" >
+              <form role="form">
+              <br>
+              <h4>Your Account!</h4><br>
+                <h5 style="color: green;">
+                  Account Settings
+                </h5>
+                  
+                    <span><h5>You are Logged in as: <span style="font-weight: bold;"><%= user.email %></span> </h5></span>
+
+                  
+              
+              
+                <hr>
+
+                <h5 style="color: green;">
+                  Payment Options
+                </h5>
+                <span><h5>You can add, remove, or edit your Payment options under: <a style="text-decoration: underline;" href="/paymentOptions">Manage Your Payment Options</a> </h5></span>
+
+
+                <hr>
+
+                <h5 style="color: green;">
+                  Primary Delivery Address
+                </h5>
+                <span><h5>Add your Address from Here :   <a style="text-decoration: underline;" href="/addressDetails">Add</a> </h5></span>
+
+<hr>
+
+                <h5 style="color: green;">
+                  Your Orders
+                </h5>
+                <span><h5>To see your Order History :    <a style="text-decoration: underline;" href="/myOrders">Click Here</a> </h5></span>
+
+
+                <hr>
+
+                <h5 style="color: green;">
+                  My Reviews
+                </h5>
+                <span><h5>Check all of my Reviews :    <a style="text-decoration: underline;" href="/myReviews">Here</a> </h5></span>
+
+                <hr>
+
+ </form>
+ </div>
+ </div>
+ 
+
+    <% include footer.ejs %>
+    <% include js-lib.ejs %>
+  </body>
+</html>
