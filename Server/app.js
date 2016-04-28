@@ -125,6 +125,18 @@ cnn.on('ready', function(){
 			//util.log("DeliveryInfo: "+JSON.stringify(deliveryInfo));
 
 			switch (message.service) {
+				case "get_prod":
+					util.log("getProducts");
+					product.get_prod(message, function(err,res){
+						//util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
 				case "getProducts":
 					util.log("getProducts");
 					product.getProducts(message, function(err,res){

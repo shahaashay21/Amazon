@@ -91,6 +91,9 @@ app.get('/product/all',product.getProducts);
 app.post('/product/create',product.createProduct);
 app.delete('/product/delete',product.deleteProduct);
 app.post('/product/edit',product.editProduct);
+//app.get('/prod_details', user.prod_details);
+app.get('/product', product.prod_details);
+
 
 
 
@@ -144,6 +147,24 @@ app.get('/addressDetails', function(req, res){
     res.render('addressDetails', { user: req.session.user });
   }else{
     res.render('index');
+  }
+  });
+
+app.get('/conditions', function(req, res){
+  if(typeof req.session.user !== 'undefined'){
+    console.log(req.session.user);
+    res.render('conditions', { user: req.session.user });
+  }else{
+    res.render('conditions');
+  }
+  });
+
+app.get('/privacy', function(req, res){
+  if(typeof req.session.user !== 'undefined'){
+    console.log(req.session.user);
+    res.render('privacy', { user: req.session.user });
+  }else{
+    res.render('privacy');
   }
   });
 
