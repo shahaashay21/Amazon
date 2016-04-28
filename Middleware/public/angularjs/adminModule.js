@@ -4,7 +4,7 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 
 	/*
 	-------Created by Darshil Saraiya 4/27/16-------
-	-------Admin Login Page operations-------
+	-------Admin login Page operations-------
 	*/
 	$scope.isBlankEmail = false;
 	$scope.isBlankPassword = false;
@@ -56,11 +56,31 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 			});
 		}
 	}
-	//Admin Login End
+	//Admin login-page End
 
-	//Admin index
+	/*
+	-------Created by Darshil Saraiya 4/27/16-------
+	-------Admin order-list Page operations-------
+	*/
+	//add order
+	$scope.addOrder = function(){
+		console.log("addOrder ::");
+		$http({
+			method : "POST",
+			url : "/order/create",
+			data : {
+				email: "test@email.com"
+			}
+		}).success(function(res) {
+			if(res.status == 200) {
+				console.log("success on add order :" + res.data);
+				//return;
+			}
+		});
+	}
+	//Admin orders-list Page End
 
-	//Admin index End
+
 
 	$scope.getfarmers = function(){
 		$http({

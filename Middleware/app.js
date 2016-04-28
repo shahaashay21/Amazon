@@ -12,8 +12,8 @@ var express = require('express')
   , product = require('./routes/product')
   , login = require('./routes/login')
   , cart = require('./routes/cart')
-  //ADMIN
-  , admin = require('./routes/admin');
+  , admin = require('./routes/admin')
+  , order = require('./routes/order');
 
 //JUST FOR PASSPORT LOGIN
 var passport = require('passport');
@@ -80,7 +80,8 @@ app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
 //app.post('/admin/addFarmer', admin.addFarmer);
 
-
+//ORDERS API
+app.post('/order/create', order.createOrder);
 
 app.get('/farmer/all',farmer.getFarmers);
 app.post('/farmer/create',farmer.createFarmer);
