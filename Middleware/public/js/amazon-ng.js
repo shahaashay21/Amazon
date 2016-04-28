@@ -1,22 +1,8 @@
 var app = angular.module("amazon",[]);
 
 app.controller("amazon",function($scope, $http, $location){
-	$scope.addItem = function(p_id){
-		var quantity = angular.element('#product'+p_id).val();
-		console.log(quantity);
-		data = {'id': p_id, 'quantity': quantity};
-		url = '/additem';
-		$http({
-			method: 'POST',
-			url: url,
-			data: data,
-			dataType: 'json'
-		}).then(function(data){
-			$scope.cartItems();
-		});
-	}
-
-	$scope.cartItems = function(p_id){
+	
+	$scope.getCartItems = function(){
 		$http({
 			method: 'POST',
 			url: 'cart',
@@ -27,8 +13,29 @@ app.controller("amazon",function($scope, $http, $location){
 			$scope.cartQty = res.data.qty;
 			$scope.cartItemDetails = res.data.cartItemDetails;
 			$scope.cartItems = res.data.items;
+			$scope.totalEachItem = res.data.totalEachitem;
 		});
 	}
 
-	$scope.cartItems();
+	$scope.addItem = function(p_id, update){
+		if(update){
+			var quantity = update;
+		}else{
+			var quantity = angular.element('#product'+p_id).val();
+		}
+		console.log(quantity);
+		data = {'id': p_id, 'quantity': quantity};
+		url = '/additem';
+		$http({
+			method: 'POST',
+			url: url,
+			data: data,
+			dataType: 'json'
+		}).then(function(data){
+			$scope.getCartItems();
+		});
+	}
+
+
+	$scope.getCartItems();
 });

@@ -2,7 +2,9 @@
 	<div class="cart-body">
 		<div class="cart-head">
 			<span>
-				Deliver to <b> </b>
+				<% if(typeof user != 'undefined') {%>
+					Deliver to <b> <%= user.fname %> <%= user.lname %> </b>
+				<% } %>
 			</span><br>
 			<span>
 				<a href="/addressDetails" style="text-decoration: underline;">(change delivery address)</a>
@@ -32,10 +34,10 @@
 					<div class="changeQuantity">
 						<div class="quantity">{{ cartItemDetails[$index].qty }}</div>
 						<div class="buttons">
-							<div class="plusButton">
+							<div class="plusButton" ng-click="addItem(item.p_id, '1')">
 								<span class="glyphicon glyphicon-plus" style="padding-top: 4px"></span>
 							</div>
-							<div class="minusButton">
+							<div class="minusButton" ng-click="addItem(item.p_id, '-1')">
 								<span class="glyphicon glyphicon-minus" style="padding-top: 4px"></span>
 							</div>
 						</div>
@@ -48,11 +50,11 @@
 							<a href="">{{ item.name }}</a>
 						</div>
 						<div class="priceBox">
-							$19.96
+							${{ totalEachItem[$index].total }}
 						</div>
 					</div>
 					<div class="cart-remove pull-right">
-						<div class="glyphicon glyphicon-remove-sign"></div>
+						<div class="glyphicon glyphicon-remove-sign" ng-click="addItem(item.p_id, '0')"></div>
 					</div>
 				</li>
 				
