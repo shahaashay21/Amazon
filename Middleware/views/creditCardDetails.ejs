@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon-Fresh</title>
+    <% include lib.ejs %>
+  </head>
+  <body>
+    <% include menu1.ejs %>
+    <div style="height: 50px; display: block;"></div>
+        <div class="container-fluid">
+
+
+                <h3>Credit Card Details</h3>
+                <div class="row">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-6">
+                    <div >
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group has-feedback">
+                            <label class="credit-card-labels-account">Card Number</label>
+                              <input type="text" class="form-control" placeholder="Card Number" name="card" />
+                             
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="credit-card-labels-account">Name on the Card</label>
+                              <input type="text" class="form-control" placeholder="Name on the Card" ng-model="" value=""/>
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                          <div class="form-group">
+
+                            <div class="col-md-3">
+                              <label class="credit-card-labels-account">Expiry Date</label>
+                              <select class="form-control" id="sel1" ng-model="" value="" >
+                                <option>01</option>
+                                <option>02</option>
+                                <option>03</option>
+                                <option>04</option>
+                                <option>05</option>
+                                <option>06</option>
+                                <option>07</option>
+                                <option>08</option>
+                                <option>09</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                              </select>
+                            </div>
+
+                            <div class="col-md-4">
+                              <label class="credit-card-labels-account">&nbsp;</label>
+                              <select class="form-control" id="sel1" ng-model="" value="">
+                                <option>2016</option>
+                                <option>2017</option>
+                                <option>2018</option>
+                                <option>2019</option>
+                                <option>2020</option>
+
+
+                              </select>
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                              <label class="credit-card-labels-account">CVV</label>
+                                <input type="password" class="form-control" placeholder="CVV" ng-model="" value=""/>
+
+                            </div>
+
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3"></div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-8">
+                      <button type="button" class="btn btn-primary btn-block btn-signup" ng-click="submit();">Update credit Card Details</button>
+
+                  </div>
+                  <div class="col-md-2"></div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+ 
+
+    <% include footer.ejs %>
+    <% include js-lib.ejs %>
+  </body>
+</html>

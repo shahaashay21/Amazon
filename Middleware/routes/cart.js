@@ -1,4 +1,5 @@
 var mq = require('../rpc/client');
+var validate = require('validator');
 
 
 exports.cartItems = function(req, res){
@@ -12,8 +13,11 @@ exports.cartItems = function(req, res){
 exports.addItem = function(req, res){
 	p_id = req.param('id');
 	quantity = req.param('quantity');
+	if(validate.util.isNumeric(quantity)){
+		res.send(500);
+	}
+	
 	c_id = req.session.user.c_id;
-
 	var msg_payload = {"route":"addItem", 'p_id':p_id, 'quantity': quantity, "c_id": c_id};
   	mq.make_request('cart', msg_payload, function(err, done){
   		res.send(done);

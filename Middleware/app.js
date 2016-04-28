@@ -106,9 +106,72 @@ app.get('/logout', function(req,res) {
   req.session.destroy();
   res.redirect('/');
 });
-app.get('/search', function(req,res){
-  res.render('ProductSearch');
-})
+
+
+app.get('/search', function(req, res){
+  
+  if(typeof req.session.user != 'undefined'){
+    console.log(req.session.user);
+    res.render('ProductSearch', { user: req.session.user });
+  }else{
+    res.render('index');
+  }
+});
+
+
+
+
+app.get('/customerAccount', function(req, res){
+  
+  if(typeof req.session.user != 'undefined'){
+    console.log(req.session.user);
+    res.render('customerAccount', { user: req.session.user });
+  }else{
+    res.render('index');
+  }
+});
+
+app.get('/help', function(req, res){
+  
+  if(typeof req.session.user != 'undefined'){
+    console.log(req.session.user);
+    res.render('help', { user: req.session.user });
+  }else{
+    res.render('index');
+  }
+});
+
+app.get('/addressDetails', function(req, res){
+  if(typeof req.session.user !== 'undefined'){
+    console.log(req.session.user);
+    res.render('addressDetails', { user: req.session.user });
+  }else{
+    res.render('index');
+  }
+  });
+
+app.get('/paymentOptions', function(req, res){
+  if(typeof req.session.user !== 'undefined'){
+    console.log(req.session.user);
+    res.render('creditCardDetails', { user: req.session.user });
+  }else{
+    res.render('index');
+  }
+  });
+
+app.get('/myReviews', function(req, res){
+  if(typeof req.session.user !== 'undefined'){
+    console.log(req.session.user);
+    res.render('myReviews', { user: req.session.user });
+  }else{
+    res.render('index');
+  }
+  });
+
+
+
+
+
 
 
 function isAuthenticated(req, res, next) {

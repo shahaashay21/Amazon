@@ -8,7 +8,7 @@
 				<% if(typeof user != 'undefined') {%>
 				<li>
 					<div class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, <%= user.fname  %><span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, <%= user.fname %> <%= user.lname %>  <span class="caret"></span></a>
 						<ul class="dropdown-menu dropdown-username">
 							<li>
 								<a href="/customerAccount">Your Account</a>
@@ -27,19 +27,19 @@
 				</li>
 				<li>
 					<div class="separator">|</div>
-					<a href="#">Your Deliveries</a>
+					<a href="/addressDetails">My Address</a>
 				</li>
 				<li>
 					<div class="separator">|</div>
-					<a href="#">Messages</a>
+					<a href="/myReviews">Reviews</a>
 				</li>
 				<li>
 					<div class="separator">|</div>
-					<a href="#">Your Lists</a>
+					<a href="/myOrders">Order List</a>
 				</li>
 				<li>
 					<div class="separator">|</div>
-					<a href="#">Past Purchases</a>
+					<a href="/paymentOptions">Payment Options</a>
 				</li>
 				<% }else{ %>
 				<li>

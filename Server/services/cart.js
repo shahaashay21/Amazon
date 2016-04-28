@@ -1,24 +1,31 @@
-// var Product = require('./model/product');
+var Product = require('./model/product');
 var Cart = require('./model/cart');
 
 
 exports.cartItems = function(req, callback){
 	c_id = req.c_id;
+	console.log(c_id);
+	Cart.find({c_id: c_id}).sort('p_id').exec(function(err, cartItemDetails){
+		p_id_array = [];
+		for(var i=0; i<cartItemDetails.length; i++){
+			p_id_array[i] = cartItemDetails[i].p_id;
+		}
+		Product.find({'p_id': { $in: p_id_array }}).sort('p_id').exec(function(err, items){
 
-	Cart.find({c_id: c_id}, function(err, items){
-		
+			totalItems = 0;
+			totalEachitem = [];
+			grandTotal = 0;
+			for(var i=0; i<items.length; i++){
+				totalEachitem[i] = {};
+				totalItems += cartItemDetails[i].qty;
+				totalEachitem[i].total = (Number(cartItemDetails[i].qty) * Number(items[i].price)).toFixed(2);
+				grandTotal += totalEachitem[i].total;
+			}
+			grandTotal = (parseFloat(grandTotal)).toFixed(2);
+			returnData = { 'cartItemDetails': cartItemDetails, 'items': items, 'qty': totalItems, 'totalEachitem': totalEachitem, 'grandTotal': grandTotal };
+			callback(null, JSON.stringify(returnData));
+		});
 	});
-
-	// Cart.find({c_id: c_id}).populate('p_id').exec(function(err, items){
-	// 	console.log(err);
-	// 	console.log(items);
-	// 	callback(null, JSON.stringify(items));
-	// });
-
-	// Cart.populate({path: 'p_id', model: 'Product'}, function(err, items){
-	// 	console.log(err);
-	// 	console.log(items);
-	// })
 }
 
 exports.addItem = function(req, callback){
