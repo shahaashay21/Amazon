@@ -4,23 +4,32 @@ var autoIncrement = require('mongoose-auto-increment');
 var connection = mongoose.createConnection("mongodb://localhost/amazon");
 autoIncrement.initialize(connection);
 
+var reviewSchema = mongoose.schema({
+	rating: {type: Number, required: true},
+	review_title: {type: String, required: true},
+	review_desc: {type:String, required:true}
+});
+
+
 var productSchema = mongoose.Schema({
 	p_id: {type: Number, required: true, index: true},
-	name: {type: String, required: true},
+	f_id: {type: Number, required: true},
+	farmer_name: {type: String, required: true}
 	cat_id: {
-		type: Number,
-		ref: 'Category.cat_id'
+		type: Number
 	},
+	name: {type: String, required: true},
 	price: {type: String, required: true},
 	weight: {type: String, required: true},
 	details: {type: String},
 	price_unit: String,
 	unit: String,
-	product_img: String,
-	short_description: String,
+	main_img: String,
+	images: [{type: String}],
+	reviews: [reviewSchema],
+	details: {type: String, required: true},
 	description: String,
-	ratings: [Schema.Types.Mixed],
-	reviews: [Schema.Types.Mixed],
+	features: type: String,
 	isActive: {type: Boolean, default: true}
 },{
 	collection: 'products',
