@@ -150,6 +150,24 @@ app.get('/addressDetails', function(req, res){
   }
   });
 
+app.get('/conditions', function(req, res){
+  if(typeof req.session.user !== 'undefined'){
+    console.log(req.session.user);
+    res.render('conditions', { user: req.session.user });
+  }else{
+    res.render('conditions');
+  }
+  });
+
+app.get('/privacy', function(req, res){
+  if(typeof req.session.user !== 'undefined'){
+    console.log(req.session.user);
+    res.render('privacy', { user: req.session.user });
+  }else{
+    res.render('privacy');
+  }
+  });
+
 app.get('/paymentOptions', function(req, res){
   if(typeof req.session.user !== 'undefined'){
     console.log(req.session.user);
