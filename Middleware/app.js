@@ -155,7 +155,7 @@ app.get('/conditions', function(req, res){
     console.log(req.session.user);
     res.render('conditions', { user: req.session.user });
   }else{
-    res.render('privacy');
+    res.render('conditions');
   }
   });
 
