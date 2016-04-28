@@ -223,8 +223,22 @@ a:hover, a:focus{
 	width: 100%;
 	margin-top: 50px;
 }
+#footer-wrapper1{
+	background-color: #3B3E44;
+	height: 260px;
+	width: 100%;
+	margin-top: 50px;
+}
 
 #footer-wrapper ul{
+	list-style-type: none;
+	color: #fff;
+	margin-top: 30px;
+	float: left
+}
+
+
+#footer-wrapper1 ul{
 	list-style-type: none;
 	color: #fff;
 	margin-top: 30px;

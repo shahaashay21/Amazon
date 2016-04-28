@@ -159,6 +159,15 @@ app.get('/conditions', function(req, res){
   }
   });
 
+app.get('/carrers', function(req, res){
+  if(typeof req.session.user !== 'undefined'){
+    console.log(req.session.user);
+    res.render('carrers', { user: req.session.user });
+  }else{
+    res.render('carrers');
+  }
+  });
+
 app.get('/privacy', function(req, res){
   if(typeof req.session.user !== 'undefined'){
     console.log(req.session.user);
