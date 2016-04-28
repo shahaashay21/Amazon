@@ -145,7 +145,7 @@
 													</span>
 												</td>
 												<td>
-													<span editable-text="farmer.email" e-name="email" e-form="farmerform">
+													<span editable-text="farmer.email" e-name="email" e-form="farmerform" onbeforesave="checkEmail($data)">
 														 {{ farmer.email || 'empty' }}
 													</span>
 												</td>
@@ -157,19 +157,19 @@
 												<td>{{farmer.ratings}}</td>
 												<td>{{farmer.createdAt | date: 'medium' || 'empty'}}</td>
 												<td>
-										      <form editable-form name="farmerform" ng-show="farmerform.$visible" class="form-buttons form-inline"
-										            shown="inserted == farmer" onbeforesave="saveFarmer($data,farmer.f_id)">
-										        <button type="submit" ng-disabled="farmerform.$waiting" class="btn btn-primary editable-table-button btn-xs">
-										          Save
-										        </button>
-										        <button type="button" ng-disabled="farmerform.$waiting" ng-click="farmerform.$cancel()" class="btn btn-default editable-table-button btn-xs">
-										          Cancel
-										        </button>
-										      </form>
-										      <div class="buttons" ng-show="!farmerform.$visible">
-										        <button class="btn btn-primary editable-table-button btn-xs" ng-click="farmerform.$show()">Edit</button>
-										        <button class="btn btn-danger editable-table-button btn-xs" ng-click="removeFarmer(farmer.f_id)">Delete</button>
-										      </div>
+											  <form editable-form name="farmerform" ng-show="farmerform.$visible" class="form-buttons form-inline"
+													shown="inserted == farmer" onbeforesave="saveFarmer($data,farmer.f_id)">
+												<button type="submit" ng-disabled="farmerform.$waiting" class="btn btn-primary editable-table-button btn-xs">
+												  Save
+												</button>
+												<button type="button" ng-disabled="farmerform.$waiting" ng-click="farmerform.$cancel()" class="btn btn-default editable-table-button btn-xs">
+												  Cancel
+												</button>
+											  </form>
+											  <div class="buttons" ng-show="!farmerform.$visible">
+												<button class="btn btn-primary editable-table-button btn-xs" ng-click="farmerform.$show()">Edit</button>
+												<button class="btn btn-danger editable-table-button btn-xs" ng-click="removeFarmer(farmer.f_id)">Delete</button>
+											  </div>
 												</td>
 											</tr>
 										</tbody>

@@ -1,7 +1,5 @@
 var user = angular.module('adminModule',['xeditable']);
 user.controller('adminController',['$scope','$http','$sce', function($scope,$http,$sce){
-
-
 	/*
 	-------Created by Darshil Saraiya 4/27/16-------
 	-------Admin login Page operations-------
@@ -108,11 +106,11 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 
 
 	$scope.saveFarmer = function(data, id) {
-    //$scope.user not updated yet
-	    angular.extend(data, {id: id});
-	    console.log("saveFarmer data::");
-	    console.log(data);
-	    $http({
+	//$scope.user not updated yet
+		angular.extend(data, {id: id});
+		console.log("saveFarmer data::");
+		console.log(data);
+		$http({
 			method : "POST",
 			url : '/farmer/edit',
 			data: {
@@ -125,13 +123,31 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 		}).success(function(res){
 			if (res.status === 200) {
 				console.log("success on save farmer" + res.data);
+				$scope.farmerformValidate = false;
 				return;
 				//$scope.farmers = res.data;
 				//return $http.post('/saveUser', data);
 			}
 		});
-  	};
+	};
 
+	$scope.checkEmail = function(email) {
+		console.log(email);
+		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    	if(!re.test(email)){
+			console.log("email invalid");
+			return "Email invalid";
+		}else{
+			return;
+		}
+	};
+
+	$scope.checkPincode = function(data){
+		if (!((new RegExp("/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/")).test(data))){
+			return "Pincode invalid";
+		}
+	}
+	
 	// remove farmer
 	$scope.removeFarmer = function(id) {
 		//$scope.farmers.splice(index, 1);
@@ -155,11 +171,11 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 
 
 	$scope.saveProduct = function(data, id) {
-    //$scope.user not updated yet
-	    angular.extend(data, {id: id});
-	    console.log("saveProduct data::");
-	    console.log(data);
-	    $http({
+	//$scope.user not updated yet
+		angular.extend(data, {id: id});
+		console.log("saveProduct data::");
+		console.log(data);
+		$http({
 			method : "POST",
 			url : '/product/edit',
 			data: {
@@ -180,7 +196,7 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 				//return $http.post('/saveUser', data);
 			}
 		});
-  	};
+	};
 
 	// remove product
 	$scope.removeProduct = function(id) {

@@ -11,12 +11,10 @@ var adminSchema = mongoose.Schema({
 	email: {type: String, required: true},
 	pass: {type: String, required: true},
 	address: {type: String},
+	zipcode: Number,
 	city: String,
 	state: String,
-	zipCode: Number,
-	contacts: [Number],
-	createdAt: Date,
-	updatedAt: Date,
+	contacts: [Number]
 },{
 	collection: 'admin',
     timestamps: true,

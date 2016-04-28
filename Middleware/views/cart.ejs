@@ -2,10 +2,12 @@
 	<div class="cart-body">
 		<div class="cart-head">
 			<span>
-				Deliver to <b>Aashay Shah-SAN JOSE</b>
+				<% if(typeof user != 'undefined') {%>
+					Deliver to <b> <%= user.fname %> <%= user.lname %> </b>
+				<% } %>
 			</span><br>
 			<span>
-				<a href="#" style="text-decoration: underline;">(change delivery address)</a>
+				<a href="/addressDetails" style="text-decoration: underline;">(change delivery address)</a>
 			</span>
 		</div>
 		<div>
@@ -16,46 +18,46 @@
 		<div class="cart-total">
 			<div class="pull-left">
 				<span style="color: #669900;">
-					Subtotal $55.90
+					Subtotal ${{ cartTotal }}
 				</span>
 			</div>
 			<div class="pull-right">
 				<span>
-					(10 Items)
+					({{ cartQty }} Items)
 				</span>
 			</div>
 		</div>
 		<div class="cart-items">
 			<ul class="no-padding no-margin">
-				<% for(var i=0; i<4; i++){ %>
-				<li>
+				
+				<li ng-repeat="item in cartItems">
 					<div class="changeQuantity">
-						<div class="quantity">4</div>
+						<div class="quantity">{{ cartItemDetails[$index].qty }}</div>
 						<div class="buttons">
-							<div class="plusButton">
+							<div class="plusButton" ng-click="addItem(item.p_id, '1')">
 								<span class="glyphicon glyphicon-plus" style="padding-top: 4px"></span>
 							</div>
-							<div class="minusButton">
+							<div class="minusButton" ng-click="addItem(item.p_id, '-1')">
 								<span class="glyphicon glyphicon-minus" style="padding-top: 4px"></span>
 							</div>
 						</div>
 					</div>
 					<div class="cart-product-image">
-						<img src="img/tomato.jpg" height="100%" width="100%">
+						<img ng-src="{{ item.product_img }}" height="100%" width="100%">
 					</div>
 					<div class="cart-detailsBox pull-left">
 						<div class="itemTitle capitalize">
-							<a href="">Organic Greenhouse Red On-The-Vine Tomatoes ssdsd sdvds</a>
+							<a href="">{{ item.name }}</a>
 						</div>
 						<div class="priceBox">
-							$19.96
+							${{ totalEachItem[$index].total }}
 						</div>
 					</div>
 					<div class="cart-remove pull-right">
-						<div class="glyphicon glyphicon-remove-sign"></div>
+						<div class="glyphicon glyphicon-remove-sign" ng-click="addItem(item.p_id, '0')"></div>
 					</div>
 				</li>
-				<% } %>
+				
 			</ul>
 		</div>
 	</div>

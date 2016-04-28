@@ -6,10 +6,12 @@ var categorySchema = mongoose.Schema({
 		required: true, 
 		index: true
 	},
-	name: {type: String, required: true},
+	name: {
+		type: String, 
+		required: true
+	},
 	parent_cat_id: {
-		type: Number,
-		ref: 'Category.cat_id'
+		type: Number
 	}
 },
 {

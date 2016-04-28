@@ -14,6 +14,7 @@ var User = require('./model/user');
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 
+var validate = require("validator");
 
 /*
 Aashay Shah 4/19/16
@@ -66,8 +67,8 @@ exports.regUser = function(req,res){
 		err = 1;
 		ret['password'] = 'Password must be more than 5 characters!';
 	}
-	var reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
-	if (!reg.test(email)){
+	//var reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+	if (!validate.isEmail(email)){
 		err = 1;
 		ret['email'] = 'Invalid email address';
 	}
