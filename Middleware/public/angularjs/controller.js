@@ -62,7 +62,7 @@
                 console.log("Went on image 6"); 
                 $scope.lrg_image=window.image6;
                 $scope.magic_zoom = window.image6;
-            };
+            };  
             
             function review()  {
                 $http.post('/review')

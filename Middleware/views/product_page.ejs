@@ -61,7 +61,7 @@ $(window).load(function(){
       <div class="col-sm-9">
       <br><br>
       <h3><%= products.object[0].name %>, <%= products.object[0].weight %> <%= products.object[0].unit %></h3>
-      <h5 style="font-size: 0.9em">Other products by <a href="/farmer_page"><%= products.object[0].farmer_name %></a></h5>
+      <h5 style="font-size: 0.9em">Other products by <a href="/farmer_page?id=<%= products.object[0].f_id %>"> <%= products.object[0].f_name %> </a></h5>
       <div>
       <% if(typeof products.object[0].reviews[0] != 'undefined') {
             if(products.object[0].reviews[0] != "") { %>

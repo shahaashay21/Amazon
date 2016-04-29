@@ -47,6 +47,28 @@ exports.get_prod = function(msg, callback){
 	});
 };
 
+exports.farmer_page = function(msg, callback){
+	var res = {};
+	console.log("In servers get farmers");
+	console.log(msg);
+	console.log(msg.p_id);
+	Product.find({f_id: msg.f_id}, function(err, product) {
+		if(product == "")
+				{
+				console.log(err);
+				res.code = "401";
+				res.value = "Failed to fetch farmer_page";
+				}
+			else
+				{
+				console.log(product);
+				res.code = "200";
+				res.value = "Farmer Fetched";
+				res.object = product;
+				}
+		callback(null, res);
+	});
+};
 
 exports.create_review = function(msg, callback){
 	var res = {};
