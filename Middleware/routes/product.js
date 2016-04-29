@@ -158,7 +158,13 @@ exports.prod_details = function(req,res){
 			if(prod.code == 200){
 				console.log(prod);
 				if(typeof req.session.user != 'undefined'){
-					console.log(req.session.user);
+				console.log(req.session.user);
+				//var arrayLength = prod.reviews.length;
+				//for (var i = 0; i < arrayLength; i++) {
+				//console.log("star value"+prod.reviews.rating);
+				//console.log("star value1"+prod.reviews[0].rating);
+				//console.log("In array should run once");
+				//}
 					res.render('product_page', { user: req.session.user, products: prod, session: true });
 				}else{
 					console.log("No session on");
@@ -174,6 +180,7 @@ exports.prod_details = function(req,res){
 };
 
 exports.create_review = function(req,res){
+	console.log();
 	var msg_payload = {
 		"service" : "create_review",
 		"p_id" : req.param("p_id"),
