@@ -12,6 +12,7 @@ var express = require('express')
   , product = require('./routes/product')
   , login = require('./routes/login')
   , cart = require('./routes/cart')
+  , order = require('./routes/order');
   , order = require('./routes/order')
   //ADMIN
   , admin = require('./routes/admin');
@@ -82,7 +83,8 @@ app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
 //app.post('/admin/addFarmer', admin.addFarmer);;
 
-
+//ORDERS API
+app.post('/order/create', order.createOrder);
 
 app.get('/farmer/all',farmer.getFarmers);
 app.post('/farmer/create',farmer.createFarmer);

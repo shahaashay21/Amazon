@@ -10,6 +10,7 @@ var express = require('express')
   , product = require('./services/product')
   , admin = require('./services/admin')
   , cart = require('./services/cart')
+  , order = require('./services/order')
   , http = require('http')
   , path = require('path')
   , amqp = require('amqp')
@@ -221,6 +222,8 @@ cnn.on('ready', function(){
 		});
 	});
 
+	console.log("listening on cart_queue");
+
 	cnn.queue('cart', function(q){
 		q.subscribe(function(message, headers, deliveryInfo, m){
 			switch(message.route){
@@ -244,6 +247,25 @@ cnn.on('ready', function(){
 					})
 			}
 		});
+	});
+
+	console.log("listening on order_queue");
+
+	cnn.queue('order-queue', function(q) {
+		q.subscribe(function(message, headers, deliveryInfo, m) {
+			switch(message.service) {
+				case 'createOrder':
+					util.log("createOrder");
+					order.createOrder(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						})
+					});
+					break;
+			}
+		})
 	});
 
 });

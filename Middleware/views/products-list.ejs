@@ -28,6 +28,12 @@
 
 		<script src="/angularjs/adminModule.js"></script>
 
+		<script src="/angularjs/angular.min.js"></script>
+
+    	<link href="/dist/css/xeditable.css" rel="stylesheet">
+    	<script src="/dist/js/xeditable.js"></script>
+    	<script src="/angularjs/adminModule.js"></script>
+
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -35,7 +41,7 @@
 				<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body class="hold-transition skin-blue sidebar-mini">
+	<body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule" ng-controller="adminController">
 		<div class="wrapper">
 			<header class="main-header">
 				<% include ./partials/admin-header %>
