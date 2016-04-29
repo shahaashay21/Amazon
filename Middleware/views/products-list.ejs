@@ -30,9 +30,9 @@
 
 		<script src="/angularjs/angular.min.js"></script>
 
-    	<link href="/dist/css/xeditable.css" rel="stylesheet">
-    	<script src="/dist/js/xeditable.js"></script>
-    	<script src="/angularjs/adminModule.js"></script>
+			<link href="/dist/css/xeditable.css" rel="stylesheet">
+			<script src="/dist/js/xeditable.js"></script>
+			<script src="/angularjs/adminModule.js"></script>
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -156,43 +156,43 @@
 													</span>
 												</td>
 												<td>
-                          <span editable-text="product.price" e-name="price" e-form="productform" e-required>
-                             {{ product.price || 'empty' }}
-                          </span>
-                        </td>
-                        <td>
-                          <span editable-text="product.weight" e-name="weight" e-form="productform" e-required>
-                             {{ product.weight || 'empty' }}
-                          </span>
-                        </td>
-                       	<td>{{product.ratings || 'empty'}}</td>
+													<span editable-text="product.price" e-name="price" e-form="productform" e-required>
+														 {{ product.price || 'empty' }}
+													</span>
+												</td>
+												<td>
+													<span editable-text="product.weight" e-name="weight" e-form="productform" e-required>
+														 {{ product.weight || 'empty' }}
+													</span>
+												</td>
+												<td>{{product.ratings || 'empty'}}</td>
 												<td>{{product.byfarmer || 'empty'}}</td>
 												<td>
-                          <span editable-text="product.details" e-name="details" e-form="productform" e-required>
-                             {{ product.details || 'empty' }}
-                          </span>
-                        </td>
-                        <td>
-                          <span editable-text="product.unit" e-name="unit" e-form="productform" e-required>
-                             {{ product.unit || 'empty' }}
-                          </span>
-                        </td>
+													<span editable-text="product.details" e-name="details" e-form="productform" e-required>
+														 {{ product.details || 'empty' }}
+													</span>
+												</td>
+												<td>
+													<span editable-text="product.unit" e-name="unit" e-form="productform" e-required>
+														 {{ product.unit || 'empty' }}
+													</span>
+												</td>
 												<td>{{product.updatedAt | date: 'medium' || 'empty'}}</td>
 
 												<td>
-										      <form editable-form name="productform" ng-show="productform.$visible" class="form-buttons form-inline"
-										            shown="inserted == product" onbeforesave="saveProduct($data,product.p_id)">
-										        <button type="submit" ng-disabled="farmerform.$waiting" class="btn btn-primary editable-table-button btn-xs">
-										          Save
-										        </button>
-										        <button type="button" ng-disabled="productform.$waiting" ng-click="productform.$cancel()" class="btn btn-default editable-table-button btn-xs">
-										          Cancel
-										        </button>
-										      </form>
-										      <div class="buttons" ng-show="!productform.$visible">
-										        <button class="btn btn-primary editable-table-button btn-xs" ng-click="productform.$show()">Edit</button>
-										        <button class="btn btn-danger editable-table-button btn-xs" ng-click="removeProduct(product.p_id)">Delete</button>
-										      </div>
+													<form editable-form name="productform" ng-show="productform.$visible" class="form-buttons form-inline"
+																shown="inserted == product" onbeforesave="saveProduct($data,product.p_id)">
+														<button type="submit" ng-disabled="farmerform.$waiting" class="btn btn-primary editable-table-button btn-xs">
+															Save
+														</button>
+														<button type="button" ng-disabled="productform.$waiting" ng-click="productform.$cancel()" class="btn btn-default editable-table-button btn-xs">
+															Cancel
+														</button>
+													</form>
+													<div class="buttons" ng-show="!productform.$visible">
+														<button class="btn btn-primary editable-table-button btn-xs" ng-click="productform.$show()">Edit</button>
+														<button class="btn btn-danger editable-table-button btn-xs" ng-click="removeProduct(product.p_id)">Delete</button>
+													</div>
 												</td>
 
 											</tr>
@@ -212,11 +212,72 @@
 											</tr>
 										</tfoot>
 									</table>
+									<button class="btn btn-default" id = "addproduct" data-toggle = "modal" data-target = "#addProductModal">Add Product</button>
 								</div><!-- /.box-body -->
 							</div><!-- /.box -->
 						</div><!-- /.col -->
 					</div><!-- /.row -->
 				</section><!-- /.content -->
+									<!-- Add Product Modal -->
+					<div id="addProductModal" class= "modal fade" role = "dialog">
+						<div class= "modal-dialog modal-md">
+							<!-- Add Product Modal Content -->
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h3 class="moda-title">Add Product</h3>
+								</div>
+								<div class="modal-body">
+										<div class="form-group">
+											<label for="product_name">Product Name</label>
+											<input type="text" class="form-control" placeholder="Enter Product Name" ng-model="product_name" required>
+											<!-- Product Name Validation Here-->
+											<!-- -->
+										</div>
+										<div class="form-group">
+											<label for="category">Category</label>
+											<select type="select" class="form-control" ng-model="category" required> 
+											</select>
+											<!-- Address Validation Here-->
+											<!-- -->
+										</div>
+										<div class="form-group">
+											<label for="price">Price</label>
+											<input type="Number" class="form-control" placeholder="Enter Price" ng-model="price" required>
+											<!-- City Validation Here-->
+											<!-- -->
+										</div>
+										<div class="form-group">
+											<label for="weight">Weight</label>
+											<input type="Number" class="form-control" placeholder="Enter Weight" ng-model="weight" required>
+											<!-- State Validation Here-->
+											<!-- -->
+										</div>
+										<div class="form-group">
+											<label for="product_info">Product Info</label>
+											<input type="text" class="form-control" placeholder="Enter Product info" ng-model="product_info" required>
+											<!-- Zip Code Validation Here-->
+											<!-- -->
+										</div>
+										<div class="form-group">
+											<label for="unit">Unit</label>
+											<input type="Number" class="form-control" placeholder="Enter Unit for weight" ng-model="unit" required>
+											<!-- Sub Total Validation Here-->
+											<!-- -->
+										</div>
+										<div class="form-group">
+											<label for="quantity">Quantity</label>
+											<input type="text" class="form-control" placeholder="Enter Quantity Available" ng-model="quantity" required>
+											<!-- Tax Validation Here-->
+											<!-- -->
+										</div>
+										<button class="btn btn-default" ng-click="addProduct();">Add Product</button>
+							</div>
+							<!-- Content End for Modal-->
+						</div>
+					</div>
+					<!-- Add Order Modal End -->
+
 			</div><!-- /.content-wrapper -->
 			<footer class="main-footer">
 				<% include ./partials/admin-footer %>
