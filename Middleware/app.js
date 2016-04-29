@@ -12,6 +12,7 @@ var express = require('express')
   , product = require('./routes/product')
   , login = require('./routes/login')
   , cart = require('./routes/cart')
+  , order = require('./routes/order')
   //ADMIN
   , admin = require('./routes/admin');
 
@@ -66,6 +67,7 @@ if ('development' == app.get('env')) {
 //GET REQUEST
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/PreviewOrder', order.home);
 
 //ADMIN API
 app.get('/admin/home',admin.home);

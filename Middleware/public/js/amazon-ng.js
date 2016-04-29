@@ -36,6 +36,10 @@ app.controller("amazon",function($scope, $http, $location){
 		});
 	}
 
+	if(window.location.pathname.indexOf("/PreviewOrder") >= 0){
+		angular.element('.cart-head').hide();
+		angular.element('.cart-proceed').hide();
+	}
 
 	$scope.getCartItems();
 });
