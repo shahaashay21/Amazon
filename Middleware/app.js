@@ -80,7 +80,7 @@ app.get('/admin/trucks/list',admin.trucksList);
 app.get('/admin/drivers/list',admin.driversList);
 app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
-//app.post('/admin/addFarmer', admin.addFarmer);
+//app.post('/admin/addFarmer', admin.addFarmer);;
 
 
 
@@ -95,6 +95,7 @@ app.delete('/product/delete',product.deleteProduct);
 app.post('/product/edit',product.editProduct);
 //app.get('/prod_details', user.prod_details);
 app.get('/product', product.prod_details);
+app.post('/create_review',product.create_review)
 
 
 
@@ -158,6 +159,15 @@ app.get('/conditions', function(req, res){
     res.render('conditions', { user: req.session.user });
   }else{
     res.render('conditions');
+  }
+  });
+
+app.get('/carrers', function(req, res){
+  if(typeof req.session.user !== 'undefined'){
+    console.log(req.session.user);
+    res.render('carrers', { user: req.session.user });
+  }else{
+    res.render('carrers');
   }
   });
 
@@ -238,7 +248,6 @@ app.post('/login', function(req, res, next) {
 app.post('/reg', login.regUser);
 app.post('/additem', cart.addItem);
 app.post('/cart', cart.cartItems);
-
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
