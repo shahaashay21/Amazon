@@ -98,8 +98,6 @@ app.get('/product', product.prod_details);
 app.post('/create_review',product.create_review)
 
 
-
-
 app.get('/frame', function(req,res){
   res.render('frame');
 })

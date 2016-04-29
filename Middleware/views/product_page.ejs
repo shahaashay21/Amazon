@@ -63,8 +63,11 @@ $(window).load(function(){
       <h3><%= products.object[0].name %>, <%= products.object[0].weight %> <%= products.object[0].unit %></h3>
       <h5 style="font-size: 0.9em">Other products by <a href="/farmer_page"><%= products.object[0].farmer_name %></a></h5>
       <div>
+      <% if(typeof products.object[0].reviews[0] != 'undefined') {
+            if(products.object[0].reviews[0] != "") { %>
     <span id="rating_2" class="rating" data-val="<%= products.object[0].reviews[0].rating %>" data-stars="5" data-change="false"></span>
-    
+    <% } }%>
+    <span id="rating_2" class="rating" data-val="0" data-stars="5" data-change="false"></span>
 </div>
 <div class="price">
                 <span class="value"><h4><strong>$<%= products.object[0].price %></strong>  ($<%= products.object[0].price_unit %>/<%= products.object[0].unit %>)</h4></span>
