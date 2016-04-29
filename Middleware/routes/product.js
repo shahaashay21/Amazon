@@ -172,3 +172,33 @@ exports.prod_details = function(req,res){
 		}
 	});
 };
+
+exports.create_review = function(req,res){
+	var msg_payload = {
+		"service" : "create_review",
+		"p_id" : req.param("p_id"),
+		"star" : req.param("star"),
+		"title": req.param("title"),
+		"review": req.param("review"), 
+		"sid":req.session.user
+	};
+  	mq.make_request('product_queue', msg_payload, function(err,prod){
+		if(err)
+		{
+		    console.log(err);
+			res.send(resGen.responseGenerator(401, null));
+		}
+		else
+		{
+			if(prod.code == 200){
+				console.log(prod);
+					console.log(req.session.user);
+					res.send(200);
+			}
+			else
+			{
+				res.send(resGen.responseGenerator(401, null));
+			}
+		}
+	});
+};

@@ -3,6 +3,12 @@
   <head>
     <title>Amazon-Fresh</title>
     <% include lib.ejs %>
+    <script type="text/javascript">
+$(window).load(function(){
+  $('#rating_1').RatingStar({callback:function(val){$('#result_1').html(val)}});
+ $('#rating_2').RatingStar();
+});
+</script>
   </head>
   <body>
     <% include menu.ejs %>
@@ -13,38 +19,55 @@
  <div class="row">
     <div class="col-sm-10" >
     <div class="col-sm-3">
-      <a href="<%= products.object[0].image1 %>" class="MagicZoom"><img src="cheese.jpg" style="width: 300px; height: 300px;"></a>
+      <a ng-href="{{lrg_image}}" class="MagicZoom"><img ng-src="{{lrg_image}}" style="width: 300px; height: 300px;"></a>
       <div id="imageCaption"style="font-size: 0.92em;text-align: center;">Roll over image to zoom in</div>
-
-      <div id="thumbnailsWrapper" class="row">
-            <span class="detailPageThumbnail col-sm-2">
-                <img src="<%= products.object[0].image1 %>" ng-mouseover="change_image1()" border="0" class="thumbnail" alt="Product Image">
+      <div id="thumbnailsWrapper" class="row" >
+            <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
+                <img src="<%= products.object[0].product_img %>" ng-mouseover="change_image1()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
             </span>
-        <span class="detailPageThumbnail col-sm-2">
-                <img src="<%= products.object[0].image2 %>" ng-mouseover="change_image2()" border="0" class="thumbnail" alt="Product Image">
+            <% if(typeof products.object[0].images[0] != 'undefined') {
+            if(products.object[0].images[0] != "") { %>
+        <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
+                <img src="<%= products.object[0].images[0] %>" ng-mouseover="change_image2()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
             </span>
-            <span class="detailPageThumbnail col-sm-2">
-                <img src="<%= products.object[0].image3 %>" ng-mouseover="change_image3()" border="0" class="thumbnail" alt="Product Image">
+            <% } }%>
+            <% if(typeof products.object[0].images[1] != 'undefined') {
+            if(products.object[0].images[1] != "") { %>
+            <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
+                <img src="<%= products.object[0].images[1] %>" ng-mouseover="change_image3()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
             </span>
-             <span class="detailPageThumbnail col-sm-2">
-                <img src="<%= products.object[0].image4 %>" ng-mouseover="change_image4()" border="0" class="thumbnail" alt="Product Image">
+            <% } }%>
+            <% if(typeof products.object[0].images[2] != 'undefined') {
+            if(products.object[0].images[2] != "") { %>
+             <span class="detailPageThumbnail col-sm-2" style="width: 50px;height: 50px;">
+                <img src="<%= products.object[0].images[2] %>" ng-mouseover="change_image4()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" style="width: 50px; height: 50px;">
             </span>
-            <span class="detailPageThumbnail col-sm-2">
-                <img src="<%= products.object[0].image5 %>" ng-mouseover="change_image5()" border="0" class="thumbnail" alt="Product Image">
+            <% } }%>
+            <% if(typeof products.object[0].images[3] != 'undefined') {
+            if(products.object[0].images[3] != "") { %>
+            <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
+                <img src="<%= products.object[0].images[3] %>" ng-mouseover="change_image5()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
             </span>
-            <span class="detailPageThumbnail col-sm-2">
-                <img src="<%= products.object[0].image6 %>" ng-mouseover="change_image6()" border="0" class="thumbnail" alt="Product Image">
+            <% } }%>
+            <% if(typeof products.object[0].images[4] != 'undefined') {
+            if(products.object[0].images[4] != "") { %>
+            <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
+                <img src="<%= products.object[0].images[4] %>" ng-mouseover="change_image6()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image">
             </span>
+            <% } }%>
     </div>
 
       </div>
       <div class="col-sm-9">
       <br><br>
-      <h3><%= products.object[0].name %>, <%= products.object[0].weight %></h3>
+      <h3><%= products.object[0].name %>, <%= products.object[0].weight %> <%= products.object[0].unit %></h3>
       <h5 style="font-size: 0.9em">Other products by <a href="/farmer_page"><%= products.object[0].farmer_name %></a></h5>
-      <p><span class="stars"><span style="width: 52.8px;"></span></span></p>
+      <div>
+    <span id="rating_2" class="rating" data-val="<%= products.object[0].reviews[0].rating %>" data-stars="5" data-change="false"></span>
+    
+</div>
 <div class="price">
-                <span class="value"><h4><strong>$<%= products.object[0].price %></strong>  (${{per_oz}}/{{measure_unit}})</h4></span>
+                <span class="value"><h4><strong>$<%= products.object[0].price %></strong>  ($<%= products.object[0].per_unit %>/<%= products.object[0].unit %>)</h4></span>
 </div><br>
 <div class="row"  ng-show="quantity">
 <select ng-model= "quantity">
@@ -93,7 +116,7 @@
       %>
   <h4>Product Features</h4>
   <ul style="list-style-type: disc;">
-   products.object[0].features 
+   <h5><%= products.object[0].features %></h5> 
         </ul>
 <% } }%>
 </div>
@@ -135,18 +158,17 @@
         <form name="TheForm1">
             <div class="createReview">
                 How do you rate this item? 
-                <span class="custRatingImage">
-                    <img src="https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/customer-reviews/stars-0-0-transparent._V18709861_.gif">
-                </span>
+                <span id="rating_1" class="rating" ></span>
+                <span id="result_1" ng-model="frm.star"></span>
             </div>
             <div class="createReview">
-                <br>What is the title of your review? <span class="titleBox"><input class="textField" id="Title" type="text" maxlength="100" size="40" name="title"></span>    
+                <br>What is the title of your review? <span class="titleBox"><input class="textField" ng-model="frm.title" id="Title" type="text" maxlength="100" size="40" name="title"></span>    
             </div>
             <div class="createReview">
                 Write your review <br><br>                   
-<span class="reviewBox"><textarea class="textArea" id="YourReview" cols="100" rows="10" name="review" style="width:80%"></textarea></span> 
+<span class="reviewBox"><textarea class="textArea" id="YourReview" cols="100" ng-model="frm.review" rows="10" name="review" style="width:80%"></textarea></span> 
             </div>
-<button type="button" ng-click="create_review()" class="btn btn-primary btn-sm" style="background-color: green;border-color: green">Submit</button>
+<button type="button" ng-click="create_review(frm)" class="btn btn-primary btn-sm" style="background-color: green;border-color: green">Submit</button>
         </form>
     </div>
 </div>
@@ -156,9 +178,13 @@
       
     </div>
   </div>
-  <div style="border: 1px solid;border-color: #DAD8D8; margin-bottom: 10px;" ng-repeat="review in reviews">
-          {{review}}
+  <br><br>
+  
+  <div style="border: 4px solid;border-color: #DAD8D8; margin-bottom: 10px;">
+          Title: <%= products.object[0].reviews[0].review_title %> <br><br>
+          Review: <%= products.object[0].reviews[0].review_desc %>
             </div>
+          
   </div><br>
   <div class="disclaimerText" style="border: 1px solid #95A8A6"> 
     <strong>Freshness Guarantee:</strong> AmazonFresh guarantees every product will be delivered to your home well within the manufacturer's recommended <i>use by</i>, <i>sell by</i>, <i>best by</i>, or <i>expiration</i> date.
@@ -170,8 +196,15 @@
 </div>
  </div>
  <script> 
- var session = <%= session %>
- </script>
+ var session = <%= session %>;
+  var image1 = <%= products.object[0].product_img %>;
+ var image2 = <%= products.object[0].images[0] %>;
+ var image3 = <%= products.object[0].images[1] %>;
+ var image4 = <%= products.object[0].images[2] %>;
+ var image5 = <%= products.object[0].images[3] %>;
+ var image6 = <%= products.object[0].images[4] %>;
+ var p_id = <%= products.object[0].p_id %>;
+</script>
 <% include footer.ejs %>
     <% include js-lib.ejs %>
 </body>

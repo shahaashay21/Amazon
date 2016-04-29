@@ -8,11 +8,12 @@
             $scope.description = true;
             $scope.details = true;
             $scope.features = true;
-            
+            $scope.lrg_image = window.image1;
         	
         	function checksession()  {
         		if(window.session == true)
         		{
+
                 	console.log("checksession successful");
                 	$scope.quantity = true;
                 	$scope.addtocart = false;
@@ -21,6 +22,8 @@
                 	$scope.review = true;
                 	$scope.disabled_button = false;
             	}
+                console.log(window.image1);
+                console.log(window.session);
         	}
         	
         	checksession();
@@ -57,6 +60,15 @@
             	//still left to do create_review functionality
         	//	});
             }
+            $scope.create_review = function($params) {
+        $http.post('/create_review',{'star':$params.star,'title':$params.title, 'review':$params.review, p_id: window.p_id})
+        .success(function(data, status) {
+            $scope.frm.star = "";
+            $scope.frm.title = "";
+            $scope.frm.review = "";
+            console.log("Success");
+    })
+        };
             
             function review()  {
                 $http.post('/review')
