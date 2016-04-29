@@ -19,7 +19,7 @@ $(window).load(function(){
  <div class="row">
     <div class="col-sm-10" >
     <div class="col-sm-3">
-      <a ng-href="{{lrg_image}}" class="MagicZoom"><img ng-src="{{lrg_image}}" style="width: 300px; height: 300px;"></a>
+      <a ng-href="{{magic_zoom}}" class="MagicZoom"><img ng-src="{{lrg_image}}" style="width: 300px; height: 300px;"></a>
       <div id="imageCaption"style="font-size: 0.92em;text-align: center;">Roll over image to zoom in</div>
       <div id="thumbnailsWrapper" class="row" >
             <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
@@ -197,16 +197,15 @@ $(window).load(function(){
  </div>
  <script> 
  var session = <%= session %>;
-  var image1 = <%= products.object[0].product_img %>;
- var image2 = <%= products.object[0].images[0] %>;
- var image3 = <%= products.object[0].images[1] %>;
- var image4 = <%= products.object[0].images[2] %>;
- var image5 = <%= products.object[0].images[3] %>;
- var image6 = <%= products.object[0].images[4] %>;
- var p_id = <%= products.object[0].p_id %>;
+ var image1 = "<%= products.object[0].product_img %>";
+ var image2 = "<%= products.object[0].images[0] %>";
+ var image3 = "<%= products.object[0].images[1] %>";
+ var image4 = "<%= products.object[0].images[2] %>";
+ var image5 = "<%= products.object[0].images[3] %>";
+ var image6 = "<%= products.object[0].images[4] %>";
+ var p_id =   "<%= products.object[0].p_id %>";
 </script>
 <% include footer.ejs %>
-    <% include js-lib.ejs %>
+<% include js-lib.ejs %>
 </body>
-
 </html>
