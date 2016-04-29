@@ -180,11 +180,11 @@ exports.prod_details = function(req,res){
 };
 
 exports.create_review = function(req,res){
-	console.log();
+	
 	var msg_payload = {
 		"service" : "create_review",
 		"p_id" : req.param("p_id"),
-		"star" : req.param("star"),
+		"star" : req.param("vue"),
 		"title": req.param("title"),
 		"review": req.param("review"), 
 		"sid":req.session.user
