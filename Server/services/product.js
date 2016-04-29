@@ -49,13 +49,16 @@ exports.get_prod = function(msg, callback){
 exports.create_review = function(msg, callback){
 	var res = {};
 	console.log("In servers create review");
-Product.update({"p_id": 1001}, {"$pushAll": {"reviews": [{"rating": req.star,"review_title": req.title,"review_desc": req.review}]}},{upsert:true},function(err){
+	console.log(msg);
+	Product.update({"p_id": req.p_id}, {"$addToSet": {"reviews": {"rating": req.star,"review_title": req.title,"review_desc": req.review}}},{upsert:true},function(err){
+        console.log("In prod update");
         if(err){
                 console.log(err);
         }else{
                 console.log("cretae_review successful");
         }
 });
+	console.log("After prod update");
 };
 
 

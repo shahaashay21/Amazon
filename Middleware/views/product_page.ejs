@@ -67,7 +67,7 @@ $(window).load(function(){
     
 </div>
 <div class="price">
-                <span class="value"><h4><strong>$<%= products.object[0].price %></strong>  ($<%= products.object[0].per_unit %>/<%= products.object[0].unit %>)</h4></span>
+                <span class="value"><h4><strong>$<%= products.object[0].price %></strong>  ($<%= products.object[0].price_unit %>/<%= products.object[0].unit %>)</h4></span>
 </div><br>
 <div class="row"  ng-show="quantity">
 <select ng-model= "quantity">
@@ -139,7 +139,7 @@ $(window).load(function(){
 </div>
 <div class="review" >
           <h4>Customer Ratings and Reviews</h4><br>
-<button type="button" class="btn btn-sm" data-toggle="modal" data-target="#myModal" style="background-color: lightgrey; color: black; border-color: lightgrey;">Create  a Review</button>
+<button type="button" class="btn btn-sm" data-toggle="modal" data-target="#myModal" style="background-color: lightgrey; color: black; border-color: lightgrey;">Create a Review</button>
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -155,11 +155,12 @@ $(window).load(function(){
 <body>
 <div class="review" style="width:80%">	
     <div class="customerReviews">
-        <form name="TheForm1">
+        <form name="TheForm1" action="/create_review" method="post">
+        <input type="hidden" name="p_id" id="p_id" value="<%= products.object[0].p_id %>"></input>
             <div class="createReview">
                 How do you rate this item? 
                 <span id="rating_1" class="rating" ></span>
-                <span id="result_1" ng-model="frm.star"></span>
+                <span><label id="result_1" ng-model="starr"></label></span>
             </div>
             <div class="createReview">
                 <br>What is the title of your review? <span class="titleBox"><input class="textField" ng-model="frm.title" id="Title" type="text" maxlength="100" size="40" name="title"></span>    
@@ -168,7 +169,7 @@ $(window).load(function(){
                 Write your review <br><br>                   
 <span class="reviewBox"><textarea class="textArea" id="YourReview" cols="100" ng-model="frm.review" rows="10" name="review" style="width:80%"></textarea></span> 
             </div>
-<button type="button" ng-click="create_review(frm)" class="btn btn-primary btn-sm" style="background-color: green;border-color: green">Submit</button>
+<button type="submit" class="btn btn-primary btn-sm" style="background-color: green;border-color: green">Submit</button>
         </form>
     </div>
 </div>
@@ -180,10 +181,18 @@ $(window).load(function(){
   </div>
   <br><br>
   
+  
+<% for(var i=0; i < products.object[0].reviews.length; i++) { %>
   <div style="border: 4px solid;border-color: #DAD8D8; margin-bottom: 10px;">
-          Title: <%= products.object[0].reviews[0].review_title %> <br><br>
-          Review: <%= products.object[0].reviews[0].review_desc %>
+      <div style="border-bottom: 2px solid #DAD8D8">
+      User: <%= products.object[0].reviews[i].username %> <br>
+      </div>
+      Ratings: <%= products.object[0].reviews[i].rating %>/5 <br>
+      Title: <%= products.object[0].reviews[i].review_title %> <br>
+          Review: <%= products.object[0].reviews[i].review_desc %>
             </div>
+<% } %>
+          
           
   </div><br>
   <div class="disclaimerText" style="border: 1px solid #95A8A6"> 

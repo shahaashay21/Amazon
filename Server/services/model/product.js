@@ -6,6 +6,7 @@ autoIncrement.initialize(connection);
 
 var reviewSchema = mongoose.Schema({
 	rating: {type: Number, required: true},
+	username: {type:String, required: true},
 	review_title: {type: String, required: true},
 	review_desc: {type:String, required:true}
 });

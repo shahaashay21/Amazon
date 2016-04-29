@@ -65,15 +65,15 @@
             };
 
             $scope.create_review = function($params) {
-                console.log($params.star);
-                console.log($scope.frm.star);
-        $http.post('/create_review',{'star':$scope.frm.star,'title':$params.title, 'review':$params.review, p_id: window.p_id})
-        .success(function(data, status) {
-            $scope.frm.star = "";
-            $scope.frm.title = "";
-            $scope.frm.review = "";
-            console.log("Success");
-    })
+                // console.log($params.star);
+                console.log($scope.starr);
+    //     $http.post('/create_review',{'star': 1,'title':$params.title, 'review':$params.review, p_id: window.p_id})
+    //     .success(function(data, status) {
+    //         $scope.frm.star = "";
+    //         $scope.frm.title = "";
+    //         $scope.frm.review = "";
+    //         console.log("Success");
+    // })
         };
             
             function review()  {
