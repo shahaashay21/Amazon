@@ -1,7 +1,22 @@
 var ejs= require('ejs');
 var mysql = require('mysql');
+var Sequelize = require('sequelize');
 
-//Put your mysql configuration settings - user, password, database and port
+
+//Put your mysql configuration settings with the help of sequelize - user, password, database and port
+var sequelize = new Sequelize('amazon', 'root', 'root', {
+	host : 'localhost',
+	dialect : 'mysql',
+	//collection pooling
+	pool : {
+		max : 50,
+		idle : 10000
+	}
+});
+
+exports.sequelize = sequelize;
+
+/*//Put your mysql configuration settings - user, password, database and port
 function getConnection(){
 	var connection = mysql.createConnection({
 	    host     : 'localhost',
@@ -72,4 +87,4 @@ exports.deleteData = function(sqlQuery, callback){
 		});
 	console.log('Store Connection Closed');
 	connection.end();
-}
+}*/
