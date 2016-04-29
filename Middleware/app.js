@@ -67,7 +67,7 @@ if ('development' == app.get('env')) {
 //GET REQUEST
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.get('/PreviewOrder', order.home);
+app.get('/PreviewOrder', isAuthenticated, order.home);
 
 //ADMIN API
 app.get('/admin/home',admin.home);
@@ -104,8 +104,9 @@ app.get('/frame', function(req,res){
 app.get('/login', login.signIn);
 app.get('/signup', login.signUp);
 app.get('/logout', function(req,res) {
-  req.session.destroy();
-  res.redirect('/');
+  req.session.destroy(function(err){
+    res.redirect('/');  
+  })
 });
 
 

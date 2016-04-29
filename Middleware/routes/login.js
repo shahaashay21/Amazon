@@ -88,8 +88,8 @@ exports.regUser = function(req,res){
 				res.end(JSON.stringify('available'));
 			}else{
 				var user = new User();
-				user.fname = fname;
-				user.lname = lname;
+				user.fname = fname.toLowerCase();
+				user.lname = lname.toLowerCase();
 				user.email = email;
 				user.pass = hash;
 				user.save(function (err){
