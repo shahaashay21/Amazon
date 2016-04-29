@@ -45,6 +45,22 @@ exports.get_prod = function(msg, callback){
 	});
 };
 
+
+exports.create_review = function(msg, callback){
+	var res = {};
+	console.log("In servers create review");
+	console.log(msg);
+	Product.update({"p_id": 1001}, {"$pushAll": {"reviews": [{"rating": 1,"review_title": req.title,"review_desc": req.review}]}},{upsert:true},function(err){
+        if(err){
+                console.log(err);
+        }else{
+                console.log("cretae_review successful");
+        }
+});
+};
+
+
+
 exports.createProduct = function(req, res){
 
 	var product = Product({

@@ -3,17 +3,30 @@
 		<div class="cart-head">
 			<span>
 				<% if(typeof user != 'undefined') {%>
-					Deliver to <b> <%= user.fname %> <%= user.lname %> </b>
+					Deliver to 
+					<b> <%= user.fname %> <%= user.lname %>
+					<% if(typeof user.city != 'undefined'){ %>
+						 - <%= user.city %>
+					<% } %>
+					</b>
 				<% } %>
 			</span><br>
 			<span>
 				<a href="/addressDetails" style="text-decoration: underline;">(change delivery address)</a>
 			</span>
 		</div>
-		<div>
-			<a href="#">
-				<div class="checkout-btn">Proceed to Checkout</div>
-			</a>
+		<div class="cart-proceed">
+			<div ng-if="cartTotal < 50">
+				<a href="#">
+					<div class="checkout-btn" style="background: #aaa; cursor: no-drop">Proceed to Checkout</div>
+				</a>
+			</div>
+			
+			<div ng-if="cartTotal >= 50">
+				<a href="/PreviewOrder">
+					<div class="checkout-btn aaa">Proceed to Checkout</div>
+				</a>
+			</div>
 		</div>
 		<div class="cart-total">
 			<div class="pull-left">

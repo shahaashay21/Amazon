@@ -1,0 +1,16 @@
+/*
+	Autor : Erik Niebla A.
+	Mail: 	ep_niebla@hotmail.com,ep.niebla@gmail.com
+	Fecha: 	08/08/2015
+	Requiere:	Jquery,Font Awesome
+*/
+/* Center */
+.hcenter{text-align:center;}
+.vcenter {white-space:nowrap;}.vcenter > * {white-space:normal;}.vcenter:before, .vcenter >* {display:inline-block; vertical-align:middle;}.vcenter:before {height:100%;}.vcenter {word-spacing:-.25em;}.vcenter > * {word-spacing:normal;}
+/* Star Rating */
+.rating {unicode-bidi: bidi-override;direction: rtl;font-size: 20px;display:inline;margin-right:4px;}
+.rating span.star,.rating span.static {font-family: FontAwesome;font-weight: normal;font-style: normal;display: inline-block;}
+.rating span.star,.rating span.static {-webkit-user-select: none; -moz-user-select: none;-khtml-user-select: none;-ms-user-select: none;}/* Evitar Seleccion */
+.rating span.star:before,.rating span.static:before {content: "\f006";padding-right: 5px;color: #777777;}
+.rating span.full:before {content: "\f005";color: #e3cf7a;}.rating span.half:before {content: "\f123";color: #e3cf7a;}
+.rating span.star:hover {cursor: pointer;}.rating span.star:hover:before,.rating span.star:hover ~ span.star:before {content: "\f005";color: #e3cf7a;}

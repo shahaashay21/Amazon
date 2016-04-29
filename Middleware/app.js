@@ -12,8 +12,10 @@ var express = require('express')
   , product = require('./routes/product')
   , login = require('./routes/login')
   , cart = require('./routes/cart')
-  , admin = require('./routes/admin')
   , order = require('./routes/order');
+  , order = require('./routes/order')
+  //ADMIN
+  , admin = require('./routes/admin');
 
 //JUST FOR PASSPORT LOGIN
 var passport = require('passport');
@@ -66,6 +68,7 @@ if ('development' == app.get('env')) {
 //GET REQUEST
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/PreviewOrder', order.home);
 
 //ADMIN API
 app.get('/admin/home',admin.home);
@@ -78,7 +81,7 @@ app.get('/admin/trucks/list',admin.trucksList);
 app.get('/admin/drivers/list',admin.driversList);
 app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
-//app.post('/admin/addFarmer', admin.addFarmer);
+//app.post('/admin/addFarmer', admin.addFarmer);;
 
 //ORDERS API
 app.post('/order/create', order.createOrder);
@@ -94,6 +97,7 @@ app.delete('/product/delete',product.deleteProduct);
 app.post('/product/edit',product.editProduct);
 //app.get('/prod_details', user.prod_details);
 app.get('/product', product.prod_details);
+app.post('/create_review',product.create_review)
 
 
 
@@ -246,7 +250,6 @@ app.post('/login', function(req, res, next) {
 app.post('/reg', login.regUser);
 app.post('/additem', cart.addItem);
 app.post('/cart', cart.cartItems);
-
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

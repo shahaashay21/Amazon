@@ -129,8 +129,16 @@ cnn.on('ready', function(){
 				case "get_prod":
 					util.log("getProducts");
 					product.get_prod(message, function(err,res){
-						//util.log("Correlation ID: " + m.correlationId);
-						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+				case "create_review":
+					util.log("Create_review");
+					product.create_review(message, function(err,res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
