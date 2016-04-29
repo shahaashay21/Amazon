@@ -29,7 +29,11 @@
 									<% } %>
 								</select>
 							</div>
-							<button class="add-to-cart" ng-click="addItem(<%= products[i].p_id %>)">Add to Cart</button>
+							<% if(typeof user == 'object') {%>
+								<button class="add-to-cart" ng-click="addItem(<%= products[i].p_id %>)">Add to Cart</button>
+							<% }else{ %>
+								<button class="add-to-cart" style="background: #aaa; cursor: not-allowed; color: #fff">Add to Cart</button>
+							<% } %>
 						</div>
 					</div>
 				</div>

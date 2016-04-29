@@ -420,3 +420,22 @@ a:hover, a:focus{
 	font-size: 16px;
 	cursor: pointer;
 }
+
+
+/*CHECKOUT ORDER*/
+.checkout-order-box{
+	background: #ccdd99;
+	border-bottom: 1px solid #a2a2a2;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-left: 1px solid #a2a2a2;
+	border-right: 1px solid #a2a2a2;
+	margin-bottom: 10px;
+	padding: 8px;
+	width: 220px;
+	font-size: 11px;
+}
+.del-time-box{
+	margin-top: -12px;
+	margin-left: 35px;
+}
