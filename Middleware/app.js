@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -12,7 +11,6 @@ var express = require('express')
   , product = require('./routes/product')
   , login = require('./routes/login')
   , cart = require('./routes/cart')
-  , order = require('./routes/order');
   , order = require('./routes/order')
   //ADMIN
   , admin = require('./routes/admin');

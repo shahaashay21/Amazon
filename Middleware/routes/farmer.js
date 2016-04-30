@@ -46,7 +46,7 @@ exports.createFarmer = function(req,res){
 
 	var msg_payload = {
 		"service" : "createFarmer",
-		"f_id" : req.param("f_id"),
+		//"f_id" : req.param("f_id"),
 		"fname" : req.param("fname"),
 		"lname" : req.param("lname"),
 		"email" : req.param("email"),

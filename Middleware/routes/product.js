@@ -32,18 +32,20 @@ exports.getProducts = function(req, res){
 
 exports.createProduct = function(req,res){
 
-
-
 	var msg_payload = {
 		"service" : "createProduct",
 		//"p_id" : req.param("p_id"),
 		"name" : req.param("name"),
+		"f_id" : req.param("f_id"),
+		//"f_name": req.param("f_name"),
 		"cat_id" : req.param("cat_id"),
 		"price" : req.param("price"),
 		"weight" : req.param("weight"),
-		"details" : req.param("details"),
 		"unit" : req.param("unit"),
+		"quantity": req.param("quantity"),
+		"details" : req.param("details"),
 		"description" : req.param("description"),
+		"features": req.param("features"),
 		"sid":req.sessionID
 	};
 

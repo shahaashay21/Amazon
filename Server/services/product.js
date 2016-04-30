@@ -1,5 +1,6 @@
 var Product = require('./model/product');
 var resGen = require('./commons/responseGenerator');
+var Farmer = require('./model/farmer');
 
 
 exports.getProducts = function(req, res){
@@ -64,36 +65,74 @@ exports.create_review = function(msg, callback){
 
 
 exports.createProduct = function(req, res){
-
-	var product = Product({
-		p_id : req.p_id,
-		name : req.name,
-		cat_id: req.cat_id,
-		price : req.price,
-		weight : req.weight,
-		details : req.details,
-		unit : req.unit,
-		description : req.description
-	});
-	product.save(function(err,results){
-		if(err)
-		{
+/*
+		"name" : req.param("name"),
+		"f_id" : req.param("f_id"),
+		//"f_name": req.param("f_name"),
+		"cat_id" : req.param("cat_id"),
+		"price" : req.param("price"),
+		"weight" : req.param("weight"),
+		"unit" : req.param("unit"),
+		"quantity": req.param("quantity"),
+		"details" : req.param("details"),
+		"description" : req.param("description"),
+		"features": req.param("features"),
+		"sid":req.sessionID
+*/	
+	var farmer_name = null;
+	console.log("in createProduct");
+	Farmer.findOne({f_id:req.f_id},function(err,result){
+		if(err){
+			console.log("error finding farmer");
+			console.log(err);
 			resGen.error(err,res);
-		}
-		else
-		{
-			if(results){
-				console.log("product created");
-				console.log(results);
-				res(null,resGen.responseGenerator(200, results));
+		}else{
+			if(result){
+				console.log("result found");
+				farmer_name = result.fname + " " + result.lname;	
+				console.log(farmer_name);	
+				var product = Product({
+					//p_id : req.p_id,
+					name : req.name,
+					f_id: req.f_id,
+					farmer_name: farmer_name,
+					cat_id: req.cat_id,
+					price : req.price,
+					weight : req.weight,
+					unit: req.unit,
+					quantity: req.quantity,
+					details : req.details,
+					description : req.description,
+					features: req.features
+				});
+
+				product.save(function(err,results){
+					if(err)
+					{
+						resGen.error(err,res);
+					}
+					else
+					{
+						if(results){
+							console.log("product created");
+							console.log(results);
+							res(null,resGen.responseGenerator(200, results));
+						}
+						else
+						{
+							console.log("no data");
+							resGen.error(null,res);
+						}
+					}
+				});
 			}
-			else
-			{
-				console.log("no data");
-				resGen.error(null,res);
+			else{
+				console.log("no result add product");
+				resGen.send(null,res);
 			}
 		}
 	});
+
 }
 
 exports.editProduct = function(req, res){

@@ -224,11 +224,47 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 
 		$http({
 			method : "POST",
-			url : "/admin/addFarmer"
+			url : "/admin/farmer/create",
+			data: {
+				fname: $scope.fname,
+				lname: $scope.lname,
+				email: $scope.email,
+				pass: $scope.pass,
+				address: $scope.address,
+				city: $scope.city,
+				zipcode: $scope.zipcode,
+				intro: $scope.intro
+			}
 		}).success(function(res) {
 			if(res.status == 200) {
 				console.log("success on add farmer :" + res.data);
-				return;
+			}
+		});
+	}
+
+	//add farmer
+	$scope.addProduct = function(){
+		console.log("addProduct ::");
+
+		$http({
+			method : "POST",
+			url : "/product/create",
+			data: {
+				name: $scope.product_name,
+				f_id: $scope.f_id,
+				//f_name: $scope.f_name,
+				cat_id: $scope.category,
+				price: $scope.price,
+				weight: $scope.weight,
+				unit: $scope.unit,
+				details: $scope.product_info,
+				description: $scope.description,
+				features: $scope.features,
+				quantity: $scope.quantity
+			}
+		}).success(function(res) {
+			if(res.status == 200) {
+				console.log("success on add product :" + res.data);
 			}
 		});
 	}

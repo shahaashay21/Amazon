@@ -21,6 +21,7 @@ exports.createOrder = function(req, res) {
 			console.log("order created successfully");
 			res.send(JSON.parse(results));
 	});
+}
 
 var Cart = require('./model/cart.js');
 
