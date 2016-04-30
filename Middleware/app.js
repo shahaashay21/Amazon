@@ -12,8 +12,8 @@ var express = require('express')
   , product = require('./routes/product')
   , login = require('./routes/login')
   , cart = require('./routes/cart')
-  , order = require('./routes/order');
   , order = require('./routes/order')
+  , truck = require('./routes/truck')
   //ADMIN
   , admin = require('./routes/admin');
 
@@ -85,6 +85,12 @@ app.get('/admin/orders/list',admin.ordersList);
 
 //ORDERS API
 app.post('/order/create', order.createOrder);
+
+//TRUCK API
+app.post('/truck/create', truck.createTruck);
+app.get('/truck/all', truck.getTrucks);
+app.post('/truck/edit', truck.editTruck);
+app.delete('/truck/delete',truck.deleteTruck);
 
 app.get('/farmer/all',farmer.getFarmers);
 app.post('/farmer/create',farmer.createFarmer);

@@ -11,6 +11,7 @@ var express = require('express')
   , admin = require('./services/admin')
   , cart = require('./services/cart')
   , order = require('./services/order')
+  , truck = require('./services/truck')
   , http = require('http')
   , path = require('path')
   , amqp = require('amqp')
@@ -21,7 +22,7 @@ var app = express();
 
 //JUST FOR PASSPORT LOGIN
 var passport = require('passport');
-require('./routes/passport')(passport);
+require('./services/passport')(passport);
 
 // all environments
 app.set('port', process.env.PORT || 3001);
@@ -272,6 +273,58 @@ cnn.on('ready', function(){
 					break;
 			}
 		})
+	});
+
+	console.log("listening on truck_queue");
+
+	cnn.queue('truck-queue', function(q){
+		q.subscribe(function(message, headers, deliveryInfo, m) {
+			switch(message.service) {
+				case 'createTruck' :
+					util.log("createTruck");
+					truck.createTruck(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						})
+					});
+					break;
+
+				case 'getTrucks' :
+					util.log("getTrucks");
+					truck.getTrucks(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						})
+					});
+					break;	
+
+				case 'editTruck':
+					util.log("editTruck");
+					truck.editTruck(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						})
+					});
+					break;
+
+				case 'deleteTruck':
+					util.log("deleteTruck");
+					truck.deleteTruck(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						})
+					});
+					break;			
+			}
+		});
 	});
 
 });
