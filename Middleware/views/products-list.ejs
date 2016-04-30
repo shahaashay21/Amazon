@@ -119,7 +119,7 @@
 				</section>
 
 				<!-- Main content -->
-				<section class="content">
+				<section class="content" style="overflow: scroll;">
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="box">
@@ -132,13 +132,16 @@
 											<tr>
 												<th>Product Id</th>
 												<th>Product Name</th>
+												<th>Farmer Id</th>
+												<th>Farmer Name</th>
 												<th>Category Id</th>
 												<th>Price</th>
 												<th>Weight</th>
-												<th>Average Ratings</th>
-												<th>Product by Farmer</th>
-												<th>Product Info</th>
 												<th>Unit</th>
+												<th>Product Info</th>
+												<th>Product Description</th>
+												<th>Features</th>
+												<th>Quantity</th>
 												<th>Updated At</th>
 											</tr>
 										</thead>
@@ -149,6 +152,14 @@
 													<span editable-text="product.name" e-name="name" e-form="productform" e-required>
 														 {{ product.name || 'empty' }}
 													</span>
+												</td>
+												<td>
+													<span editable-text="product.f_id" e-name="f_id" e-form="productform" e-required>
+														 {{ product.f_id || 'empty' }}
+													</span>
+												</td>
+												<td>
+												 {{ product.farmer_name || 'empty' }}	
 												</td>
 												<td>
 													<span editable-text="product.cat_id" e-name="cat_id" e-form="productform" e-required>
@@ -165,16 +176,30 @@
 														 {{ product.weight || 'empty' }}
 													</span>
 												</td>
-												<td>{{product.ratings || 'empty'}}</td>
-												<td>{{product.byfarmer || 'empty'}}</td>
+												<td>
+													<span editable-text="product.unit" e-name="unit" e-form="productform" e-required>
+														 {{ product.unit || 'empty' }}
+													</span>
+												</td>
+
 												<td>
 													<span editable-text="product.details" e-name="details" e-form="productform" e-required>
 														 {{ product.details || 'empty' }}
 													</span>
 												</td>
 												<td>
-													<span editable-text="product.unit" e-name="unit" e-form="productform" e-required>
-														 {{ product.unit || 'empty' }}
+													<span editable-text="product.description" e-name="description" e-form="productform" e-required>
+														 {{ product.description || 'empty' }}
+													</span>
+												</td>
+												<td>
+													<span editable-text="product.features" e-name="features" e-form="productform" e-required>
+														 {{ product.features || 'empty' }}
+													</span>
+												</td>
+												<td>
+													<span editable-text="product.quantity" e-name="quantity" e-form="productform" e-required>
+														 {{ product.quantity || 'empty' }}
 													</span>
 												</td>
 												<td>{{product.updatedAt | date: 'medium' || 'empty'}}</td>
@@ -201,13 +226,16 @@
 											<tr>
 												<th>Product Id</th>
 												<th>Product Name</th>
+												<th>Farmer Id</th>
+												<th>Farmer Name</th>
 												<th>Category Id</th>
 												<th>Price</th>
 												<th>Weight</th>
-												<th>Average Ratings</th>
-												<th>Product by Farmer</th>
-												<th>Product Info</th>
 												<th>Unit</th>
+												<th>Product Info</th>
+												<th>Product Description</th>
+												<th>Features</th>
+												<th>Quantity</th>
 												<th>Updated At</th>
 											</tr>
 										</tfoot>

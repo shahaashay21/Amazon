@@ -20,7 +20,7 @@ var farmerSchema = mongoose.Schema({
 	address: {type: String, required: true},
 	city: {type: String, required: true},
 	state: {type: String, required: true},
-	zipCode: {type: Number, required:true},
+	zipcode: {type: Number, required:true},
 	contacts: [Number],
 	reviews: [reviewSchema],
 	intro: {type: String, required: true},
