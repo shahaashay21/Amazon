@@ -15,9 +15,18 @@ $(window).load(function(){
     <div style="height: 50px; display: block;"></div>
     <div class="container-fluid">
       <div class="col-lg-9">
-      <div>
+      <div class="row">
+      <div class="col-lg-5">
+      <br><br>
+      <h4> Farmer Name: <%= farmer.object[0].fname %> <%= farmer.object[0].lname %></h4>
+      <h4> Email: <%= farmer.object[0].email %> </h4> <br>
+      <h4> Introduction: <%= farmer.object[0].intro %> </h4>    
+    </div>
+      <div class="col-lg-7">
     <iframe width="550" height="350" src="<%= farmer.object[0].video %>">
 </iframe></div>
+      
+</div>
       <h1>Products by <%= farmer.object[0].fname %></h1>
       <% for(var i=0; i < products.length; i++) { %>
         <div class="col-xs-3 no-padding">
@@ -38,7 +47,7 @@ $(window).load(function(){
             </div>
             <div class="bottomProduct">
               <div class="form-group pull-left">
-                <select class="form-control productQuant" id="product1001">
+                <select class="form-control productQuant" id="product<%= products[i].p_id %>">
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -51,7 +60,11 @@ $(window).load(function(){
                   <option value="10">10</option>
                 </select>
               </div>
+              <% if(typeof user == 'object') {%>
+                <button class="add-to-cart" ng-click="addItem(<%= products[i].p_id %>)">Add to Cart</button>
+              <% }else{ %>
                 <button class="add-to-cart" style="background: #aaa; cursor: not-allowed; color: #fff">Add to Cart</button>
+              <% } %>
             </div>
           </div>
         </div>
