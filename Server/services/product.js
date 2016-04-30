@@ -4,15 +4,15 @@ var Farmer = require('./model/farmer');
 
 
 exports.suggest = function(req, callback){
-	console.log("SERVER suggest");
+	// console.log("SERVER suggest");
 	q = req.q;
-	console.log(q);
+	// console.log(q);
 
 	re = new RegExp('(^|\\s+)'+q,'i');
-	console.log(re);
+	// console.log(re);
 	Product.aggregate([{$match: {name: new RegExp('(^|\\s+)'+q,'i')}}, {$group: {_id:'$name', name: {$first:'$name'}}}, {$limit: 5}]).exec(function(err, name){
 		// Product.find({name: new RegExp('(^|\\s+)'+q,'i')}, 'name').exec(function(err, name){
-		console.log(name);
+		// console.log(name);
 		callback(null, JSON.stringify(name));
 	});
 	// Product.find()
