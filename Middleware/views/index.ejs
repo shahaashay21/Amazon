@@ -4,10 +4,10 @@
     <title>Home | AmazonFresh</title>
     <% include lib.ejs %>
   </head>
-  <body ng-app="" ng-controller="">
+  <body ng-app="amazon" ng-controller="amazon">
   	<% include menu.ejs %>
     <div style="height: 50px; display: block;"></div>
-
+    
     <div class="container-fluid">
       <div class="col-xs-9">
         <% include search.ejs %>
@@ -16,7 +16,7 @@
 
         <% include carousel.ejs %>
 
-        <% include productSearch.ejs %>
+        <% include product.ejs %>
 
         <div class="col-xs-12 no-padding" style="margin-top: 15px;">
           <div class="tiles">
