@@ -253,6 +253,7 @@ exports.farmer_page = function(req,res){
 				//console.log("star value1"+prod.reviews[0].rating);
 				//console.log("In array should run once");
 				//}
+				console.log(req.session.user);
 				res.render('farmer_page', { user: req.session.user, products: prod.product, farmer: prod.farmer, session: true });
 				}else{
 					console.log("No session on");

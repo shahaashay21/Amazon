@@ -45,7 +45,8 @@ exports.get_prod = function(msg, callback){
 	console.log("In servers get prod");
 	console.log(msg);
 	console.log(msg.p_id);
-	Product.find({p_id: msg.p_id}, function(err, product) {
+
+	Product.find({p_id: msg.p_id,isActive: true}, function(err, product) {
 		if(product == "")
 				{
 				console.log(err);
