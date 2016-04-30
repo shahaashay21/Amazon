@@ -121,12 +121,15 @@ exports.editProduct = function(req,res){
 		"service" : "editProduct",
 		//"p_id" : req.param("p_id"),
 		"name" : req.param("name"),
+		"f_id": req.param("f_id"),
 		"cat_id" : req.param("cat_id"),
 		"price" : req.param("price"),
 		"weight" : req.param("weight"),
+		"unit": req.param("unit"),
 		"details" : req.param("details"),
-		//"description" : req.param("description"),
-		"unit" : req.param("unit"),
+		"description" : req.param("description"),
+		"features" : req.param("features"),
+		"quantity" : req.param("quantity"),
 		"sid":req.sessionID
 	};
 
