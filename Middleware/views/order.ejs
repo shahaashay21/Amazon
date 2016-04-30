@@ -21,6 +21,32 @@
                 <span class="pull-right">
                   <a href="" style="text-decoration: underline; color: #669900">edit</a>
                 </span>
+                <br>
+                <div class="delivery-date-time" style="display: table; margin-top: 10px;">
+                  <select class="delivery-date pull-left" style="width: 65px" name="dayDate">
+                    <option ng-repeat="dateopt in del_day_date" value="{{$index}}">{{ dateopt }}</option>
+                  </select>
+                  <select class="delivery-time" style="margin-left: 40px" name="time">
+                    <option ng-repeat="timeopt in del_time">{{ timeopt }}:00</option>
+                  </select>
+                </div>
+                <div class="text-muted" style="margin-top: 10px">
+                  (you won't be disturbed when the delivery is made)
+                </div>
+              </div>
+              <div class="checkout-order-box del_address">
+                <span><b>Delivery Address</b></span>
+                <span class="pull-right">
+                  <a href="" style="text-decoration: underline; color: #669900">edit</a>
+                </span>
+                <div class="address uppercase" style="width: 180px; overflow: hidden; margin-top: 12px">
+                  <% if(user.address) {%>
+                  <span><%= user.address %></span><br>
+                  <span><%= user.city %></span>
+                  <span><%= user.state %></span>
+                  <span><%= user.zipCode %></span>
+                  <% } %>
+                </div>
               </div>  
             </div>
             <div class="pull-left">
