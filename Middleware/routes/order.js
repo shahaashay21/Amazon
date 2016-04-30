@@ -17,9 +17,10 @@ exports.createOrder = function(req, res) {
 			console.log("Error occurred while requesting to server for createorder : " + err);
 			var json_resposes = {"statusCode" : 401, "error" : "Could not connect to server"};
 			res.send(json_resposes);
-		} else
+		} else {
 			console.log("order created successfully");
 			res.send(JSON.parse(results));
+		}
 	});
 }
 

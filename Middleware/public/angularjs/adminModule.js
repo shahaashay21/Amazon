@@ -224,16 +224,20 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 
 		$http({
 			method : "POST",
-			url : "/admin/farmer/create",
+			url : "/farmer/create",
 			data: {
 				fname: $scope.fname,
 				lname: $scope.lname,
 				email: $scope.email,
 				pass: $scope.pass,
+				intro: $scope.intro,
+				contacts: $scope.contact_no,
+				video: $scope.video,
+				tax: $scope.tax,
 				address: $scope.address,
 				city: $scope.city,
-				zipcode: $scope.zipcode,
-				intro: $scope.intro
+				state: $scope.state,
+				zipcode: $scope.zipcode
 			}
 		}).success(function(res) {
 			if(res.status == 200) {

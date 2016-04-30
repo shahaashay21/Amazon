@@ -80,8 +80,9 @@ cnn.on('ready', function(){
 				case "createFarmer":
 					util.log("createFarmer");
 					farmer.createFarmer(message, function(err,res){
-						//util.log("Correlation ID: " + m.correlationId);
+						util.log("Correlation ID: " + m.correlationId);
 						// return index sent
+						util.log(JSON.stringify(res));
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
@@ -128,6 +129,19 @@ cnn.on('ready', function(){
 			//util.log("DeliveryInfo: "+JSON.stringify(deliveryInfo));
 
 			switch (message.service) {
+
+				case "getProducts":
+					util.log("getProducts");
+					product.getProducts(message, function(err,res){
+						//util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
 
 				case "createProduct":
 					util.log("createProduct");
@@ -179,6 +193,7 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+
 				case "create_review":
 					util.log("Create_review");
 					product.create_review(message, function(err,res){
@@ -189,21 +204,6 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
-
-				case "getProducts":
-					util.log("getProducts");
-					product.getProducts(message, function(err,res){
-						//util.log("Correlation ID: " + m.correlationId);
-						// return index sent
-						cnn.publish(m.replyTo, JSON.stringify(res), {
-							contentType: 'application/json',
-							contentEncoding: 'utf-8',
-							correlationId: m.correlationId
-						});
-					});
-					break;
-
-
 			}
 		});
 	});
@@ -252,6 +252,7 @@ cnn.on('ready', function(){
 							correlationId: m.correlationId
 						});
 					})
+					break;
 			}
 		});
 	});

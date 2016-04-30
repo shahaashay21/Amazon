@@ -125,7 +125,13 @@
 												<th>Last Name</th>
 												<th>Email</th>
 												<th>Address</th>
-												<th>Ratings</th>
+												<th>City</th>
+												<th>State</th>
+												<th>Pincode</th>
+												<th>Intro</th>
+												<th>Video</th>
+												<th>Tax</th>
+												<th>Contact No</th>
 												<th>Joined At</th>
 											</tr>
 										</thead>
@@ -154,8 +160,42 @@
 														 {{ farmer.address || 'empty' }}
 													</span>
 												</td>
-												<td>{{farmer.ratings}}</td>
-												<td>{{farmer.createdAt | date: 'medium' || 'empty'}}</td>
+												<td>
+													<span editable-text="farmer.city" e-name="city" e-form="farmerform">
+														 {{ farmer.city || 'empty' }}
+													</span>
+												</td>
+												<td>
+													<span editable-text="farmer.state" e-name="state" e-form="farmerform">
+														 {{ farmer.state || 'empty' }}
+													</span>
+												</td>
+												<td>
+													<span editable-text="farmer.zipcode" e-name="zipcode" e-form="farmerform">
+														 {{ farmer.zipcode || 'empty' }}
+													</span>
+												</td>
+												<td>
+													<span editable-text="farmer.intro" e-name="intro" e-form="farmerform">
+														 {{ farmer.intro || 'empty' }}
+													</span>
+												</td>
+												<td>
+													<span editable-text="farmer.video" e-name="video" e-form="farmerform">
+														 {{ farmer.video || 'empty' }}
+													</span>
+												</td>
+												<td>
+													<span editable-text="farmer.tax" e-name="tax" e-form="farmerform">
+														 {{ farmer.tax || 'empty' }}
+													</span>
+												</td>
+												<td>
+													<span editable-text="farmer.contacts" e-name="contacts" e-form="farmerform">
+														 {{ farmer.contacts || 'empty' }}
+													</span>
+												</td>
+												<td>{{farmer.createdAt | date: 'medium'}}</td>
 												<td>
 											  <form editable-form name="farmerform" ng-show="farmerform.$visible" class="form-buttons form-inline"
 													shown="inserted == farmer" onbeforesave="saveFarmer($data,farmer.f_id)">
@@ -180,19 +220,91 @@
 												<th>Last Name</th>
 												<th>Email</th>
 												<th>Address</th>
-												<th>Ratings</th>
+												<th>Intro</th>
+												<th>Video</th>
+												<th>Tax</th>
+												<th>Contact No</th>
 												<th>Joined At</th>
 											</tr>
 										</tfoot>
 									</table>
 									</br>
-									<button class="btn btn-default" ng-click="addFarmer()">Add Farmer</button>
+									<button class="btn btn-default" id = "addfarmer" data-toggle = "modal" data-target = "#addFarmerModal">Add Product</button>
 								</div><!-- /.box-body -->
 							</div><!-- /.box -->
 						</div><!-- /.col -->
 					</div><!-- /.row -->
 				</section><!-- /.content -->
-			</div><!-- /.content-wrapper -->
+
+				<!-- Add Product Modal -->
+					<div id="addFarmerModal" class= "modal fade" role = "dialog">
+						<div class= "modal-dialog modal-md">
+							<!-- Add Product Modal Content -->
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h3 class="moda-title">Add Farmer</h3>
+								</div>
+								<div class="modal-body">
+										<div class="form-group">
+											<label for="fname">First Name</label>
+											<input type="text" class="form-control" placeholder="Enter First Name" ng-model="fname" required>
+											<!-- Product Name Validation Here-->
+											<!-- -->
+										</div>
+										<div class="form-group">
+											<label for="lname">Last Name</label>
+											<input type="text" class="form-control" placeholder="Enter Last Name" ng-model="lname" required>
+										</div>
+										<div class="form-group">
+											<label for="email">Email</label>
+											<input type="text" class="form-control" placeholder="Enter Email" ng-model="email" required>
+										</div>
+										<div class="form-group">
+											<label for="pass">Password</label>
+											<input type="password" class="form-control" placeholder="Enter Password" ng-model="pass" required>
+										</div>
+										<div class="form-group">
+											<label for="intro">Introduction</label>
+											<input type="text" class="form-control" placeholder="Enter Introduction" ng-model="intro" required>
+										</div>
+										<div class="form-group">
+											<label for="contact_no">Contact No</label>
+											<input type="text" class="form-control" placeholder="Enter Contact No" ng-model="contact_no" required>
+										</div>
+										<div class="form-group">
+											<label for="video">Youtube Video Link</label>
+											<input type="text" class="form-control" placeholder="Enter Youtube Video Link" ng-model="video" required>
+										</div>
+										<div class="form-group">
+											<label for="tax">Tax</label>
+											<input type="Number" class="form-control" placeholder="Enter Tax" ng-model="tax" required>
+										</div>
+										<div class="form-group">
+											<label for="address">Address</label>
+											<input type="text" class="form-control" placeholder="Enter Address" ng-model="address" required>
+										</div>
+
+										<div class="form-group">
+											<label for="city">City</label>
+											<input type="text" class="form-control" placeholder="Enter City" ng-model="city" required>
+										</div>
+										<div class="form-group">
+											<label for="state">State</label>
+											<input type="text" class="form-control" placeholder="Enter State" ng-model="state" required>
+										</div>
+										<div class="form-group">
+											<label for="zipcode">Zipcode</label>
+											<input type="Number" class="form-control" placeholder="Enter Zipcode" ng-model="zipcode" required>
+										</div>
+										<button class="btn btn-default" ng-click="addFarmer();">Add Farmer</button>
+							</div>
+							<!-- Content End for Modal-->
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<footer class="main-footer">
 				<% include ./partials/admin-footer %>
 			</footer>
