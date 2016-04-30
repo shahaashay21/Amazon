@@ -3,7 +3,8 @@ $(document).ready(function(e){
 	//Carousel
 	$('.carousel').carousel({
 	  interval: 3000
-	})
+	});
+
 	//INITIALIZE TOOLTIP
 	$('[data-toggle="tooltip"]').tooltip();
 
@@ -36,6 +37,12 @@ $(document).ready(function(e){
 	});
 	$('#pass-login').on('keyup click focus blur change', function(){
 		nullFieldValidation('pass-login');
+	});
+
+
+	//HIDE USER SUGGESTION IF CLICK OUTSIDE
+	$(":not(.qsuggest)").click(function(){
+		$(".qsuggest").hide();
 	});
 
 });

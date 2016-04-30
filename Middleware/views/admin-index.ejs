@@ -39,11 +39,14 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <!-- Loading the AngularJS file from /public/angularJS folder -->
-    <script src="../angularjs/adminindex.js"></script>
+    <script src="/angularjs/angular.min.js"></script>
+
+    <link href="/dist/css/xeditable.css" rel="stylesheet">
+    <script src="/dist/js/xeditable.js"></script>
+    <script src="/angularjs/adminModule.js"></script>
 
   </head>
-  <body class="hold-transition skin-blue sidebar-mini" ng-app= "adminindexapp" ng-controller="adminindexcontroller">
+  <body class="hold-transition skin-blue sidebar-mini" ng-app= "adminModule" ng-controller="adminController">
     <div class="wrapper">
       <header class="main-header">
         <% include ./partials/admin-header %>

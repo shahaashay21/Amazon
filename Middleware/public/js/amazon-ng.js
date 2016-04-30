@@ -2,6 +2,49 @@ var app = angular.module("amazon",[]);
 
 app.controller("amazon",function($scope, $http, $location){
 	
+	//CONFIG
+	$scope.monthname = function(){
+		var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		temp = new Date();
+		return monthNames[temp.getMonth()];
+	}
+	var days = ['Sun','Mon','Tues','Wed','Thu','Fri','Sat'];
+
+	var tempcheck = "";
+	$scope.q ="";
+	$scope.search = function(opt){
+		var hashtag = 0;
+		var handle = 0;
+		if(opt == "focus"){
+			tempcheck = "";
+		}
+		if($scope.q != tempcheck){
+			var data = {'q': $scope.q};
+
+			$http({
+				method: 'POST',
+				dataType: 'json',
+				url: '/suggest',
+				data: data
+			}).then(function success(res){
+				console.log(res);
+				$scope.availableTags = res.data;
+				angular.element('.for-drop-hashtag').css("display","none");
+				angular.element('.for-drop').css("display","table");
+			
+				angular.element('.dropdown-toggle').dropdown();
+				angular.element('.dropdown-toggle').css("display","table");
+				tempcheck = $scope.q;
+			});
+			
+		}
+	};
+
+	//REDIRECT TO USER PROFILE PAGE
+	$scope.userRedirect= function(id){
+		window.location.assign("/search/"+id);
+	};
+
 	$scope.getCartItems = function(){
 		$http({
 			method: 'POST',
@@ -38,6 +81,24 @@ app.controller("amazon",function($scope, $http, $location){
 		}
 	}
 
+	$scope.finalOrder = function(){
+		if(window.isCard == 'no'){
+			alertline('alert-notify-danger','<b>Please provide card details.</b>');
+			return;
+		}
+		if(window.isAddress == 'no'){
+			alertline('alert-notify-danger','<b>Please provide delivery address.</b>');	
+			return;
+		}
+		dayDate = angular.element('#dayDate').val();
+		time = angular.element('#time').val();
+		temp = new Date();
+		month = $scope.monthname();
+		drop_time = new Date(month+' '+(temp.getDate() + Number(dayDate))+', '+temp.getFullYear()+' '+time);
+		console.log(drop_time);
+
+	}
+
 	if(window.location.pathname.indexOf("/PreviewOrder") >= 0){
 		angular.element('.cart-head').hide();
 		angular.element('.cart-proceed').hide();
@@ -48,7 +109,7 @@ app.controller("amazon",function($scope, $http, $location){
 		$scope.getCartItems();
 	}
 
-	var days = ['Sun','Mon','Tues','Wed','Thu','Fri','Sat'];
+	var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 	nowdate = new Date();
 	$scope.del_day = [];
 	$scope.del_date = [];
@@ -64,4 +125,12 @@ app.controller("amazon",function($scope, $http, $location){
 	// console.log($scope.del_day_date[0]);
 
 	// alertline('alert-notify-danger','<b>Successfully Registered.</b> Now you can LOGIN');
+	
+
+	// temp = new Date();
+	// mo = $scope.monthname();
+	// timepass = mo+' '+(temp.getDate() + 1)+', '+temp.getFullYear()+' '+temp.getHours()+':00';
+	// console.log(timepass);
+	// d = new Date(mo+' '+(temp.getDate() + 1)+', '+temp.getFullYear()+' '+temp.getHours()+':00');
+	// console.log(d);
 });

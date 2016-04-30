@@ -32,10 +32,14 @@ exports.createFarmer = function(req, res){
 		lname : req.lname,
 		email : req.email,
 		pass : req.pass,
+		contacts: req.contacts,
+		intro: req.intro,
+		video: req.video,
+		tax: req.tax,
 		address : req.address,
 		city : req.city,
-		zipcode : req.zipcode,
-		intro : req.intro
+		state: req.state,
+		zipCode : req.zipcode,
 		//,f_id : req.f_id
 	});
 
@@ -75,6 +79,13 @@ exports.editFarmer = function(req, res){
 				result.lname = req.lname;
 				result.email = req.email;
 				result.address = req.address;
+				result.city = req.city;
+				result.state = req.state;
+				result.zipCode = req.zipcode;
+				result.intro = req.intro;
+				result.video = req.video;
+				result.tax = req.tax;
+				result.contacts = req.contacts;
 				//result.city = req.city ? req.city : result.city;
 				//result.zipcode = req.zipcode ? req.zipcode : result.zipcode;
 				//result.intro = req.intro ? req.intro : result.intro;

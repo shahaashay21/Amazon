@@ -13,7 +13,7 @@ var cardDetailsSchema = mongoose.Schema({
 	name_on_card: {type: String, required: true},
 	exp_month: {type:Number, required:true},
 	exp_year: {type:Number, required:true},
-	exp_cvv: {type:Number, required:true},
+	cvv: {type:Number, required:true},
 	default_card: {type:String, required:true, default: 'false'}
 });
 
@@ -24,7 +24,7 @@ var userSchema = mongoose.Schema({
 	email: {type: String, required: true},
 	pass: {type: String, required: true},
 	address: {type: String},
-	zipCode: Number,
+	zipcode: Number,
 	city: String,
 	state: String,
 	contacts: [contactsSchema],

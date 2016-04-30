@@ -28,6 +28,21 @@ exports.cartItems = function(req, callback){
 	});
 }
 
+function otherCharge(req, callback){
+	items = req.items;
+
+	function taxChargeLoop(i, callAgain){
+		if(i < items.length){
+
+		}else{
+			callAgain();
+		}
+	}
+	taxChargeLoop(0, function(){
+
+	});
+}
+
 exports.addItem = function(req, callback){
 	p_id = req.p_id;
 	quantity = req.quantity;
@@ -83,3 +98,4 @@ function deleteItem(req, callback){
 }
 
 exports.deleteItem = deleteItem;
+exports.otherCharge = otherCharge;

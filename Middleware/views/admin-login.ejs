@@ -5,40 +5,63 @@
 
     <% include lib.ejs %>
 
-    <!-- Loading the AngularJS file from /public/angularJS folder -->
-    <script src="../angularjs/adminlogin.js"></script>
+    <script src="/angularjs/angular.min.js"></script>
+
+    <link href="/dist/css/xeditable.css" rel="stylesheet">
+    <script src="/dist/js/xeditable.js"></script>
+    <script src="/angularjs/adminModule.js"></script>
 
   </head>
-  <body ng-app="adminloginapp" ng-controller = "adminlogincontroller">
+  <body ng-app="adminModule" ng-controller = "adminController">
   	
     <div style="height: 50px; display: block;"></div>
     
     <div class="container">
-      <div class="login-wrapper">
-        
-        <div class='login-error-wrapper'>
-          <!-- Email=blank password=either blank or filled -->
-          <div ng-show="isBlankEmail">
-            <img src="../img/signin-error.jpg" height="25" width="25" style="margin-top: 25px; margin-left: 20px;" />
-            <strong>There was a problem</strong>
-            <label>Missing e-mail. Please correct and try again.</label>
+      <div class="login-error-wrapper"> 
+        <!-- Email=filled || password=filled -->
+        <!-- -->
+        <div ng-show="!isBlankEmail && !isBlankPassword && isIncorrectDetails">
+          <div class="wrong-login" style = "visibility : visible;">
+            <div class="pull-left" style="display: block; height: 25px; width: 25px; margin-right: 15px">
+              <span class="glyphicon glyphicon-remove-sign" style="color: red; font-size: 30px"></span>
+            </div>
+            <div>
+              <span><b>There was a problem</b></span>
+              <p>Your email or password was incorrect. Please try again.</p>
+            </div>
           </div>
+        </div>
+        <!-- -->
 
-          <!-- Email=filled password=blank -->
-          <div ng-show="!isBlankEmail && isBlankPassword">
-            <img src="../img/signin-error.jpg" height="25" width="25" style="margin-top: 25px; margin-left: 20px;" />
-            <strong>There was a problem</strong>
-            <label>Please enter your password.</label>
+        <!-- Email=blank || password=blank/filled -->  
+        <div ng-show="isBlankEmail">
+          <div class="wrong-login" style = "visibility : visible;">
+            <div class="pull-left" style="display: block; height: 25px; width: 25px; margin-right: 15px">
+              <span class="glyphicon glyphicon-remove-sign" style="color: red; font-size: 30px"></span>
+            </div>
+            <div>
+              <span><b>There was a problem</b></span>
+              <p>Missing e-mail. Please correct and try again.</p>
+            </div>
           </div>
-
-          <!-- Email=filled password=filled -->
-          <div ng-show="!isBlankEmail && !isBlankPassword && isIncorrectDetails">
-            <img src="../img/signin-error.jpg" height="25" width="25" style="margin-top: 25px; margin-left: 20px;" />
-            <strong>There was a problem</strong>
-            <label>Your email or password was incorrect. Please try again.</label>
-          </div>        
         </div>
 
+        <!-- Email=filled || password=blank -->
+        <div ng-show="!isBlankEmail && isBlankPassword">
+          <div class="wrong-login" style = "visibility : visible;">
+           <div class="pull-left" style="display: block; height: 25px; width: 25px; margin-right: 15px">
+              <span class="glyphicon glyphicon-remove-sign" style="color: red; font-size: 30px"></span>
+            </div>
+            <div>
+              <span><b>There was a problem</b></span>
+              <p>Please enter your password.</p>
+            </div>
+          </div>
+        </div>       
+        <!-- -->
+      </div>
+
+      <div class="login-wrapper">
         <div style="margin-bottom: 40px;">
           <h3><b>Admin Sign In</b></h3>
         </div>

@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -69,6 +68,7 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/PreviewOrder', isAuthenticated, order.home);
 
+
 //ADMIN API
 app.get('/admin/home',admin.home);
 app.get('/admin/login',admin.login);
@@ -81,6 +81,9 @@ app.get('/admin/drivers/list',admin.driversList);
 app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
 //app.post('/admin/addFarmer', admin.addFarmer);;
+
+//ORDERS API
+app.post('/order/create', order.createOrder);
 
 app.get('/farmer/all',farmer.getFarmers);
 app.post('/farmer/create',farmer.createFarmer);
@@ -103,13 +106,13 @@ app.get('/login', login.signIn);
 app.get('/signup', login.signUp);
 app.get('/logout', function(req,res) {
   req.session.destroy(function(err){
-    res.redirect('/');  
+    res.redirect('/');
   })
 });
 
 
 app.get('/search', function(req, res){
-  
+
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('ProductSearch', { user: req.session.user });
@@ -122,7 +125,7 @@ app.get('/search', function(req, res){
 
 
 app.get('/customerAccount', function(req, res){
-  
+
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('customerAccount', { user: req.session.user });
@@ -132,7 +135,7 @@ app.get('/customerAccount', function(req, res){
 });
 
 app.get('/help', function(req, res){
-  
+
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('help', { user: req.session.user });
@@ -245,6 +248,7 @@ app.post('/login', function(req, res, next) {
 app.post('/reg', login.regUser);
 app.post('/additem', cart.addItem);
 app.post('/cart', cart.cartItems);
+app.post('/suggest', product.suggest);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

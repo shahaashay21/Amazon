@@ -8,7 +8,7 @@
 		<div class="col-xs-3 no-padding">
 			<div class="product-wrapper">
 				<div class="itemInnerBorader">
-					<a href="">
+					<a href="/product?id=<%= products[i].p_id %>">
 						<img src="<%= products[i].product_img %>" class="" style="width: 140px; height: 140px; margin: 35px 45px 20px;">
 					</a>
 					<div class="productDetails">
@@ -17,7 +17,7 @@
 							<span class="unitPrice"> ($<%= products[i].price_unit %>/<%= products[i].unit %>) </span>
 						</div>
 						<div class="shortDetail capitalize">
-							<a href="#">
+							<a href="/product?id=<%= products[i].p_id %>">
 								<%= products[i].name %>, <%= products[i].weight %> <%= products[i].unit %>
 							</a>
 						</div>

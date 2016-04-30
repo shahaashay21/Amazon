@@ -6,10 +6,9 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "amqplib": "^0.4.1",
-    "underscore": "^1.8.3",
     "amqp": "^0.2.4",
-    "mongoose-auto-increment": "^5.0.1",
+    "amqplib": "^0.4.1",
+    "bcrypt-nodejs": "^0.0.3",
     "connect-mongo": "^1.1.0",
     "ejs": "*",
     "express": "3.2.6",
@@ -17,9 +16,10 @@
     "mocha": "^2.4.5",
     "mongodb": "^2.1.10",
     "mongoose": "^4.4.9",
+    "mongoose-auto-increment": "^5.0.1",
     "mysql": "^2.10.2",
     "request": "^2.71.0",
-    "bcrypt-nodejs": "^0.0.3",
-    "mongoose-auto-increment": "^5.0.1"
+    "sequelize": "^3.22.0",
+    "underscore": "^1.8.3"
   }
 }

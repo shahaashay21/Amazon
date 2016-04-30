@@ -30,20 +30,31 @@ exports.getProducts = function(req, res){
 	});
 };
 
+exports.suggest = function(req, res){
+	q = req.param('q');
+	var msg_payload = {'service': 'suggest', 'q': q};
+	console.log(q);
+	mq.make_request('product_queue', msg_payload, function(err, done){
+		res.send(done);
+	})
+}
+
 exports.createProduct = function(req,res){
-
-
 
 	var msg_payload = {
 		"service" : "createProduct",
 		//"p_id" : req.param("p_id"),
 		"name" : req.param("name"),
+		"f_id" : req.param("f_id"),
+		//"f_name": req.param("f_name"),
 		"cat_id" : req.param("cat_id"),
 		"price" : req.param("price"),
 		"weight" : req.param("weight"),
-		"details" : req.param("details"),
 		"unit" : req.param("unit"),
+		"quantity": req.param("quantity"),
+		"details" : req.param("details"),
 		"description" : req.param("description"),
+		"features": req.param("features"),
 		"sid":req.sessionID
 	};
 
@@ -110,12 +121,15 @@ exports.editProduct = function(req,res){
 		"service" : "editProduct",
 		//"p_id" : req.param("p_id"),
 		"name" : req.param("name"),
+		"f_id": req.param("f_id"),
 		"cat_id" : req.param("cat_id"),
 		"price" : req.param("price"),
 		"weight" : req.param("weight"),
+		"unit": req.param("unit"),
 		"details" : req.param("details"),
-		//"description" : req.param("description"),
-		"unit" : req.param("unit"),
+		"description" : req.param("description"),
+		"features" : req.param("features"),
+		"quantity" : req.param("quantity"),
 		"sid":req.sessionID
 	};
 

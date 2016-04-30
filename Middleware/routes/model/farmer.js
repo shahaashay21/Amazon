@@ -4,7 +4,7 @@ var autoIncrement = require('mongoose-auto-increment');
 var connection = mongoose.createConnection("mongodb://localhost/amazon");
 autoIncrement.initialize(connection);
 
-var reviewSchema = mongoose.schema({
+var reviewSchema = mongoose.Schema({
 	rating: {type: Number, required: true},
 	review_title: {type: String, required: true},
 	review_desc: {type:String, required:true}
@@ -20,7 +20,7 @@ var farmerSchema = mongoose.Schema({
 	address: {type: String, required: true},
 	city: {type: String, required: true},
 	state: {type: String, required: true},
-	zipCode: {type: Number, required:true},
+	zipcode: {type: Number, required:true},
 	contacts: [Number],
 	reviews: [reviewSchema],
 	intro: {type: String, required: true},
