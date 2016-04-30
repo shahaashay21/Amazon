@@ -68,6 +68,7 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/PreviewOrder', isAuthenticated, order.home);
 
+
 //ADMIN API
 app.get('/admin/home',admin.home);
 app.get('/admin/login',admin.login);
@@ -247,6 +248,7 @@ app.post('/login', function(req, res, next) {
 app.post('/reg', login.regUser);
 app.post('/additem', cart.addItem);
 app.post('/cart', cart.cartItems);
+app.post('/suggest', product.suggest);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
