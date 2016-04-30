@@ -82,8 +82,6 @@ app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
 //app.post('/admin/addFarmer', admin.addFarmer);;
 
-
-
 app.get('/farmer/all',farmer.getFarmers);
 app.post('/farmer/create',farmer.createFarmer);
 app.delete('/farmer/delete',farmer.deleteFarmer);
@@ -95,10 +93,8 @@ app.delete('/product/delete',product.deleteProduct);
 app.post('/product/edit',product.editProduct);
 //app.get('/prod_details', user.prod_details);
 app.get('/product', product.prod_details);
-app.post('/create_review',product.create_review)
-
-
-
+app.post('/create_review',product.create_review);
+app.get('/farmer_page',product.farmer_page);
 
 app.get('/frame', function(req,res){
   res.render('frame');

@@ -15,7 +15,7 @@ var reviewSchema = mongoose.Schema({
 var productSchema = mongoose.Schema({
 	p_id: {type: Number, required: true, index: true},
 	f_id: {type: Number, required: true},
-	farmer_name: {type: String, required: true},
+	f_name: {type: String, required: true},
 	cat_id: {
 		type: Number
 	},

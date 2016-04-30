@@ -135,6 +135,16 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+				case "farmer_page":
+					util.log("getFarmers");
+					product.farmer_page(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
 				case "create_review":
 					util.log("Create_review");
 					product.create_review(message, function(err,res){
