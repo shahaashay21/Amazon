@@ -117,12 +117,12 @@ exports.createProduct = function(req, res){
 			if(result){
 				console.log("result found");
 				farmer_name = result.fname + " " + result.lname;	
-				//console.log(farmer_name);	
+				console.log(farmer_name);	
 				var product = Product({
 					//p_id : req.p_id,
 					name : req.name,
 					f_id: req.f_id,
-					farmer_name: farmer_name,
+					f_name: farmer_name,
 					cat_id: req.cat_id,
 					price : req.price,
 					weight : req.weight,
@@ -155,7 +155,7 @@ exports.createProduct = function(req, res){
 			}
 			else{
 				console.log("no result add product");
-				resGen.send(null,res);
+				res.send(null,res);
 			}
 		}
 	});
@@ -214,15 +214,17 @@ exports.editProduct = function(req, res){
 
 exports.deleteProduct = function(req, res){
 
-	Product.find({p_id:req.p_id},function(err,result){
+	console.log(req.p_id);
+	Product.findOne({p_id:req.p_id},function(err,result){
 		if(err)
 		{
 			resGen.error(err,res);
 		}
 		else
 		{
-			if(results){
-				console.log("all products found");
+			console.log(result);
+			if(result){
+				//console.log("all products found");
 				//console.log(result);
 				result.isActive = false;
 				result.save(function(err,doc){

@@ -62,6 +62,7 @@ exports.createFarmer = function(req,res){
 			"city" : req.param("city"),
 			"state": req.param("state"),
 			"zipcode" : req.param("zipcode"),
+			"isActive" : req.param("isActive"),
 			"sid":req.sessionID
 		};
 
