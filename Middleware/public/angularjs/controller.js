@@ -12,7 +12,7 @@
         	$scope.magic_zoom = window.image1;
 
         	function checksession()  {
-        		if(window.session == true)
+        		if(window.session != true)
         		{
 
                 	console.log("checksession successful");

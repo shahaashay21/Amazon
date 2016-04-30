@@ -227,7 +227,10 @@ exports.farmer_page = function(req,res){
 		}
 		else
 		{
+			console.log(prod.farmer);
+			console.log(prod.product);
 			if(prod.code == 200){
+
 				//console.log(Object.keys(prod.reviews));
 				if(typeof req.session.user != 'undefined'){
 				console.log(req.session.user);
