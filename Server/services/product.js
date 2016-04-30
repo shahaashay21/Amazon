@@ -28,8 +28,10 @@ exports.getProducts = function(req, res){
 exports.get_prod = function(msg, callback){
 	var res = {};
 	console.log("In servers get prod");
-	Product.find({}, function(err, product) {
-		if(err)
+	console.log(msg);
+	console.log(msg.p_id);
+	Product.find({p_id: msg.p_id}, function(err, product) {
+		if(product == "")
 				{
 				console.log(err);
 				res.code = "401";
@@ -46,20 +48,45 @@ exports.get_prod = function(msg, callback){
 	});
 };
 
+exports.farmer_page = function(msg, callback){
+	var res = {};
+	console.log("In servers get farmers");
+	console.log(msg);
+	console.log(msg.p_id);
+	Product.find({f_id: msg.f_id}, function(err, product) {
+		if(product == "")
+				{
+				console.log(err);
+				res.code = "401";
+				res.value = "Failed to fetch farmer_page";
+				}
+			else
+				{
+				console.log(product);
+				res.code = "200";
+				res.value = "Farmer Fetched";
+				res.object = product;
+				}
+		callback(null, res);
+	});
+};
 
 exports.create_review = function(msg, callback){
 	var res = {};
 	console.log("In servers create review");
 	console.log(msg);
-	Product.update({"p_id": req.p_id}, {"$addToSet": {"reviews": {"rating": req.star,"review_title": req.title,"review_desc": req.review}}},{upsert:true},function(err){
+	Product.update({"p_id": msg.p_id}, {"$push": {"reviews": {"rating": msg.star,"review_title": msg.title,"review_desc": msg.review}}},{upsert:true},function(err){
         console.log("In prod update");
         if(err){
-                console.log(err);
-        }else{
-                console.log("cretae_review successful");
+                console.log(err);res.code = "401";
+				res.value = "Failed to create review";
+        }else{	
+        		res.code = "200";
+				res.value = "Review Created";
+                console.log("create_review successful");
         }
+        callback(null, res);
 });
-	console.log("After prod update");
 };
 
 

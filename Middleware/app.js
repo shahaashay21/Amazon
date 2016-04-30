@@ -66,7 +66,7 @@ if ('development' == app.get('env')) {
 //GET REQUEST
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.get('/PreviewOrder', order.home);
+app.get('/PreviewOrder', isAuthenticated, order.home);
 
 //ADMIN API
 app.get('/admin/home',admin.home);
@@ -95,10 +95,8 @@ app.delete('/product/delete',product.deleteProduct);
 app.post('/product/edit',product.editProduct);
 //app.get('/prod_details', user.prod_details);
 app.get('/product', product.prod_details);
-app.post('/create_review',product.create_review)
-
-
-
+app.post('/create_review',product.create_review);
+app.get('/farmer_page',product.farmer_page);
 
 app.get('/frame', function(req,res){
   res.render('frame');
@@ -106,13 +104,14 @@ app.get('/frame', function(req,res){
 app.get('/login', login.signIn);
 app.get('/signup', login.signUp);
 app.get('/logout', function(req,res) {
-  req.session.destroy();
-  res.redirect('/');
+  req.session.destroy(function(err){
+    res.redirect('/');
+  })
 });
 
 
 app.get('/search', function(req, res){
-  
+
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('ProductSearch', { user: req.session.user });
@@ -125,7 +124,7 @@ app.get('/search', function(req, res){
 
 
 app.get('/customerAccount', function(req, res){
-  
+
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('customerAccount', { user: req.session.user });
@@ -135,7 +134,7 @@ app.get('/customerAccount', function(req, res){
 });
 
 app.get('/help', function(req, res){
-  
+
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('help', { user: req.session.user });

@@ -144,11 +144,13 @@ exports.editProduct = function(req,res){
 };
 
 exports.prod_details = function(req,res){
+	console.log("In middlewares prod.js");
 	var msg_payload = {
 		"service" : "get_prod",
-		"p_id" : req.param("p_id"),
+		"p_id" : req.param("id"),
 		"sid":req.session.user
 	};
+	console.log(msg_payload);
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
 		{
@@ -158,10 +160,10 @@ exports.prod_details = function(req,res){
 		else
 		{
 			if(prod.code == 200){
-				console.log(prod);
+				//console.log(Object.keys(prod.reviews));
 				if(typeof req.session.user != 'undefined'){
 				console.log(req.session.user);
-				//var arrayLength = prod.reviews.length;
+
 				//for (var i = 0; i < arrayLength; i++) {
 				//console.log("star value"+prod.reviews.rating);
 				//console.log("star value1"+prod.reviews[0].rating);
@@ -175,7 +177,7 @@ exports.prod_details = function(req,res){
 			}
 			else
 			{
-				res.send(resGen.responseGenerator(401, null));
+				res.send("Sorry the product that you are searching for does not exist.");
 			}
 		}
 	});
@@ -201,12 +203,53 @@ exports.create_review = function(req,res){
 		{
 			if(prod.code == 200){
 				console.log(prod);
-					console.log(req.session.user);
-					res.send(200);
-			}
+					console.log(req.session.user);	
+		}
 			else
 			{
 				res.send(resGen.responseGenerator(401, null));
+			}
+		}
+	});
+};
+
+exports.farmer_page = function(req,res){
+	console.log("In middlewares prod.js");
+	var msg_payload = {
+		"service" : "farmer_page",
+		"f_id" : req.param("id"),
+		"sid":req.session.user
+	};
+	console.log(msg_payload);
+  	mq.make_request('product_queue', msg_payload, function(err,prod){
+		if(err)
+		{
+		    console.log(err);
+			res.send(resGen.responseGenerator(401, null));
+		}
+		else
+		{
+			if(prod.code == 200){
+				//console.log(Object.keys(prod.reviews));
+				if(typeof req.session.user != 'undefined'){
+				console.log(req.session.user);
+
+				//for (var i = 0; i < arrayLength; i++) {
+				//console.log("star value"+prod.reviews.rating);
+				//console.log("star value1"+prod.reviews[0].rating);
+				//console.log("In array should run once");
+				//}
+
+					res.render('farmer_page', { user: req.session.user, products: prod, session: true });
+				}else{
+					console.log("No session on");
+					//res.send(prod);
+					res.render('farmer_page', { products: prod, session: false });
+				}
+			}
+			else
+			{
+				res.send("Sorry the product that you are searching for does not exist.");
 			}
 		}
 	});

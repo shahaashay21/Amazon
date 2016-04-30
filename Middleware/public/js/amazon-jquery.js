@@ -118,3 +118,27 @@ function loginSubmit(){
 		return false;
 	}
 }
+
+//ALERT LINE
+function alertline(mood,message){
+	//$('.alert-top-notify').slideUp(0);
+	$('.alert-top-notify').removeClass('alert-notify-success alert-notify-info alert-notify-warning alert-notify-danger');
+	$('.alert-top-notify').addClass(mood);
+	// console.log(message);
+	var messageshow = "<center><span>"+message+"</span></center>";
+	// $(messageshow).appendTo('.alert-top-notify');
+	$('.alert-top-notify').html(messageshow);
+	// $('.alert-top-notify').show('slide',{ direction : "up"});
+//	console.log($('.alert-top-notify').is(':visible'));
+	if($('.alert-top-notify').is(':visible')){
+
+	}else{
+		$('.alert-top-notify').slideDown();
+	}
+	// hidealert();
+	setTimeout(function(){$('.alert-top-notify').slideUp();},5000);
+
+	function hidealert(){
+		// setTimeout(function(){$('.alert-top-notify').slideUp();},5000);
+	}
+}

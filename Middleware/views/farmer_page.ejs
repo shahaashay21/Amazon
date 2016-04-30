@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon-Fresh</title>
+    <% include lib.ejs %>
+  </head>
+  <body ng-app="amazon" ng-controller="amazon">
+    <% include menu.ejs %>
+    <div style="height: 50px; display: block;"></div>
+    <div class="container-fluid">
+      <div class="col-lg-9">
+      <h1>Products by <%= products.object[0].f_name %></h1>
+      <% for(var i=0; i < products.object.length; i++) { %>
+        <div class="col-xs-3 no-padding">
+      <div class="product-wrapper">
+        <div class="itemInnerBorader" style="width: 250px;height: 370px;">
+          <a href="">
+            <img src="<%= products.object[i].product_img %>" class="" style="width: 140px; height: 140px; margin: 35px 45px 20px;">
+          </a>
+          <div class="productDetails">
+            <div>
+              <b>$<%= products.object[i].price %></b>
+              <span class="unitPrice"> ($<%= products.object[i].price_unit %>/<%= products.object[i].unit %>) </span>
+            </div>
+            <div class="shortDetail capitalize">
+              <a href="#">
+                <%= products.object[i].name %>, <%= products.object[i].weight %> <%= products.object[i].unit %>
+              </a>
+            </div>
+            <div class="bottomProduct">
+              <div class="form-group pull-left">
+                <select class="form-control productQuant" id="product1001">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+                <button class="add-to-cart" style="background: #aaa; cursor: not-allowed; color: #fff">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+      </div>
+      <div class="col-xs-3">
+        <!-- CART WILL BE HERE -->
+        <% include cart.ejs %>
+      </div>
+    </div>
+    </div>
+    
+    
+    <% include footer.ejs %>
+    <% include js-lib.ejs %>
+  </body>
+</html>
