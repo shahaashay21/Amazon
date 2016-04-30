@@ -474,3 +474,20 @@ a:hover, a:focus{
 	margin-top: 20px;
 	border-radius: 5px;
 }
+
+.place_order{
+	margin-top: 10px;
+	width: 250px;
+	height: 45px;
+	font-size: 22px;
+	padding-top: 7px;
+	margin-left: 10px
+}
+.extra-shop{
+	background: #f1f2d3;
+	border-radius: 5px;
+	padding: 9px;
+	width: 250px;
+	margin-left: 10px;
+	font-size: 12px
+}
