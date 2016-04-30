@@ -14,7 +14,7 @@ exports.getProducts = function(req, res){
 		{
 			if(results.length > 0){
 				console.log("all products found");
-				console.log(results[0]);
+				//console.log(results[0]);
 				res(null,resGen.responseGenerator(200, results));
 			}
 			else
@@ -117,7 +117,7 @@ exports.createProduct = function(req, res){
 			if(result){
 				console.log("result found");
 				farmer_name = result.fname + " " + result.lname;	
-				console.log(farmer_name);	
+				//console.log(farmer_name);	
 				var product = Product({
 					//p_id : req.p_id,
 					name : req.name,
@@ -142,7 +142,7 @@ exports.createProduct = function(req, res){
 					{
 						if(results){
 							console.log("product created");
-							console.log(results);
+							//console.log(results);
 							res(null,resGen.responseGenerator(200, results));
 						}
 						else
@@ -173,18 +173,33 @@ exports.editProduct = function(req, res){
 		{
 			if(result){
 				result.name = req.name;
+
+				if(result.f_id != req.f_id){
+					Farmer.find({f_id:req.f_id}, {fname:1,lname:1,f_id:1}, function(err,res){
+						if(err){
+							resGen.error(err,res);
+						} else {
+							result.farmer_name = res.fname + " " + res.lname;
+							result.f_id = res.f_id;
+						}
+					});
+				}
+
 				result.cat_id = req.cat_id;
 				result.price = req.price;
 				result.weight = req.weight;
-				result.details = req.details;
 				result.unit = req.unit;
+				result.details = req.details;
+				result.description = req.description;
+				result.features = req.features;
+				result.quantity = req.quantity;
 				//result.description = req.description;
 				result.save(function(err,doc){
 					if(err){
 						resGen.error(err,res);
 					} else {
 						console.log("product edited");
-						console.log(doc);
+						//console.log(doc);
 						res(null,resGen.responseGenerator(200, doc));
 					}
 				});
@@ -208,14 +223,14 @@ exports.deleteProduct = function(req, res){
 		{
 			if(results){
 				console.log("all products found");
-				console.log(result);
+				//console.log(result);
 				result.isActive = false;
 				result.save(function(err,doc){
 					if(err){
 						resGen.error(err,res);
 					} else {
 						console.log("product inactive now");
-						console.log(doc);
+						//console.log(doc);
 						res(null,resGen.responseGenerator(200, doc.isActive));
 					}
 				});

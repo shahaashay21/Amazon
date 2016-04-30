@@ -118,7 +118,14 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 				fname: data.fname,
 				lname: data.lname,
 				email: data.email,
-				address: data.address
+				address: data.address,
+				city: data.city,
+				state: data.state,
+				zipcode: data.zipcode,
+				intro: data.intro,
+				video: data.video,
+				tax: data.tax,
+				contacts: data.contacts
 			}
 		}).success(function(res){
 			if (res.status === 200) {
@@ -181,11 +188,15 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 			data: {
 				p_id : id,
 				name: data.name,
+				f_id: data.f_id,
 				cat_id: data.cat_id,
 				price: data.price,
 				weight: data.weight,
+				unit: data.unit,
 				details: data.details,
-				unit: data.unit
+				description: data.description,
+				features: data.features,
+				quantity: data.quantity
 			}
 		}).success(function(res){
 			if (res.status === 200) {

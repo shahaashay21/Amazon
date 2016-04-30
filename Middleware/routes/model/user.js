@@ -24,7 +24,7 @@ var userSchema = mongoose.Schema({
 	email: {type: String, required: true},
 	pass: {type: String, required: true},
 	address: {type: String},
-	zipCode: Number,
+	zipcode: Number,
 	city: String,
 	state: String,
 	contacts: [contactsSchema],
