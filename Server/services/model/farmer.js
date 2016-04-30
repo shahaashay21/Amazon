@@ -25,7 +25,8 @@ var farmerSchema = mongoose.Schema({
 	city: {type: String, required: true},
 	state: {type: String, required: true},
 	zipcode: {type: Number, required:true},
-	reviews: [reviewSchema]
+	reviews: [reviewSchema],
+	isAvailable: {type: Boolean, required: true}
 },{
 	collection: 'farmers',
     timestamps: true,

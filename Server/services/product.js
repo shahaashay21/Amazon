@@ -185,9 +185,10 @@ exports.editProduct = function(req, res){
 		}
 		else
 		{
+			console.log(result);
 			if(result){
 				result.name = req.name;
-
+				
 				if(result.f_id != req.f_id){
 					Farmer.find({f_id:req.f_id}, {fname:1,lname:1,f_id:1}, function(err,res){
 						if(err){
@@ -198,7 +199,7 @@ exports.editProduct = function(req, res){
 						}
 					});
 				}
-
+				console.log(result.f_id);
 				result.cat_id = req.cat_id;
 				result.price = req.price;
 				result.weight = req.weight;

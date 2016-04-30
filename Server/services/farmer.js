@@ -4,7 +4,7 @@ var resGen = require('./commons/responseGenerator');
 
 exports.getFarmers = function(req, res){
 
-	Farmer.find({},{pass:0},function(err,results){
+	Farmer.find({isAvailable:true},{pass:0},function(err,results){
 		if(err)
 		{
 			resGen.error(err,res);
@@ -39,7 +39,7 @@ exports.createFarmer = function(req, res){
 		address : req.address,
 		city : req.city,
 		state: req.state,
-		zipCode : req.zipcode,
+		zipcode : req.zipcode
 		//,f_id : req.f_id
 	});
 
@@ -74,6 +74,7 @@ exports.editFarmer = function(req, res){
 		}
 		else
 		{
+			//console.log(result);
 			if(result){
 				result.fname = req.fname;
 				result.lname = req.lname;
@@ -81,12 +82,13 @@ exports.editFarmer = function(req, res){
 				result.address = req.address;
 				result.city = req.city;
 				result.state = req.state;
-				result.zipCode = req.zipcode;
+				result.zipcode = req.zipcode;
 				result.intro = req.intro;
 				result.video = req.video;
 				result.tax = req.tax;
 				result.contacts = req.contacts;
 				result.isActive = req.isActive;
+				console.log(req.isActive);
 				//result.city = req.city ? req.city : result.city;
 				//result.zipcode = req.zipcode ? req.zipcode : result.zipcode;
 				//result.intro = req.intro ? req.intro : result.intro;
@@ -120,7 +122,7 @@ exports.deleteFarmer = function(req, res){
 			if(result){
 				console.log("farmer found");
 				//console.log(result);
-				result.isActive = false;
+				result.isAvailable = false;
 				result.save(function(err,doc){
 					if(err){
 						resGen.error(err,res);

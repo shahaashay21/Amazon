@@ -320,9 +320,9 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 	    var selected = [];
 	    var temp = farmer.isActive==true ? 1 : 2;
 	   	//console.log("temp ::"+temp);
-	    if(farmer.isActive) {
-	      selected = $filter('filter')($scope.statuses, {value: temp });
-	    }
+    	selected = $filter('filter')($scope.statuses, {value: temp });
+	    
+	    //console.log(selected);
 	    return selected.length ? selected[0].text : 'Not set';
   	};
 	//editableOptions.theme = 'bs3';
