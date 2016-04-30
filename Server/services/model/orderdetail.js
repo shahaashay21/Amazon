@@ -14,8 +14,8 @@ var orderDetailSchema = mongoose.Schema({
 	},
 	f_id: {
 		type: Number,
-		required: true
 		//ref: 'Farmer.f_id'
+		required: true
 	},
 	qty: Number,
 	price: Number,

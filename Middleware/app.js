@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -82,6 +81,9 @@ app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
 //app.post('/admin/addFarmer', admin.addFarmer);;
 
+//ORDERS API
+app.post('/order/create', order.createOrder);
+
 app.get('/farmer/all',farmer.getFarmers);
 app.post('/farmer/create',farmer.createFarmer);
 app.delete('/farmer/delete',farmer.deleteFarmer);
@@ -103,13 +105,13 @@ app.get('/login', login.signIn);
 app.get('/signup', login.signUp);
 app.get('/logout', function(req,res) {
   req.session.destroy(function(err){
-    res.redirect('/');  
+    res.redirect('/');
   })
 });
 
 
 app.get('/search', function(req, res){
-  
+
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('ProductSearch', { user: req.session.user });
@@ -122,7 +124,7 @@ app.get('/search', function(req, res){
 
 
 app.get('/customerAccount', function(req, res){
-  
+
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('customerAccount', { user: req.session.user });
@@ -132,7 +134,7 @@ app.get('/customerAccount', function(req, res){
 });
 
 app.get('/help', function(req, res){
-  
+
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('help', { user: req.session.user });

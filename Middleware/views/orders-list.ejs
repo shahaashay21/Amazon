@@ -20,6 +20,12 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
 
+    <script src="/angularjs/angular.min.js"></script>
+
+    <link href="/dist/css/xeditable.css" rel="stylesheet">
+    <script src="/dist/js/xeditable.js"></script>
+    <script src="/angularjs/adminModule.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -27,7 +33,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="hold-transition skin-blue sidebar-mini">
+  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule" ng-controller="adminController">
     <div class="wrapper">
       <header class="main-header">
         <% include ./partials/admin-header %>
@@ -270,10 +276,114 @@
                       </tr>
                     </tfoot>
                   </table>
+                </br>
+                <button class="btn btn-default" id = "addorder" data-toggle = "modal" data-target = "#addOrderModal">Add Order</button>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
           </div><!-- /.row -->
+          
+          <!-- Add Order Modal -->
+          <div id="addOrderModal" class= "modal fade" role = "dialog">
+            <div class= "modal-dialog modal-md">
+              <!-- Add Order Modal Content -->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h3 class="moda-title">Add Order</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                      <label for="c_email">Customer Email</label>
+                      <input type="email" class="form-control" placeholder="Enter Customer Email" ng-model="c_email" required>
+                      <!-- Customer Email Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="driver_id">Order Id</label>
+                      <input type="text" class="form-control" placeholder="Enter Driver Id" ng-model="driver_id" required>
+                      <!-- Driver Id Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="address">Address</label>
+                      <input type="text" class="form-control" placeholder="Enter Address" ng-model="address" required>
+                      <!-- Address Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="city">City</label>
+                      <input type="text" class="form-control" placeholder="Enter City" ng-model="city" required>
+                      <!-- City Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="state">State</label>
+                      <input type="text" class="form-control" placeholder="Enter State" ng-model="state" required>
+                      <!-- State Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="zip_code">Zip Code</label>
+                      <input type="text" class="form-control" placeholder="Enter Zip Code" ng-model="zip_code" required>
+                      <!-- Zip Code Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="sub_total">Sub Total</label>
+                      <input type="text" class="form-control" placeholder="Enter Sub Total" ng-model="sub_total" required>
+                      <!-- Sub Total Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="tax">Tax</label>
+                      <input type="text" class="form-control" placeholder="Enter Tax" ng-model="tax" required>
+                      <!-- Tax Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="ship_cose">Ship Cost</label>
+                      <input type="text" class="form-control" placeholder="Enter Ship Cost" ng-model="ship_cost" required>
+                      <!-- Ship Cost Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="edt">Estimated Delivery Time</label>
+                      <input type="text" class="form-control" placeholder="Enter Estimated Delivery Time" ng-model="edt" required>
+                      <!-- Estimated Delivery Time Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="pickup_time">Pick-Up Time</label>
+                      <input type="text" class="form-control" placeholder="Enter Pick-Up Time" ng-model="pickup_time" required>
+                      <!-- Pick-Up Time Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="drop_time">Drop Time</label>
+                      <input type="text" class="form-control" placeholder="Enter Drop Time" ng-model="drop_time" required>
+                      <!-- Drop Time Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="distance">Distance</label>
+                      <input type="text" class="form-control" placeholder="Enter Distance" ng-model="distance" required>
+                      <!-- Distance Validation Here-->
+                      <!-- -->
+                    </div>
+                    <div class="form-group">
+                      <label for="order_time">Order Time</label>
+                      <input type="text" class="form-control" placeholder="Enter Order Time" ng-model="order_time" required>
+                      <!-- Order Time Validation Here-->
+                      <!-- -->
+                    </div>
+                    <button class="btn btn-default" ng-click="addOrder();">Add Order</button>
+              </div>
+              <!-- Content End for Modal-->
+            </div>
+          </div>
+          <!-- Add Order Modal End -->
+        
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
       <footer class="main-footer">

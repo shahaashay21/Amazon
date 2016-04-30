@@ -14,22 +14,22 @@ var reviewSchema = mongoose.Schema({
 var productSchema = mongoose.Schema({
 	p_id: {type: Number, required: true, index: true},
 	f_id: {type: Number, required: true},
-	farmer_name: {type: String, required: true},
+	f_name: {type: String, required: true},
 	cat_id: {
 		type: Number
 	},
 	name: {type: String, required: true},
 	price: {type: String, required: true},
-	weight: {type: String, required: true},
-	details: {type: String},
+	weight: Number,
 	price_unit: String,
-	unit: String,
+	unit: {type: String, required: true},
 	product_img: String,
 	images: [{type: String}],
 	reviews: [reviewSchema],
-	details: {type: String, required: true},
+	details: {type: String},
 	description: String,
-	features: {type: String},
+	features: {type: String, required: true},
+	quantity: {type: Number, required: true},
 	isActive: {type: Boolean, default: true}
 },{
 	collection: 'products',

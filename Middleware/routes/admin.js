@@ -40,7 +40,7 @@ exports.checkLogin = function(req, res) {
 				var dataParsed = JSON.parse(results);
 				if(dataParsed.statusCode == 200) {
 					req.session.email = email;
-					//req.session.fname = dataParsed.fname;
+					req.session.fname = dataParsed.fname;
 					req.session.lname = dataParsed.lname;
 					req.session.createdAt = dataParsed.createdAt;
 					res.send(JSON.parse(results));
