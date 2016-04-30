@@ -1,4 +1,5 @@
 var Product = require('./model/product');
+var Farmer = require('./model/farmer');
 var resGen = require('./commons/responseGenerator');
 var Farmer = require('./model/farmer');
 
@@ -63,26 +64,47 @@ exports.get_prod = function(msg, callback){
 };
 
 exports.farmer_page = function(msg, callback){
-	var res = {};
-	console.log("In servers get farmers");
-	console.log(msg);
-	console.log(msg.p_id);
-	Product.find({f_id: msg.f_id}, function(err, product) {
-		if(product == "")
+	var p= {};
+	var f= {};
+	
+	//console.log("In servers get farmers");
+	Farmer.find({f_id: msg.f_id}, function(err, farmer) {
+		if(farmer == "")
 				{
 				console.log(err);
-				res.code = "401";
-				res.value = "Failed to fetch farmer_page";
+				farmer.code = "401";
+				farmer.value = "Failed to fetch farmer_page";
 				}
 			else
 				{
-				console.log(product);
-				res.code = "200";
-				res.value = "Farmer Fetched";
-				res.object = product;
+				//console.log(farmer);
+				f.code = "200";
+				f.value = "Farmer Fetched";
+				f.object = farmer;
+				Product.find({f_id: msg.f_id}, function(err, product) {
+		if(product == "")
+				{
+				console.log(err);
+				product.code = "401";
+				product.value = "Failed to fetch prod info";
 				}
-		callback(null, res);
+			else
+				{
+				//console.log(product);
+				p.code = "200";
+				p.value = "Farmer products Fetched";
+				p = product;
+				//console.log(p);
+				
+	//console.log(p);
+	//console.log(f);
+	var res = {"farmer": f,"product": p};
+	callback(null, res);
+				}
 	});
+				}
+	});
+	
 };
 
 exports.create_review = function(msg, callback){

@@ -77,10 +77,7 @@
                 	console.log("Should get signin page");
             		});
                 }
-            function cart()  {  
-            	$http.post('/cart')
-                .success(function(data) {
-                	console.log("Should open cart");
-            		});
+            function addcart()  {  
+            	
                 }            
         }]);
