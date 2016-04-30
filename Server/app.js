@@ -10,6 +10,7 @@ var express = require('express')
   , product = require('./services/product')
   , admin = require('./services/admin')
   , cart = require('./services/cart')
+  , order = require('./services/order')
   , http = require('http')
   , path = require('path')
   , amqp = require('amqp')
@@ -79,8 +80,9 @@ cnn.on('ready', function(){
 				case "createFarmer":
 					util.log("createFarmer");
 					farmer.createFarmer(message, function(err,res){
-						//util.log("Correlation ID: " + m.correlationId);
+						util.log("Correlation ID: " + m.correlationId);
 						// return index sent
+						util.log(JSON.stringify(res));
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
@@ -117,6 +119,8 @@ cnn.on('ready', function(){
 			}
 		});
 	});
+
+	console.log("listening on product_queue");
 
 	cnn.queue('product_queue', function(q){
 		q.subscribe(function(message, headers, deliveryInfo, m){
@@ -171,7 +175,7 @@ cnn.on('ready', function(){
 				case "createProduct":
 					util.log("createProduct");
 					product.createProduct(message, function(err,res){
-						//util.log("Correlation ID: " + m.correlationId);
+						util.log("Correlation ID: " + m.correlationId);
 						// return index sent
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
@@ -206,10 +210,33 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+
+
+				case "get_prod":
+					util.log("getProducts");
+					product.get_prod(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case "create_review":
+					util.log("Create_review");
+					product.create_review(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
 			}
 		});
 	});
-	
+
 	console.log("listening on admin_queue");
 
 	cnn.queue('admin-queue', function(q) {
@@ -230,6 +257,8 @@ cnn.on('ready', function(){
 			}
 		});
 	});
+
+	console.log("listening on cart_queue");
 
 	cnn.queue('cart', function(q){
 		q.subscribe(function(message, headers, deliveryInfo, m){
@@ -252,8 +281,27 @@ cnn.on('ready', function(){
 							correlationId: m.correlationId
 						});
 					})
+					break;
 			}
 		});
 	});
 
+	console.log("listening on order_queue");
+
+	cnn.queue('order-queue', function(q) {
+		q.subscribe(function(message, headers, deliveryInfo, m) {
+			switch(message.service) {
+				case 'createOrder':
+					util.log("createOrder");
+					order.createOrder(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						})
+					});
+					break;
+			}
+		})
+	});
 });
