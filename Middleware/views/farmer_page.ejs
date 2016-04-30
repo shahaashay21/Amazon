@@ -14,26 +14,26 @@ $(window).load(function(){
     <% include menu.ejs %>
     <div style="height: 50px; display: block;"></div>
     <div class="container-fluid">
-    <div>
-    <iframe width="550" height="350" src="http://www.youtube.com/embed/XGSy3_Czz8k">
-</iframe></div>
       <div class="col-lg-9">
-      <h1>Products by <%= products.object[0].f_name %></h1>
-      <% for(var i=0; i < products.object.length; i++) { %>
+      <div>
+    <iframe width="550" height="350" src="<%= farmer.object[0].video %>">
+</iframe></div>
+      <h1>Products by <%= farmer.object[0].fname %></h1>
+      <% for(var i=0; i < products.length; i++) { %>
         <div class="col-xs-3 no-padding">
       <div class="product-wrapper">
         <div class="itemInnerBorader">
           <a href="">
-            <img src="<%= products.object[i].product_img %>" class="" style="width: 140px; height: 140px; margin: 35px 45px 20px;">
+            <img src="<%= products[i].product_img %>" class="" style="width: 140px; height: 140px; margin: 35px 45px 20px;">
           </a>
           <div class="productDetails">
             <div>
-              <b>$<%= products.object[i].price %></b>
-              <span class="unitPrice"> ($<%= products.object[i].price_unit %>/<%= products.object[i].unit %>) </span>
+              <b>$<%= products[i].price %></b>
+              <span class="unitPrice"> ($<%= products[i].price_unit %>/<%= products[i].unit %>) </span>
             </div>
             <div class="shortDetail capitalize">
               <a href="#">
-                <%= products.object[i].name %>, <%= products.object[i].weight %> <%= products.object[i].unit %>
+                <%= products[i].name %>, <%= products[i].weight %> <%= products[i].unit %>
               </a>
             </div>
             <div class="bottomProduct">
@@ -84,7 +84,7 @@ $(window).load(function(){
 <div class="review" style="width:80%">  
     <div class="customerReviews">
         <form name="TheForm1" action="/create_review" method="post">
-        <input type="hidden" name="p_id" id="p_id" value="<%= products.object[0].p_id %>"></input>
+        <input type="hidden" name="p_id" id="p_id" value="<%= products.p_id %>"></input>
             <div class="createReview">
                 How do you rate this item?
                 <span id="rating_1" class="rating" ></span>
@@ -110,14 +110,14 @@ $(window).load(function(){
   <br><br>
   
   
-<% for(var i=0; i < products.object[0].reviews.length; i++) { %>
+<% for(var i=0; i < farmer.object[0].reviews.length; i++) { %>
   <div style="border: 4px solid;border-color: #DAD8D8; margin-bottom: 10px;">
       <div style="border-bottom: 2px solid #DAD8D8">
-      User: <%= products.object[0].reviews[i].username %> <br>
+      User: <%= farmer.object[0].reviews[i].username %> <br>
       </div>
-      Ratings: <%= products.object[0].reviews[i].rating %>/5 <br>
-      Title: <%= products.object[0].reviews[i].review_title %> <br>
-          Review: <%= products.object[0].reviews[i].review_desc %>
+      Ratings: <%= farmer.object[0].reviews[i].rating %>/5 <br>
+      Title: <%= farmer.object[0].reviews[i].review_title %> <br>
+          Review: <%= farmer.object[0].reviews[i].review_desc %>
             </div>
 <% } %>
           

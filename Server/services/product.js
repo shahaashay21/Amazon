@@ -67,7 +67,7 @@ exports.farmer_page = function(msg, callback){
 	var p= {};
 	var f= {};
 	
-	console.log("In servers get farmers");
+	//console.log("In servers get farmers");
 	Farmer.find({f_id: msg.f_id}, function(err, farmer) {
 		if(farmer == "")
 				{
@@ -78,10 +78,9 @@ exports.farmer_page = function(msg, callback){
 			else
 				{
 				//console.log(farmer);
-				//farmer.code = "200";
-				//farmer.value = "Farmer Fetched";
-				f = farmer;
-				//console.log(f);
+				f.code = "200";
+				f.value = "Farmer Fetched";
+				f.object = farmer;
 				Product.find({f_id: msg.f_id}, function(err, product) {
 		if(product == "")
 				{
@@ -92,13 +91,13 @@ exports.farmer_page = function(msg, callback){
 			else
 				{
 				//console.log(product);
-				//product.code = "200";
-				//product.value = "Farmer products Fetched";
+				p.code = "200";
+				p.value = "Farmer products Fetched";
 				p = product;
 				//console.log(p);
 				
-	console.log(p);
-	console.log(f);
+	//console.log(p);
+	//console.log(f);
 	var res = {"farmer": f,"product": p};
 	callback(null, res);
 				}
