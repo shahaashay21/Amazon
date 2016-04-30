@@ -10,6 +10,41 @@ app.controller("amazon",function($scope, $http, $location){
 	}
 	var days = ['Sun','Mon','Tues','Wed','Thu','Fri','Sat'];
 
+	var tempcheck = "";
+	$scope.q ="";
+	$scope.search = function(opt){
+		var hashtag = 0;
+		var handle = 0;
+		if(opt == "focus"){
+			tempcheck = "";
+		}
+		if($scope.q != tempcheck){
+			var data = {'q': $scope.q};
+
+			$http({
+				method: 'POST',
+				dataType: 'json',
+				url: '/suggest',
+				data: data
+			}).then(function success(res){
+				console.log(res);
+				$scope.availableTags = res.data;
+				angular.element('.for-drop-hashtag').css("display","none");
+				angular.element('.for-drop').css("display","table");
+			
+				angular.element('.dropdown-toggle').dropdown();
+				angular.element('.dropdown-toggle').css("display","table");
+				tempcheck = $scope.q;
+			});
+			
+		}
+	};
+
+	//REDIRECT TO USER PROFILE PAGE
+	$scope.userRedirect= function(id){
+		window.location.assign("/search/"+id);
+	};
+
 	$scope.getCartItems = function(){
 		$http({
 			method: 'POST',

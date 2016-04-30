@@ -32,25 +32,25 @@ exports.index = function(req, res){
 
 	//ADD FARMER
 	// var f = new Farmer();
-	// f.fname = 'Babubhai';
+	// f.fname = 'Chandubhai';
 	// f.lname = 'kaiNai';
-	// f.email = 'babu@farmer.com';
-	// f.pass = "Mango";
-	// f.address = '322 Woodlandmeadow Ln';
+	// f.email = 'chandi@farmer.com';
+	// f.pass = "Potato";
+	// f.address = '532 abcd Ln';
 	// f.city = 'San Jose';
 	// f.state = 'Ca';
 	// f.zipCode = '95131';
-	// f.tax = '2';
-	// f.intro = 'Kai intro jevu j nai rahyu. Kale to submission 6e.';
+	// f.tax = '8';
+	// f.intro = 'Navo j 6u etle koi intro rahyo j nathi.';
 
 	// f.save(function(err){
 	// 	console.log(err);
 	// });
 
 	// UPDATE PRODUCT
-	// Product.update({'p_id': 500000017}, {'f_id': 200000001, 'farmer_name': 'Babubhai'}, function(err,ans){
+	// Product.update({'p_id': 500000012}, {'f_id': 200000002, 'farmer_name': 'Babubhai'}, function(err,ans){
 	// 	console.log(err);
-	// })
+	// });
 
 
 	//INSERT CARD DETAILS IN USERS

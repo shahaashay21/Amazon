@@ -1,6 +1,21 @@
 <div class="col-xs-12">
   <div class="input-group">
-    <input type="text" class="form-control" placeholder="Search AmazonFresh">
+    <input type="text" name="q" id="search" class="form-control search_input_text" placeholder="Search AmazonFresh" ng-model="q" ng-focus="search('focus')" ng-keyup="search('q')">
+    <!-- <input type="text" name="q" id="search" class="form-control search_input_text" style="margin-bottom:20px; font-size:18px" placeholder="Search by Restaurant"> -->
+
+    <div class="dropdown-toggle qsuggest"  data-toggle="dropdown" style="position:absolute; width: 1010px; top: 32px; left: 0px;">
+	  <ul class="dropdown-menu for-drop" style="width: 100%">
+	  	<li ng-repeat="se in availableTags">
+		  <a href="#" ng-click="userRedirect(se.name)" class="camel highlightstyle" style="display:table; padding: 0; width: 100%">
+		  	<div class="col-xs-12 no-padding">
+		  		<div class="col-xs-12" style="padding-top: 5px">
+		  			<span class="suggest-name capitalize">{{ se.name }}</span>
+		  		</div>
+		  	</div>
+		  </a>
+		</li>
+	  </ul>
+    </div>
     <span class="input-group-btn">
       <button class="btn btn-default" type="button"> Go!</button>
     </span>
