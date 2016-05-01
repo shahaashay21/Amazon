@@ -9,7 +9,7 @@ var contactsSchema = mongoose.Schema({
 });
 
 // var cardDetailsSchema = mongoose.Schema({
-	
+// 	,
 // 	default_card: {type:String, required:true, default: 'false'}
 // });
 
@@ -28,7 +28,7 @@ var userSchema = mongoose.Schema({
 	exp_month: {type:Number},
 	exp_year: {type:Number},
 	cvv: {type:Number},
-	contacts: [contactsSchema],
+	contact: String,
 },
 {
 	collection: 'users',

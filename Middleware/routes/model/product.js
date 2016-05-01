@@ -5,6 +5,7 @@ var connection = mongoose.createConnection("mongodb://localhost/amazon");
 autoIncrement.initialize(connection);
 
 var reviewSchema = mongoose.Schema({
+	c_id: {type:String, required: true},
 	username: {type: String, required: true},
 	rating: {type: Number, required: true},
 	username: {type:String, required: true},

@@ -40,6 +40,30 @@ app.controller("amazon",function($scope, $http, $location){
 		}
 	};
 
+//Get Address
+
+	$scope.getAddress = function(){
+          $http({
+            method: "GET",
+            url: '/user/address'
+          }).success(function(res){
+            if(res.status == 200){
+              console.log(res.data);
+              $scope.user = res.data;
+              $scope.state = res.data[0].state;
+              $scope.address = res.data[0].address;
+              $scope.city = res.data[0].city;
+              $scope.zipcode = res.data[0].zipcode;
+              $scope.card_number = res.data[0].card_number;
+              $scope.name_on_card = res.data[0].name_on_card;
+              
+            }
+          });
+        }
+
+
+
+
 	//REDIRECT TO USER PROFILE PAGE
 	$scope.userRedirect= function(id){
 		window.location.assign("/search?q="+id);
@@ -97,7 +121,7 @@ app.controller("amazon",function($scope, $http, $location){
 		time = angular.element('#time').val();
 		temp = new Date();
 		month = $scope.monthname();
-		drop_time = new Date(month+' '+(temp.getDate() + Number(dayDate))+', '+temp.getFullYear()+' '+time);
+		drop_time = new Date(month+' '+(temp.getDate() + Number(dayDate))+', '+temp.getFullYear()+' '+time+':00:00');
 		console.log(drop_time);
 		data = {'drop_time': drop_time};
 		url = '/order';
@@ -110,6 +134,11 @@ app.controller("amazon",function($scope, $http, $location){
 			console.log(data);
 			if(data.data.suc == 'false'){
 				alertline('alert-notify-danger','<b>Sorry</b>, We have only <b>'+data.data.availableQuant+'</b> quantity available of <b>'+data.data.itemName+'</b>');
+			}else{
+				alertline('alert-notify-success','<b>Your has been placed successfully.</b>');
+				setTimeout(function(){
+					window.location.assign('/')
+				}, 4000);
 			}
 		});
 

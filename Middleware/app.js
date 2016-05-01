@@ -167,15 +167,7 @@ app.get('/logout', function(req,res) {
   })
 });
 
-app.get('/search', function(req, res){
 
-  if(typeof req.session.user != 'undefined'){
-    console.log(req.session.user);
-    res.render('ProductSearch', { user: req.session.user });
-  }else{
-    res.render('index');
-  }
-});
 
 app.get('/myOrders', function(req, res){
 
@@ -196,6 +188,7 @@ app.get('/myOrders', function(req, res){
 //     res.render('index');
 //   }
 // });
+
 
 
 app.get('/customerAccount', function(req, res){
