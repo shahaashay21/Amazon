@@ -3,14 +3,60 @@
   <head>
     <title>Amazon-Fresh</title>
     <% include lib.ejs %>
+
+
+
+          <script>
+                angular.module('review', []).controller('review', function($scope, $http, $location) {
+                  
+                  
+
+                  $scope.getPReviews = function(){
+          $http({
+            method: "GET",
+            url: '/user/reviews'
+          }).success(function(res){
+            if(res.status == 200){
+              console.log(res.data);
+              $scope.user = res.data;
+              $scope.state = res.data[0].state;
+              $scope.address = res.data[0].address;
+              $scope.city = res.data[0].city;
+              $scope.zipcode = res.data[0].zipcode;
+              $scope.card_number = res.data[0].card_number;
+
+              
+            }
+          });
+        }
+
+              });
+              </script>
+
+
   </head>
-  <body>
+  <body ng-app="review" ng-controller="review" ng-init="getPReviews();">
     <% include menu1.ejs %>
     <div style="height: 50px; display: block;"></div>
         <div class="container-fluid">
       
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="padding: 15px 50px 50px 200px;">
+          <br />
+          
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a href="#p_reviews" class="nav-link active" role="tab" data-toggle="tab">Products Reviews</a>
+            </li>
 
-  <table class="table table-inverse">
+            <li class="nav-item">
+              <a href="#f_reviews" class="nav-link" role="tab" data-toggle="tab">Farmer Reviews</a>
+            </li>            
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade" id="p_reviews">
+
+
+ <table class="table table-inverse">
   <thead>
     <tr>
       <th>Product Name</th>
@@ -21,26 +67,31 @@
   </thead>
   
   <tbody>
-<% for(var i=0; i<14; i++) { %>  
+
     <tr>
-      <th scope="row">Tomato | Farmer Name</th>
+      <th>Tomato | Farmer Name</th>
       <td>Greenhouse Roma Tomatoes, 1.5 lb</td>
       <td>Good Quality</td>
       <td>5 stars</td>
     </tr>
 
 
-    <% } %> 
+    
   </tbody>
 </table>
 
 
-    </div>
-</div>
+              
+
+
+
+          
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="f_reviews">2</div>
             
-
-
-
+          </div>
+          </div>  
+ 
         </div> 
 
     <% include footer.ejs %>

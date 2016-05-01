@@ -59,20 +59,21 @@ exports.editAddress = function(req, res){
 				result.state = req.state;
 				result.zipcode = req.zipcode;
 
-				user = req.session.user;
+				// var user = req.session.user.c_id;
+				// console.log(users);
 
-				newUser = {
-					pass: user.pass,
-					c_id: user.c_id,
-					fname: user.fname,
-					lname: user.lname,
-					email: user.email,
-					city: user.city,
-					address: req.address,
-					state: user.state,
-					zipcode: user.zipcode
-				}
-				req.session.user = newUser;
+				// newUser = {
+				// 	pass: user.pass,
+				// 	c_id: user.c_id,
+				// 	fname: user.fname,
+				// 	lname: user.lname,
+				// 	email: user.email,
+				// 	city: user.city,
+				// 	address: req.address,
+				// 	state: user.state,
+				// 	zipcode: user.zipcode
+				// }
+				// req.session.user.c_id = newUser;
 				//result.description = req.description;
 				console.log(result);
 				result.save(function(err,doc){

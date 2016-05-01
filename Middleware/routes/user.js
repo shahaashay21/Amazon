@@ -109,6 +109,7 @@ console.log(msg_payload);
 			doc = JSON.parse(doc);
 			if(doc.status == 200){
 				console.log("Edited address");
+				req.session.user.address = req.param("address");
 				console.log(doc);
        			res.send(doc);
        			res.redirect("/help");

@@ -3,8 +3,13 @@
   <head>
     <title>Amazon-Fresh</title>
     <% include lib.ejs %>
+
+
+
+
+
   </head>
-  <body ng-app="amazon" ng-controller="amazon">
+  <body ng-app="amazon" ng-controller="amazon" ng-init="getAddress();">
   	<% include menu.ejs %>
     <div style="height: 50px; display: block;"></div>
 
@@ -39,27 +44,27 @@
                 <span class="pull-right">
                   <a href="/addressDetails" style="text-decoration: underline; color: #669900">edit</a>
                 </span>
-                <div class="address uppercase" style="width: 180px; overflow: hidden; margin-top: 12px">
-                  <% if(user.address) {%>
-                  <span><%= user.address %></span><br>
-                  <span><%= user.city %></span>
-                  <span><%= user.state %></span>
-                  <span><%= user.zipcode %></span>
-                  <% } %>
+                <div class="address uppercase" style="width: 180px; overflow: hidden; margin-top: 12px" ng-if="address">
+                  
+                  <span>{{address}}</span><br>
+                  <span>{{city}}</span>
+                  <span>{{state}}</span>
+                  <span>{{zipcode}}</span>
+                  
                 </div>
               </div>  
             </div>
             <div class="pull-left">
               <div class="checkout-order-box del-time-box">
                 <div><b>Card Details</b></div>
-                <% if(typeof cardDetails !=  'undefined') { %>
-                <div style="margin: 10px 0">
-                  <div class="capitalize" style="margin-bottom: 5px;">Name on card: <span><b><%= cardDetails.name_on_card %></b></span></div>
+               
+                <div style="margin: 10px 0" ng-if="card_number">
+                  <div class="capitalize" style="margin-bottom: 5px;">Name on card: <span><b>{{name_on_card}}</b></span></div>
                   <select>
-                    <option>**** **** **** <%= lastFourDigit %></option>
+                    <option>{{card_number}}</option>
                   </select>
                 </div>
-                <% } %>
+              
                 <div>
                   <a href="/paymentOptions" style="color: #006699; text-decoration: underline;">Add a new credit card</a>
                 </div>
