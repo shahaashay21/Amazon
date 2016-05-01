@@ -27,7 +27,9 @@ var farmerSchema = mongoose.Schema({
 	state: {type: String, required: true, default: "Your State"},
 	zipcode: {type: Number, required:true, default: 12345},
 	reviews: [reviewSchema],
-	isAvailable: {type: Boolean, default:true}
+
+	isAvailable: {type: Boolean,default:true},
+
 },{
 	collection: 'farmers',
     timestamps: true,

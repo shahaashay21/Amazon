@@ -426,6 +426,19 @@ cnn.on('ready', function(){
 						})
 					});
 					break;
+
+					case 'getOrders':
+					//util.log("createOrder");
+					order.getOrders(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						})
+					});
+					break;
+
+
 			}
 		})
 	});
