@@ -33,7 +33,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule" ng-controller="adminController">
+  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule" ng-controller="adminController" ng-init="getTrucks();">
     <div class="wrapper">
       <header class="main-header">
         <% include ./partials/admin-header %>
@@ -128,14 +128,14 @@
                     <tbody>
                       <!-- Displaying Trucks Data -->
                       <tr ng-repeat = "truck in trucks">
-                        <td>{{truck.t_id}}</td>
+                        <td>{{truck.t_id || 'empty'}}</td>
                         <td>
-                          <span editable-text = "truck.number" e-name = "number" e-form = "truckform" e-required>
-                            {{truck.number}}
+                          <span editable-text = "truck.number" e-name = "number" e-form = "truckform" e-required onbeforesave = "checkNumber($data)">
+                            {{truck.number || 'empty'}}
                           </span>
                         </td>
                         <td>
-                          <form editable-form name = "truckform" ng-show = "truckform.$visible" class = "form-buttons form-inline" shown = "inserted == truck" onbeforesave="saveTruck($data,truck.t_id)">
+                          <form editable-form name = "truckform" ng-show = "truckform.$visible" class = "form-buttons form-inline" shown = "inserted == truck" onbeforesave="saveTruck($data,truck.t_id)" ng-minlength="7" ng-maxlength="7">
                             <button type="submit" ng-disabled="truckform.$waiting" class="btn btn-primary editable-table-button btn-xs">
                               Save
                             </button>

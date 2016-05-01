@@ -12,6 +12,7 @@ var express = require('express')
   , cart = require('./services/cart')
   , order = require('./services/order')
   , truck = require('./services/truck')
+  , driver = require('./services/driver')
   , http = require('http')
   , path = require('path')
   , amqp = require('amqp')
@@ -222,7 +223,7 @@ cnn.on('ready', function(){
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
 							correlationId: m.correlationId
-						})
+						});
 					});
 					break;
 			}
@@ -268,7 +269,7 @@ cnn.on('ready', function(){
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
 							correlationId: m.correlationId
-						})
+						});
 					});
 					break;
 			}
@@ -287,7 +288,7 @@ cnn.on('ready', function(){
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
 							correlationId: m.correlationId
-						})
+						});
 					});
 					break;
 
@@ -298,7 +299,7 @@ cnn.on('ready', function(){
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
 							correlationId: m.correlationId
-						})
+						});
 					});
 					break;	
 
@@ -309,7 +310,7 @@ cnn.on('ready', function(){
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
 							correlationId: m.correlationId
-						})
+						});
 					});
 					break;
 
@@ -320,7 +321,60 @@ cnn.on('ready', function(){
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
 							correlationId: m.correlationId
-						})
+						});
+					});
+					break;			
+			}
+		});
+	});
+
+	console.log("listening on driver_queue");
+
+	cnn.queue('driver-queue', function(q){
+		q.subscribe(function(message, headers, deliveryInfo, m) {
+			switch(message.service) {
+				
+				case 'getDrivers' :
+					util.log("getDrivers");
+					driver.getDrivers(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;	
+
+				case 'createDriver' :
+					util.log("createDriver");
+					driver.createDriver(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case 'editDriver':
+					util.log("editDriver");
+					driver.editDriver(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case 'deleteDriver':
+					util.log("deleteDriver");
+					driver.deleteDriver(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
 					});
 					break;			
 			}

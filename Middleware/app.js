@@ -14,6 +14,7 @@ var express = require('express')
   , cart = require('./routes/cart')
   , order = require('./routes/order')
   , truck = require('./routes/truck')
+  , driver =  require('./routes/driver')
   //ADMIN
   , admin = require('./routes/admin');
 
@@ -91,6 +92,12 @@ app.post('/truck/create', truck.createTruck);
 app.get('/truck/all', truck.getTrucks);
 app.post('/truck/edit', truck.editTruck);
 app.delete('/truck/delete',truck.deleteTruck);
+
+//DRIVER API
+app.post('/driver/create', driver.createDriver);
+app.get('/driver/all', driver.getDrivers);
+app.post('/driver/edit', driver.editDriver);
+app.delete('/driver/delete',driver.deleteDriver);
 
 app.get('/farmer/all',farmer.getFarmers);
 app.post('/farmer/create',farmer.createFarmer);
