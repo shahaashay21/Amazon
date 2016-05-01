@@ -3,8 +3,56 @@
   <head>
     <title>Amazon-Fresh</title>
     <% include lib.ejs %>
+
+          <script>
+                angular.module('addressModule', []).controller('addressController', function($scope, $http, $location) {
+                  
+                  $scope.updateAddress = function(){
+                    console.log($scope.zipCode);
+                    var data = {
+                        address: $scope.address,
+                        zipcode: $scope.zipcode,
+                        city: $scope.city,
+                        state: $scope.state
+                      };
+
+                    $http({
+                      method: "POST",
+                      url: '/user/address/update',
+                      data: data
+                    }).success(function(res){
+                      if(res){
+                        console.log(res.data);
+                        window.location.assign('/customerAccount');
+                      }
+                    });
+                  }
+
+                  $scope.getAddress = function(){
+          $http({
+            method: "GET",
+            url: '/user/address'
+          }).success(function(res){
+            if(res.status == 200){
+              console.log(res.data);
+              $scope.user = res.data;
+              $scope.state = res.data[0].state;
+              $scope.address = res.data[0].address;
+              $scope.city = res.data[0].city;
+              $scope.zipcode = res.data[0].zipcode;
+              $scope.card_number = res.data[0].zipcode;
+              
+            }
+          });
+        }
+
+              });
+              </script>
+
+
+
   </head>
-  <body>
+  <body ng-app="addressModule" ng-controller="addressController" ng-init="getAddress();">
     <% include menu1.ejs %>
     <div style="height: 50px; display: block;"></div>
         <div class="container-fluid">
@@ -26,7 +74,7 @@
                       <label for="address">
                         Address
                       </label>
-                      <textarea class="form-control textbox-address"  placeholder="Address" ng-model=""  value=""></textarea>
+                      <textarea class="form-control textbox-address"  placeholder="Address" ng-model="address" ></textarea>
                     </div>
                   </div>
                 </div>
@@ -37,7 +85,7 @@
                       <label for="city">
                         City
                       </label>
-                      <input type="text" class="form-control" placeholder="City" ng-model=""  value=""/>
+                      <input type="text" class="form-control" placeholder="City" ng-model="city" />
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -45,7 +93,7 @@
                       <label for="state">
                         State
                       </label>
-                      <input type="text" class="form-control" placeholder="State" ng-model=""  value=""/>
+                      <input type="text" class="form-control" placeholder="State" ng-model="state" />
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -53,10 +101,7 @@
                       <label for="zip">
                         Zip
                       </label>
-
-
-                      <input type="text" class="form-control" placeholder="Zip" ng-model=""  value=""/>
-
+                      <input type="text" class="form-control" placeholder="Zip" ng-model="zipcode" />
                     </div>
                   </div>
                 </div>
@@ -66,8 +111,6 @@
 
 
           
- 
-
                 
  
                   <div class="col-md-3"></div>
@@ -77,7 +120,7 @@
                 <div class="row">
                   <div class="col-md-3"></div>
                   <div class="col-md-6">
-                      <button type="button" class="btn btn-primary btn-block" ng-click="submit();">Update Address Details</button>
+                      <button type="button" class="btn btn-primary btn-block" ng-click="updateAddress();">Update Address Details</button>
 
                   </div>
                   <div class="col-md-2"></div>
