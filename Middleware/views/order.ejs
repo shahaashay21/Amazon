@@ -52,9 +52,9 @@
             <div class="pull-left">
               <div class="checkout-order-box del-time-box">
                 <div><b>Card Details</b></div>
-                <% if(typeof cardDetails !=  'undefined') { %>
+                <% if(typeof name_on_card !=  'undefined') { %>
                 <div style="margin: 10px 0">
-                  <div class="capitalize" style="margin-bottom: 5px;">Name on card: <span><b><%= cardDetails.name_on_card %></b></span></div>
+                  <div class="capitalize" style="margin-bottom: 5px;">Name on card: <span><b><%= name_on_card %></b></span></div>
                   <select>
                     <option>**** **** **** <%= lastFourDigit %></option>
                   </select>
