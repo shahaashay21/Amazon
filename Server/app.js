@@ -148,6 +148,16 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+					case "prod_search":
+					util.log("Product Search Page");
+					product.prod_search(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
 				case "farmer_page":
 					util.log("getFarmers");
 					product.farmer_page(message, function(err,res){

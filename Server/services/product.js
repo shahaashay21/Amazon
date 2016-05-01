@@ -58,7 +58,70 @@ exports.getCategory = function(req,res){
 
 }
 
+exports.prod_search = function(msg, callback){
+	var res = {};
+	console.log("In servers prod search");
+	console.log(msg);
+	console.log(msg.cat_id);
+	console.log(msg.search);
+	if (msg.search != undefined && msg.cat_id != undefined) {
+	Product.find({name: /.*T.*/,cat_id: msg.cat_id,isActive: true}, function(err, product) {
+		if(product == "")
+				{
+				console.log(err);
+				res.code = "401";
+				res.value = "Failed to fetch Product";
+				}
+			else
+				{
+				console.log(product);
+				res.code = "200";
+				res.value = "Product Fetched";
+				res.object = product;
+				}
+		callback(null, res);
+	});
+	}	
+	if (msg.search != undefined && msg.cat_id == undefined) {
+		console.log("Category is undefined");
+	Product.find({name: /.*T.*/,isActive: true}, function(err, product) {
+		if(product == "")
+				{
+				console.log(err);
+				res.code = "401";
+				res.value = "Failed to fetch Product";
+				}
+			else
+				{
+				console.log(product);
+				res.code = "200";
+				res.value = "Product Fetched";
+				res.object = product;
+				console.log(product);
+				}
 
+		callback(null, res);
+	});
+	}
+	if (msg.search == undefined && msg.cat_id != undefined) {
+	Product.find({cat_id: msg.cat_id,isActive: true}, function(err, product) {
+		if(product == "")
+				{
+				console.log(err);
+				res.code = "401";
+				res.value = "Failed to fetch Product";
+				}
+			else
+				{
+				console.log(product);
+				res.code = "200";
+				res.value = "Product Fetched";
+				res.object = product;
+				}
+		callback(null, res);
+	});
+	}
+};
 
 
 exports.get_prod = function(msg, callback){

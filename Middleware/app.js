@@ -98,6 +98,7 @@ app.get('/category/get', product.getCategory);
 
 
 //app.get('/prod_details', user.prod_details);
+app.get('/search', product.prod_search);
 app.get('/product', product.prod_details);
 app.post('/create_review',product.create_review);
 app.post('/f_create_review',product.f_create_review); 
@@ -113,20 +114,6 @@ app.get('/logout', function(req,res) {
     res.redirect('/');
   })
 });
-
-
-app.get('/search', function(req, res){
-
-  if(typeof req.session.user != 'undefined'){
-    console.log(req.session.user);
-    res.render('ProductSearch', { user: req.session.user });
-  }else{
-    res.render('index');
-  }
-});
-
-
-
 
 
 
