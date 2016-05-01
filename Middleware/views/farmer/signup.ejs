@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>Farmer Signup</title>
+    <% include ../lib.ejs %>
+    
+    <script>
+    	angular.module('farmerSignUp', [])
+    	.controller('farmerSignUpController', function($scope,$http){
+    		$scope.isBlankPassword = false;
+    		$scope.isBlankEmail = false;
+    		$scope.isIncorrectDetails = false;
+    		$scope.registered = "";
+    		$scope.emailAvailable = "";
+
+    		$scope.registerSubmit = function(){
+    			$scope.registered = "";
+    			$scope.emailAvailable = "";
+    			$http({
+    				method: "GET",
+    				url: '/farmer/checkEmail',
+    				params: {
+    					email: $scope.email
+    				}
+    			}).success(function(res){
+    				if(res.status == 200){
+		    			$http({
+		    				method: "POST",
+		    				url: '/farmer/signup',
+		    				data: {
+		    					fname: $scope.fname,
+		    					lname: $scope.lname,
+		    					email: $scope.email,
+		    					pass: $scope.password
+		    				}
+		    			}).success(function(res){
+		    					$scope.registered = "Registered successfully! Wait for admin to Approve.";
+		    					console.log(res);
+		    					console.log(err);
+		    			});
+    				} else {
+    					$scope.emailAvailable = res.data;
+    				}
+    			});
+
+    		}
+    	});
+    </script>
+</head>
+<body ng-app="farmerSignUp" ng-controller="farmerSignUpController">
+		  <div style="height: 50px; display: block;"></div>
+    
+    <div class="container">
+      <div class="login-error-wrapper"> 
+        <!-- Email=filled || password=filled -->
+        <!-- -->
+        <div ng-show="!isBlankEmail && !isBlankPassword && isIncorrectDetails">
+          <div class="wrong-login" style = "visibility : visible;">
+            <div class="pull-left" style="display: block; height: 25px; width: 25px; margin-right: 15px">
+              <span class="glyphicon glyphicon-remove-sign" style="color: red; font-size: 30px"></span>
+            </div>
+            <div>
+              <span><b>There was a problem</b></span>
+              <p>Your email or password was incorrect. Please try again.</p>
+            </div>
+          </div>
+        </div>
+        <!-- -->
+
+        <!-- Email=blank || password=blank/filled -->  
+        <div ng-show="isBlankEmail">
+          <div class="wrong-login" style = "visibility : visible;">
+            <div class="pull-left" style="display: block; height: 25px; width: 25px; margin-right: 15px">
+              <span class="glyphicon glyphicon-remove-sign" style="color: red; font-size: 30px"></span>
+            </div>
+            <div>
+              <span><b>There was a problem</b></span>
+              <p>Missing e-mail. Please correct and try again.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email=filled || password=blank -->
+        <div ng-show="!isBlankEmail && isBlankPassword">
+          <div class="wrong-login" style = "visibility : visible;">
+           <div class="pull-left" style="display: block; height: 25px; width: 25px; margin-right: 15px">
+              <span class="glyphicon glyphicon-remove-sign" style="color: red; font-size: 30px"></span>
+            </div>
+            <div>
+              <span><b>There was a problem</b></span>
+              <p>Please enter your password.</p>
+            </div>
+          </div>
+        </div>       
+        <!-- -->
+      </div>
+
+      <div class="login-wrapper">
+        <div style="margin-bottom: 40px;">
+          <h3><b>Farmer SignUp</b></h3>
+        </div>
+        <form class="pull-left">
+
+          <fieldset class="form-group has-feedback">
+              <label for="email">First Name</label>           
+              <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname" ng-model="fname">
+              <span class="glyphicon form-control-feedback"></span>
+            </fieldset>
+            <fieldset class="form-group has-feedback">
+              <label for="email">Last Name</label>
+              <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname" ng-model="lname">
+              <span class="glyphicon form-control-feedback"></span>
+            </fieldset>
+
+
+          <fieldset class="form-group has-feedback">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" placeholder="Enter email" name="email" ng-model="email">
+            <span class="glyphicon form-control-feedback"></span>
+            <span ng-model="emailAvailable">{{emailAvailable}}</span>
+          </fieldset>
+            <fieldset class="form-group has-feedback">
+              <label for="email">Password</label>
+              <input type="password" class="form-control" id="pass" placeholder="Password" name="pass" ng-model="password">
+              <span class="glyphicon form-control-feedback"></span>
+              <span class="min6char">Password must be more than 5 characters!</span>
+            </fieldset>
+            <fieldset class="form-group has-feedback">
+              <label for="email">Verify Password</label>
+              <input type="password" class="form-control" id="verify-pass" placeholder="Verify Password" name="verify-pass">
+              <span class="glyphicon form-control-feedback"></span>
+            </fieldset>
+            <fieldset>
+              <input type="submit" ng-click="registerSubmit();" class="btn btn-success submit-reg" value="Sign Up">
+              </br>
+              <span ng-model="registered">{{registered}}</span>
+            </fieldset>
+
+          <div class="pull-right" style="margin-top: -10px">
+            <span class="forgot-pass">
+              <a href="/farmer/login"> Farmer Login </a>
+              </br>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div
+
+</body>
+</html>

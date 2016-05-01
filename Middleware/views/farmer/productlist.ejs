@@ -24,15 +24,10 @@
 
 		<link href="/dist/css/xeditable.css" rel="stylesheet">
 		<script src="/dist/js/xeditable.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js"></script>
 
+		<script src="/angularjs/farmerModule.js"></script>
 
-		<script src="/angularjs/adminModule.js"></script>
-
-		<script src="/angularjs/angular.min.js"></script>
-
-			<link href="/dist/css/xeditable.css" rel="stylesheet">
-			<script src="/dist/js/xeditable.js"></script>
-			<script src="/angularjs/adminModule.js"></script>
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,10 +36,10 @@
 				<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule" ng-controller="adminController">
+	<body class="hold-transition skin-blue sidebar-mini" ng-app="farmerModule" ng-controller="farmerController">
 		<div class="wrapper">
 			<header class="main-header">
-				<% include ./partials/admin-header %>
+				<% include ../partials/admin-header %>
 			</header>
 
 			<!-- Left side column. contains the logo and sidebar -->
@@ -54,10 +49,10 @@
 					<!-- Sidebar user panel -->
 					<div class="user-panel">
 						<div class="pull-left image">
-							<img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+							<img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="Farmer Image">
 						</div>
 						<div class="pull-left info">
-							<p><%= fname %> <%= lname %></p>
+							<p> {{fname}} {{lname}} </p>
 							<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 						</div>
 					</div>
@@ -80,8 +75,8 @@
 								<i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
 							</a>
 							<ul class="treeview-menu">
-								<li><a href="/admin/home"><i class="fa fa-circle-o"></i> Dashboard</a></li>
-								<li><a href="/admin/home"><i class="fa fa-circle-o"></i> Statistics</a></li>
+								<li><a href="/farmer/home"><i class="fa fa-circle-o"></i> Profile</a></li>
+								<li><a href="/farmer/orders/completed"><i class="fa fa-circle-o"></i> Completed Orders</a></li>
 							</ul>
 						</li>
 						<li class="active treeview">
@@ -90,12 +85,9 @@
 								<i class="fa fa-angle-left pull-right"></i>
 							</a>
 							<ul class="treeview-menu">
-								<li><a href="/admin/farmers/list"><i class="fa fa-circle-o"></i> Farmers List</a></li>
 								<li class="active"><a href="/admin/products/list"><i class="fa fa-circle-o"></i> Products List</a></li>
-								<li><a href="/admin/trucks/list"><i class="fa fa-circle-o"></i> Trucks List</a></li>
-								<li><a href="/admin/drivers/list"><i class="fa fa-circle-o"></i> Drivers List</a></li>
-								<li><a href="/admin/customers/list"><i class="fa fa-circle-o"></i> Customers List</a></li>
-								<li><a href="/admin/orders/list"><i class="fa fa-circle-o"></i> Orders List</a></li>
+								<li><a href="/farmer/orders/pending"><i class="fa fa-circle-o"></i> Pending Orders</a></li>
+								<li><a href="/farmer/orders/completed"><i class="fa fa-circle-o"></i> Completed Orders</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -104,19 +96,20 @@
 			</aside>
 
 			<!-- Content Wrapper. Contains page content -->
-			<div ng-app="adminModule" ng-controller="adminController" ng-init="getproducts(); getCategory();" class="content-wrapper">
-				<!-- Content Header (Page header) -->
+			<div class="content-wrapper">
+								<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<h1>
-						Product Data Tables
-						<small>All data</small>
+						Farmer Info
+						<small>Control panel</small>
 					</h1>
 					<ol class="breadcrumb">
-						<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-						<li><a href="#">Tables</a></li>
-						<li class="active">Products table</li>
+						<li><a href="#"><i class="fa fa-dashboard"></i> Farmer</a></li>
+						<li class="active">Home</li>
 					</ol>
 				</section>
+
+
 
 				<!-- Main content -->
 				<section class="content" style="overflow: scroll;">
@@ -246,84 +239,79 @@
 						</div><!-- /.col -->
 					</div><!-- /.row -->
 				</section><!-- /.content -->
-					<!-- Add Product Modal -->
-					<div id="addProductModal" class= "modal fade" role = "dialog">
-						<div class= "modal-dialog modal-md">
-							<!-- Add Product Modal Content -->
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h3 class="moda-title">Add Product</h3>
-								</div>
-								<div class="modal-body">
-										<div class="form-group">
-											<label for="product_name">Product Name</label>
-											<input type="text" class="form-control" placeholder="Enter Product Name" ng-model="product_name" required>
-											<!-- Product Name Validation Here-->
-											<!-- -->
-										</div>
-										<div>
-											<label for="f_id">Farmer Id</label>
-											<input type="Number" class="form-control" placeholder="Enter Product Name" ng-model="f_id" required>
-										</div>
-										<div class="form-group">
-											<label for="category">Category</label>
-											<select type="select" ng-options="s.value as s.text for s in categories" class="form-control" ng-model="category" required> 
-											</select>
-											<!-- Address Validation Here-->
-											<!-- -->
-										</div>
-										<div class="form-group">
-											<label for="price">Price</label>
-											<input type="Number" class="form-control" placeholder="Enter Price" ng-model="price" required>
-											<!-- City Validation Here-->
-											<!-- -->
-										</div>
-
-										<div class="form-group">
-											<label for="weight">Weight</label>
-											<input type="Number" class="form-control" placeholder="Enter Weight" ng-model="weight" required>
-											<!-- State Validation Here-->
-											<!-- -->
-										</div>
-
-										<div class="form-group">
-											<label for="unit">Unit</label>
-											<input type="text" class="form-control" placeholder="Enter Weight Unit" ng-model="unit" required>
-											<!-- State Validation Here-->
-											<!-- -->
-										</div>
-										
-										<div class="form-group">
-											<label for="product_info">Product Info</label>
-											<input type="text" class="form-control" placeholder="Enter Product info" ng-model="product_info" required>
-											<!-- Zip Code Validation Here-->
-											<!-- -->
-										</div>
-										<div class="form-group">
-											<label for="description">Product Description</label>
-											<input type="text" class="form-control" placeholder="Enter Product Description" ng-model="description" required>
-										</div>
-										<div class="form-group">
-											<label for="features">Product Features</label>
-											<input type="text" class="form-control" placeholder="Enter Product Features" ng-model="features" required>
-										</div>
-										<div class="form-group">
-											<label for="quantity">Quantity</label>
-											<input type="text" class="form-control" placeholder="Enter Quantity Available" ng-model="quantity" required>
-										</div>
-										<button class="btn btn-default" ng-click="addProduct();">Add Product</button>
+			<!-- Add Product Modal -->
+				<div id="addProductModal" class= "modal fade" role = "dialog">
+					<div class= "modal-dialog modal-md">
+						<!-- Add Product Modal Content -->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h3 class="moda-title">Add Product</h3>
 							</div>
-							<!-- Content End for Modal-->
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="product_name">Product Name</label>
+									<input type="text" class="form-control" placeholder="Enter Product Name" ng-model="product_name" required>
+									<!-- Product Name Validation Here-->
+									<!-- -->
+								</div>
+								<div class="form-group">
+									<label for="category">Category</label>
+									<select type="select" ng-options="s.value as s.text for s in categories" class="form-control" ng-model="category" required> 
+									</select>
+									<!-- Address Validation Here-->
+									<!-- -->
+								</div>
+								<div class="form-group">
+									<label for="price">Price</label>
+									<input type="Number" class="form-control" placeholder="Enter Price" ng-model="price" required>
+									<!-- City Validation Here-->
+									<!-- -->
+								</div>
+
+								<div class="form-group">
+									<label for="weight">Weight</label>
+									<input type="Number" class="form-control" placeholder="Enter Weight" ng-model="weight" required>
+									<!-- State Validation Here-->
+									<!-- -->
+								</div>
+
+								<div class="form-group">
+									<label for="unit">Unit</label>
+									<input type="text" class="form-control" placeholder="Enter Weight Unit" ng-model="unit" required>
+									<!-- State Validation Here-->
+									<!-- -->
+								</div>
+								
+								<div class="form-group">
+									<label for="product_info">Product Info</label>
+									<input type="text" class="form-control" placeholder="Enter Product info" ng-model="product_info" required>
+									<!-- Zip Code Validation Here-->
+									<!-- -->
+								</div>
+								<div class="form-group">
+									<label for="description">Product Description</label>
+									<input type="text" class="form-control" placeholder="Enter Product Description" ng-model="description" required>
+								</div>
+								<div class="form-group">
+									<label for="features">Product Features</label>
+									<input type="text" class="form-control" placeholder="Enter Product Features" ng-model="features" required>
+								</div>
+								<div class="form-group">
+									<label for="quantity">Quantity</label>
+									<input type="text" class="form-control" placeholder="Enter Quantity Available" ng-model="quantity" required>
+								</div>
+								<button class="btn btn-default" ng-click="addProduct();">Add Product</button>
+							</div>
+						<!-- Content End for Modal-->
 						</div>
 					</div>
-					<!-- Add Order Modal End -->
-
+				</div>		
 			</div><!-- /.content-wrapper -->
 			<footer class="main-footer">
-				<% include ./partials/admin-footer %>
+				<% include ../partials/admin-footer %>
 			</footer>
-			<% include ./partials/admin-aside %>
+			<% include ../partials/admin-aside %>
 			<!-- Add the sidebar's background. This div must be placed
 					 immediately after the control sidebar -->
 			<div class="control-sidebar-bg"></div>

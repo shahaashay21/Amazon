@@ -5,6 +5,7 @@ var connection = mongoose.createConnection("mongodb://localhost/amazon");
 autoIncrement.initialize(connection);
 
 var reviewSchema = mongoose.Schema({
+	username: {type: String, required: true},
 	rating: {type: Number, required: true},
 	review_title: {type: String, required: true},
 	review_desc: {type:String, required:true}
@@ -17,16 +18,16 @@ var farmerSchema = mongoose.Schema({
 	lname: {type: String, required: true},
 	email: {type: String, required: true},
 	pass: {type: String, required: true},
-	intro: {type: String, required: true},
+	intro: {type: String, required: true, default: "Hello!"},
 	video: String,
-	tax: {type: Number, required: true},
+	tax: {type: Number, required: true, default: 5},
 	contacts: Number,
-	address: {type: String, required: true},
-	city: {type: String, required: true},
-	state: {type: String, required: true},
-	zipcode: {type: Number, required:true},
+	address: {type: String, required: true, default: "Type Address Here"},
+	city: {type: String, required: true, default: "Your City"},
+	state: {type: String, required: true, default: "Your State"},
+	zipcode: {type: Number, required:true, default: 12345},
 	reviews: [reviewSchema],
-	isAvailable: {type: Boolean, required: true}
+	isAvailable: {type: Boolean, required: true, default:true}
 },{
 	collection: 'farmers',
     timestamps: true,
