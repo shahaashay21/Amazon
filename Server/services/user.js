@@ -58,6 +58,21 @@ exports.editAddress = function(req, res){
 				result.city = req.city;
 				result.state = req.state;
 				result.zipcode = req.zipcode;
+
+				user = req.session.user;
+
+				newUser = {
+					pass: user.pass,
+					c_id: user.c_id,
+					fname: user.fname,
+					lname: user.lname,
+					email: user.email,
+					city: user.city,
+					address: req.address,
+					state: user.state,
+					zipcode: user.zipcode
+				}
+				req.session.user = newUser;
 				//result.description = req.description;
 				console.log(result);
 				result.save(function(err,doc){

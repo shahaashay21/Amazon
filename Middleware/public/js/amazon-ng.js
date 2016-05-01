@@ -57,6 +57,9 @@ app.controller("amazon",function($scope, $http, $location){
 			$scope.cartItemDetails = res.data.cartItemDetails;
 			$scope.cartItems = res.data.items;
 			$scope.totalEachItem = res.data.totalEachitem;
+			$scope.tax = res.data.tax;
+			$scope.delivery_charge = res.data.delivery_charge;
+			$scope.finalTotal = res.data.finalTotal;
 		});
 	}
 
@@ -105,6 +108,9 @@ app.controller("amazon",function($scope, $http, $location){
 			dataType: 'json'
 		}).then(function(data){
 			console.log(data);
+			if(data.data.suc == 'false'){
+				alertline('alert-notify-danger','<b>Sorry</b>, We have only <b>'+data.data.availableQuant+'</b> quantity available of <b>'+data.data.itemName+'</b>');
+			}
 		});
 
 	}

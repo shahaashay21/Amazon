@@ -33,7 +33,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule" ng-controller="adminController">
+  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule" ng-controller="adminController" ng-init="getDrivers()">
     <div class="wrapper">
       <header class="main-header">
         <% include ./partials/admin-header %>
@@ -123,7 +123,8 @@
                       <tr>
                         <th>Driver Id</th>
                         <th>Truck Id</th>
-                        <th>Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Email</th>
                         <th>Address</th>
                         <th>City</th>
@@ -133,116 +134,78 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>driver1</td>
-                        <td>truck2</td>
-                        <td>John Appeased</td>
-                        <td>john.appeased@gmail.com</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                            18889994444,
-                            17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>driver2</td>
-                        <td>truck7</td>
-                        <td>War Hammer</td>
-                        <td>war.hammer@hotmail.com</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>driver3</td>
-                        <td>truck10</td>
-                        <td>John Appeased</td>
-                        <td>john.appeased@gmail.com</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>driver4</td>
-                        <td>truck3</td>
-                        <td>John Appeased</td>
-                        <td>john.appeased@gmail.com</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>driver5</td>
-                        <td>truck14</td>
-                        <td>John Appeased</td>
-                        <td>john.appeased@gmail.com</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>driver6</td>
-                        <td>truck11</td>
-                        <td>John Appeased</td>
-                        <td>john.appeased@gmail.com</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>driver7</td>
-                        <td>truck4</td>
-                        <td>John Appeased</td>
-                        <td>john.appeased@gmail.com</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>driver8</td>
-                        <td>truck9</td>
-                        <td>John Appeased</td>
-                        <td>john.appeased@gmail.com</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
+                      <tr ng-repeat="driver in drivers">
+                        <td>
+                          {{driver.driver_id}}
+                        </td>
+                        <td>
+                          <span editable-text="driver.t_id" e-name="t_id" e-form="driverform" e-required>
+                             {{ driver.t_id || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="driver.fname" e-name="fname" e-form="driverform" e-required>
+                             {{ driver.fname || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="driver.lname" e-name="lname" e-form="driverform">
+                             {{ driver.lname || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="driver.email" e-name="email" e-form="driverform" onbeforesave="checkEmail($data)">
+                             {{ driver.email || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="driver.address" e-name="address" e-form="driverform">
+                             {{ driver.address || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="driver.city" e-name="city" e-form="driverform">
+                             {{ driver.city || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="driver.state" e-name="state" e-form="driverform">
+                             {{ driver.state || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="driver.zipCode" e-name="zipCode" e-form="driverform">
+                             {{ driver.zipCode || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="driver.contacts" e-name="contacts" e-form="driverform">
+                             {{ driver.contacts || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                        <form editable-form name="driverform" ng-show="driverform.$visible" class="form-buttons form-inline"
+                          shown="inserted == driver" onbeforesave="saveDriver($data,driver.driver_id)">
+                        <button type="submit" ng-disabled="driverform.$waiting" class="btn btn-primary editable-table-button btn-xs">
+                          Save
+                        </button>
+                        <button type="button" ng-disabled="driverform.$waiting" ng-click="driverform.$cancel()" class="btn btn-default editable-table-button btn-xs">
+                          Cancel
+                        </button>
+                        </form>
+                        <div class="buttons" ng-show="!driverform.$visible">
+                        <button class="btn btn-primary editable-table-button btn-xs" ng-click="driverform.$show()">Edit</button>
+                        <button class="btn btn-danger editable-table-button btn-xs" ng-click="removeDriver(driver.driver_id)">Delete</button>
+                        </div>
+                        </td>
                       </tr>
                     </tbody>
                     <tfoot>
                       <tr>
                         <th>Driver Id</th>
                         <th>Truck Id</th>
-                        <th>Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Email</th>
                         <th>Address</th>
                         <th>City</th>
@@ -252,10 +215,104 @@
                       </tr>
                     </tfoot>
                   </table>
+                  <button class="btn btn-default" id = "adddriver" data-toggle = "modal" data-target = "#addDriverModal">Add Driver</button>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
           </div><!-- /.row -->
+
+
+          <!-- Add Driver Modal -->
+          <div id="addDriverModal" class= "modal fade" role = "dialog">
+            <div class= "modal-dialog modal-md">
+              <!-- Add Driver Modal Content -->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h3 class="moda-title">Add Driver</h3>
+                </div>
+                <div class="modal-body">
+                  <div role="form" name="adddriverform">
+                    <div class="form-group">
+                      <label for="t_id">Truck ID</label>
+                      <input type="text" class="form-control" placeholder="Enter Truck ID" name="t_id" ng-model="t_id" required>
+                      <label>{{t_id}}</label>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="invalid_t_id">Invalid Truck ID!</span>
+                      </div>
+                      <div role="alert">
+                        <span class="error" ng-show="t_id_exist">Truck ID Already Assigned!</span>
+                      </div>
+                      <div role="alert">
+                        <span class="error" ng-show="unexpected_error">Unexpected Error Occurred!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="fname">First Name</label>
+                      <input type="text" class="form-control" placeholder="Enter First Name" name="fname" ng-model="fname" required>
+                      <label>{{fname}}</label>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.fname.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="lname">Last Name</label>
+                      <input type="text" class="form-control" placeholder="Enter Last Name" name="lname" ng-model="lname">
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.lname.$error.required">Invalid Last Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="email" class="form-control" placeholder="Enter Email" name="email" ng-model="email" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="address">Address</label>
+                      <input type="text" class="form-control" placeholder="Enter Address" name="address" ng-model="address" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="address">City</label>
+                      <input type="text" class="form-control" placeholder="Enter City" name="city" ng-model="city" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="state">State</label>
+                      <input type="text" class="form-control" placeholder="Enter State" name="state" ng-model="state" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="zipCode">Zip Code</label>
+                      <input type="text" class="form-control" placeholder="Enter Zip Code" name="zipCode" ng-model="zipCode" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="contacts">Contacts</label>
+                      <input type="text" class="form-control" placeholder="Enter Contacts" name="contacts" ng-model="contacts" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <button class="btn btn-default" ng-click="addDriver();">Add Driver</button>
+                  </div>
+                </div>
+                <!-- Content End for Modal-->
+              </div>
+            </div>
+          </div>
+          <!-- Add Truck Modal End -->
+
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
       <footer class="main-footer">
@@ -284,7 +341,7 @@
     <script src="/dist/js/demo.js"></script>
     <!-- page script -->
     <script>
-      $(function () {
+      /*$(function () {
         $("#example1").DataTable();
         $('#example2').DataTable({
           "paging": true,
@@ -294,7 +351,7 @@
           "info": true,
           "autoWidth": false
         });
-      });
+      });*/
     </script>
   </body>
 </html>

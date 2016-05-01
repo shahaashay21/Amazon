@@ -37,7 +37,7 @@
               <div class="checkout-order-box del_address">
                 <span><b>Delivery Address</b></span>
                 <span class="pull-right">
-                  <a href="" style="text-decoration: underline; color: #669900">edit</a>
+                  <a href="/addressDetails" style="text-decoration: underline; color: #669900">edit</a>
                 </span>
                 <div class="address uppercase" style="width: 180px; overflow: hidden; margin-top: 12px">
                   <% if(user.address) {%>
@@ -61,7 +61,7 @@
                 </div>
                 <% } %>
                 <div>
-                  <a href="" style="color: #006699; text-decoration: underline;">Add a new credit card</a>
+                  <a href="/paymentOptions" style="color: #006699; text-decoration: underline;">Add a new credit card</a>
                 </div>
               </div>
             </div>
@@ -90,6 +90,26 @@
                   Add additional items
                 </div>
               </a>
+            </div>
+            <div>
+              <ul style="list-style-type: none; font-size: 18px; margin-top: 15px;">
+                <li style="margin: 2px 0">
+                  <span style="color: #669900">Item Subtotal: </span>
+                  <span>${{ cartTotal }}</span>
+                </li>
+                <li style="margin: 2px 0">
+                  <span style="color: #669900">Delivery Charge: </span>
+                  <span>${{ delivery_charge }}</span>
+                </li>
+                <li style="margin: 2px 0 6px; padding-bottom: 6px; border-bottom: 1px #aaa dashed; width: 220px">
+                  <span style="color: #669900">Estimated Tax*: </span>
+                  <span>${{ tax }}</span>
+                </li>
+                <li style="margin: 4px 0">
+                  <span style="color: #669900">Total: </span>
+                  <span>${{ finalTotal }}</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

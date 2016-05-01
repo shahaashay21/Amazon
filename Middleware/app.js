@@ -12,6 +12,9 @@ var express = require('express')
   , login = require('./routes/login')
   , cart = require('./routes/cart')
   , order = require('./routes/order')
+  , truck = require('./routes/truck')
+  , driver =  require('./routes/driver')
+  ,farmerLogin = require('./routes/farmerLogin')
   //ADMIN
   , admin = require('./routes/admin');
 
@@ -82,7 +85,50 @@ app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
 //app.post('/admin/addFarmer', admin.addFarmer);;
 
+//TRUCK API
+app.post('/truck/create', truck.createTruck);
+app.get('/truck/all', truck.getTrucks);
+app.post('/truck/edit', truck.editTruck);
+app.delete('/truck/delete',truck.deleteTruck);
 
+//DRIVER API
+app.post('/driver/create', driver.createDriver);
+app.get('/driver/all', driver.getDrivers);
+app.post('/driver/edit', driver.editDriver);
+app.delete('/driver/delete',driver.deleteDriver);
+
+app.post('/farmer/login', function(req, res, next) {
+  passport.authenticate('farmerLogin', function(err, farmer, info) {
+    if(err) {
+      console.log(err);
+      return next(err);
+    }
+    
+    if(!farmer) {
+      req.session.wrongSignIn = true;
+      console.log("login failed");
+      return res.redirect('/farmer/login');
+    }
+    else{
+      req.logIn(farmer, {session: false}, function(err) {
+        if(err) {
+          return next(err);
+        }
+        console.log("login success");
+        req.session.user = user;
+        return res.redirect('/farmer/home');
+      })
+    }
+  })(req, res, next);
+});
+app.post('/farmer/signup',farmerLogin.signup);
+app.get('/farmer/signup',farmerLogin.userSignUp);
+app.get('/farmer/login',farmerLogin.userSignIn);
+app.get('/farmer/checkEmail',farmerLogin.checkEmail);
+app.get('/farmer/home',farmerLogin.home);
+app.get('/farmer/product/all', function(req,res){ res.render('/farmer/productlist'); });
+app.get('/farmer/order/pending', function(req,res){ res.render('/farmer/pendinglist'); });
+app.get('/farmer/order/complete', function(req,res){ res.render('/farmer/completelist'); });
 app.get('/farmer/all',farmer.getFarmers);
 app.post('/farmer/create',farmer.createFarmer);
 app.delete('/farmer/delete',farmer.deleteFarmer);
@@ -91,7 +137,7 @@ app.post('/farmer/edit',farmer.editFarmer);
 app.post('/user/address/update',user.editAddress);
 app.post('/user/card/update',user.editCard);
 app.get('/user/address',user.getAddress);
-
+// app.get('/user/orders',user.getOrders);
 
 
 app.get('/product/all',product.getProducts);
@@ -122,15 +168,6 @@ app.get('/logout', function(req,res) {
 });
 
 
-app.get('/search', function(req, res){
-
-  if(typeof req.session.user != 'undefined'){
-    console.log(req.session.user);
-    res.render('ProductSearch', { user: req.session.user });
-  }else{
-    res.render('index');
-  }
-});
 
 app.get('/myOrders', function(req, res){
 
@@ -142,6 +179,18 @@ app.get('/myOrders', function(req, res){
   }
 });
 
+// app.get('/orderDetails', function(req, res){
+
+//   if(typeof req.session.user != 'undefined'){
+//     console.log(req.session.user);
+//     res.render('orderDetails', { user: req.session.user });
+//   }else{
+//     res.render('index');
+//   }
+// });
+
+
+>>>>>>> 81465fc2b169d136b0fbb05961d718dced160867
 app.get('/customerAccount', function(req, res){
 
   if(typeof req.session.user != 'undefined'){

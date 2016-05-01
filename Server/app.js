@@ -11,6 +11,9 @@ var express = require('express')
   , admin = require('./services/admin')
   , cart = require('./services/cart')
   , order = require('./services/order')
+  , truck = require('./services/truck')
+  , driver = require('./services/driver')
+  , farmerLogin = require('./services/farmerLogin')
   , http = require('http')
   , path = require('path')
   , amqp = require('amqp')
@@ -18,6 +21,10 @@ var express = require('express')
   , mongoose = require('mongoose');
 
 var app = express();
+
+//JUST FOR PASSPORT LOGIN
+var passport = require('passport');
+require('./services/passport')(passport);
 
 // all environments
 app.set('port', process.env.PORT || 3001);
@@ -34,6 +41,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
+
+app.use(passport.initialize());
 
 //app.get('/', routes.index);
 app.get('/users', user.list);
@@ -116,6 +125,20 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+
+				case "farmerSignUp":
+					util.log("farmerSignUp");
+					farmerLogin.farmerSignUp(message, function(err,res){
+						util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
 			}
 		});
 	});
@@ -273,7 +296,7 @@ cnn.on('ready', function(){
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
 							correlationId: m.correlationId
-						})
+						});
 					});
 					break;
 			}
@@ -402,8 +425,19 @@ cnn.on('ready', function(){
 		q.subscribe(function(message, headers, deliveryInfo, m) {
 			switch(message.service) {
 				case 'createOrder':
-					util.log("createOrder");
+					// util.log("createOrder");
 					order.createOrder(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+					case 'getOrders':
+					//util.log("createOrder");
+					order.getOrders(message, function(err, res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
@@ -411,7 +445,114 @@ cnn.on('ready', function(){
 						})
 					});
 					break;
+
+
 			}
 		})
+	});
+
+	console.log("listening on truck_queue");
+
+	cnn.queue('truck-queue', function(q){
+		q.subscribe(function(message, headers, deliveryInfo, m) {
+			switch(message.service) {
+				case 'createTruck' :
+					util.log("createTruck");
+					truck.createTruck(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case 'getTrucks' :
+					util.log("getTrucks");
+					truck.getTrucks(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;	
+
+				case 'editTruck':
+					util.log("editTruck");
+					truck.editTruck(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case 'deleteTruck':
+					util.log("deleteTruck");
+					truck.deleteTruck(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;			
+			}
+		});
+	});
+
+	console.log("listening on driver_queue");
+
+	cnn.queue('driver-queue', function(q){
+		q.subscribe(function(message, headers, deliveryInfo, m) {
+			switch(message.service) {
+				
+				case 'getDrivers' :
+					util.log("getDrivers");
+					driver.getDrivers(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;	
+
+				case 'createDriver' :
+					util.log("createDriver");
+					driver.createDriver(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case 'editDriver':
+					util.log("editDriver");
+					driver.editDriver(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case 'deleteDriver':
+					util.log("deleteDriver");
+					driver.deleteDriver(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;			
+			}
+		});
 	});
 });
