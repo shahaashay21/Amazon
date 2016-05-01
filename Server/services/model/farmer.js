@@ -12,7 +12,7 @@ var reviewSchema = mongoose.Schema({
 
 var farmerSchema = mongoose.Schema({
 	f_id: {type: Number, required: true, index: true},
-	isActive : {type: Boolean, default: true},
+	isActive : {type: Boolean, default: false},
 	fname: {type: String, required: true},
 	lname: {type: String, required: true},
 	email: {type: String, required: true},
@@ -26,13 +26,12 @@ var farmerSchema = mongoose.Schema({
 	state: {type: String, required: true},
 	zipcode: {type: Number, required:true},
 	reviews: [reviewSchema],
-	isAvailable: {type: Boolean, required: true}
+	isAvailable: {type: Boolean,default:true}
 },{
 	collection: 'farmers',
     timestamps: true,
     versionKey: false
 });
-
 
 farmerSchema.plugin(autoIncrement.plugin, {
 	model: 'Farmer',

@@ -91,7 +91,7 @@ app.post('/farmer/edit',farmer.editFarmer);
 app.post('/user/address/update',user.editAddress);
 app.post('/user/card/update',user.editCard);
 app.get('/user/address',user.getAddress);
-
+// app.get('/user/orders',user.getOrders);
 
 
 app.get('/product/all',product.getProducts);
@@ -140,6 +140,16 @@ app.get('/myOrders', function(req, res){
     res.render('index');
   }
 });
+
+// app.get('/orderDetails', function(req, res){
+
+//   if(typeof req.session.user != 'undefined'){
+//     console.log(req.session.user);
+//     res.render('orderDetails', { user: req.session.user });
+//   }else{
+//     res.render('index');
+//   }
+// });
 
 
 

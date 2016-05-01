@@ -1,6 +1,43 @@
 //Required Files
 var mq = require('../rpc/client');
 
+
+
+
+exports.getOrders = function(req,res){
+
+	var msg_payload = {
+		"service":"getOrders",
+		 "c_id": req.session.user.c_id ,
+		 "sid":req.sessionID};
+			console.log(req.session.user.c_id);
+  	mq.make_request('order_queue', msg_payload, function(err,doc){
+		if(err)
+		{
+		    console.log(err);
+			res.send(resGen.responseGenerator(401, null));
+		}
+		else
+		{
+			doc = JSON.parse(doc);
+			if(doc.status == 200){
+				console.log("reply from getOrders");
+				res.send(doc);
+			}
+			else
+			{
+				res.send(resGen.responseGenerator(401, null));
+			}
+		}
+	});
+}
+
+
+
+
+
+
+
 //create and order
 exports.createOrder = function(req, res) {
 
