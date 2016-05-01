@@ -11,6 +11,7 @@ var express = require('express')
   , admin = require('./services/admin')
   , cart = require('./services/cart')
   , order = require('./services/order')
+  , farmerLogin = require('./services/farmerLogin')
   , http = require('http')
   , path = require('path')
   , amqp = require('amqp')
@@ -116,6 +117,20 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+
+				case "farmerSignUp":
+					util.log("farmerSignUp");
+					farmerLogin.farmerSignUp(message, function(err,res){
+						util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
 			}
 		});
 	});

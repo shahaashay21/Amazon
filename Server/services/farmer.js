@@ -3,7 +3,7 @@ var resGen = require('./commons/responseGenerator');
 
 
 exports.getFarmers = function(req, res){
-
+	//isAvailable:true
 	Farmer.find({isAvailable:true},{pass:0},function(err,results){
 		if(err)
 		{
@@ -88,6 +88,7 @@ exports.editFarmer = function(req, res){
 				result.tax = req.tax;
 				result.contacts = req.contacts;
 				result.isActive = req.isActive;
+				result.isAvailable = true;
 				console.log(req.isActive);
 				//result.city = req.city ? req.city : result.city;
 				//result.zipcode = req.zipcode ? req.zipcode : result.zipcode;
