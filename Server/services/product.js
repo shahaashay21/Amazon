@@ -1,5 +1,6 @@
 var Product = require('./model/product');
 var Farmer = require('./model/farmer');
+var Category = require('./model/category');
 var resGen = require('./commons/responseGenerator');
 var Farmer = require('./model/farmer');
 
@@ -40,6 +41,26 @@ exports.getProducts = function(req, res){
 		}
 	});
 }
+
+
+exports.getCategory = function(req,res){
+	Category.find({},function(err,results){
+		if(err){
+			resGen.error(err,res);
+		} else {
+			if(results){
+				console.log("categories found");
+				console.log(results);
+				res(null,resGen.responseGenerator(200,results));
+			}
+		}
+	})
+
+}
+
+
+
+
 exports.get_prod = function(msg, callback){
 	var res = {};
 	console.log("In servers get prod");

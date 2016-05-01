@@ -104,7 +104,7 @@
 			</aside>
 
 			<!-- Content Wrapper. Contains page content -->
-			<div ng-app="adminModule" ng-controller="adminController" ng-init="getproducts();" class="content-wrapper">
+			<div ng-app="adminModule" ng-controller="adminController" ng-init="getproducts(); getCategory();" class="content-wrapper">
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<h1>
@@ -162,8 +162,8 @@
 												 {{ product.farmer_name || 'empty' }}	
 												</td>
 												<td>
-													<span editable-text="product.cat_id" e-name="cat_id" e-form="productform" e-required>
-														 {{ product.cat_id || 'empty' }}
+													<span editable-select="product.cat_id" e-name="cat_id" e-form="productform" e-ng-options="s.value as s.text for s in categories" e-required>
+														 {{ showCategory(product) }}
 													</span>
 												</td>
 												<td>
