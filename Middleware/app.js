@@ -97,6 +97,7 @@ app.post('/product/edit',product.editProduct);
 //app.get('/prod_details', user.prod_details);
 app.get('/product', product.prod_details);
 app.post('/create_review',product.create_review);
+app.post('/f_create_review',product.f_create_review); 
 app.get('/farmer_page',product.farmer_page);
 
 app.get('/frame', function(req,res){

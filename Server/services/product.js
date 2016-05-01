@@ -112,7 +112,7 @@ exports.create_review = function(msg, callback){
 	var res = {};
 	console.log("In servers create review");
 	console.log(msg);
-	Product.update({"p_id": msg.p_id}, {"$push": {"reviews": {"rating": msg.star,"review_title": msg.title,"review_desc": msg.review}}},{upsert:true},function(err){
+	Product.update({"p_id": msg.p_id}, {"$push": {"reviews": {"username": msg.sid,"rating": msg.star,"review_title": msg.title,"review_desc": msg.review}}},{upsert:true},function(err){
         console.log("In prod update");
         if(err){
                 console.log(err);res.code = "401";
@@ -126,6 +126,23 @@ exports.create_review = function(msg, callback){
 });
 };
 
+exports.f_create_review = function(msg, callback){
+	var res = {};
+	console.log("In servers farmer create review");
+	console.log(msg);
+	Farmer.update({"f_id": msg.f_id}, {"$push": {"reviews": {"username": msg.sid,"rating": msg.star,"review_title": msg.title,"review_desc": msg.review}}},{upsert:true},function(err){
+        console.log("In f_create update place");
+        if(err){
+                console.log(err);res.code = "401";
+				res.value = "Failed to create review";
+        }else{	
+        		res.code = "200";
+				res.value = "Review Created";
+                console.log("Farmers create_review successful");
+        }
+        callback(null, res);
+});
+};
 
 
 exports.createProduct = function(req, res){

@@ -96,8 +96,8 @@ $(window).load(function(){
 <body>
 <div class="review" style="width:80%">  
     <div class="customerReviews">
-        <form name="TheForm1" action="/create_review" method="post">
-        <input type="hidden" name="p_id" id="p_id" value="<%= products.p_id %>"></input>
+        <form name="TheForm1" action="/f_create_review" method="post">
+        <input type="hidden" name="p_id" id="p_id" value="<%= farmer.object[0].f_id %>"></input>
             <div class="createReview">
                 How do you rate this item?
                 <span id="rating_1" class="rating" ></span>

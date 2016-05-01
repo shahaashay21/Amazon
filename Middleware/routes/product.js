@@ -195,15 +195,14 @@ exports.prod_details = function(req,res){
 	});
 };
 
-exports.create_review = function(req,res){
-	
+exports.f_create_review = function(req,res){
 	var msg_payload = {
-		"service" : "create_review",
-		"p_id" : req.param("p_id"),
+		"service" : "f_create_review",
+		"f_id" : req.param("p_id"),
 		"star" : req.param("vue"),
 		"title": req.param("title"),
 		"review": req.param("review"), 
-		"sid":req.session.user
+		"sid":req.session.user.fname
 	};
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
@@ -214,6 +213,37 @@ exports.create_review = function(req,res){
 		else
 		{
 			if(prod.code == 200){
+				res.redirect("/farmer_page?id="+req.param("p_id"));
+		}
+			else
+			{
+				res.send(resGen.responseGenerator(401, null));
+			}
+		}
+	});
+};
+
+exports.create_review = function(req,res){
+	
+	var msg_payload = {
+		"service" : "create_review",
+		"p_id" : req.param("p_id"),
+		"star" : req.param("vue"),
+		"title": req.param("title"),
+		"review": req.param("review"), 
+		"sid": req.session.user.fname
+	};
+  	mq.make_request('product_queue', msg_payload, function(err,prod){
+		if(err)
+		{
+		    console.log(err);
+			res.send(resGen.responseGenerator(401, null));
+		}
+		else
+		{
+			if(prod.code == 200){
+				res.redirect("/product?id="+req.param("p_id"));
+				
 				console.log(prod);
 					console.log(req.session.user);	
 		}
