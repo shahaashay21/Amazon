@@ -417,7 +417,7 @@ cnn.on('ready', function(){
 		q.subscribe(function(message, headers, deliveryInfo, m) {
 			switch(message.service) {
 				case 'createOrder':
-					util.log("createOrder");
+					// util.log("createOrder");
 					order.createOrder(message, function(err, res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',

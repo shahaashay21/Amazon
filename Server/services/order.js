@@ -1,6 +1,7 @@
 var Order = require('./model/order');
 var OrderDetail = require('./model/orderdetail');
 var Product = require('./model/product');
+var User = require('./model/user');
 var cart = require('./cart');
 
 exports.createOrder = function(req, callback) {
@@ -35,14 +36,54 @@ exports.createOrder = function(req, callback) {
 
 		//CHECK WHETHER QUNTITY IS AVAILABLE OR NOT
 		checkRemainItems(0, function(){
-			console.log(itemAvailFlag);
+			// console.log(itemAvailFlag);
 			if(itemAvailFlag == 'false'){
-				console.log('baddhu barabar');
-			}else{
+				// console.log('baddhu barabar');
 				//ALL QUANTITY IS AVAILABLE, NOW WE CAN DO FURTHER
 				//EVERY LOGIC FOR ORDER
+				User.findOne({c_id: c_id.c_id}, 'address city zipcode state contact', function(err, u){
+					console.log(u);
+					console.log(u.contact);
+
+					allItemDetail = [];
+					function itemDetail(i, callItemDetail){
+						if(i < items.length){
+							eachItemDetail = {
+									p_id: items[i].p_id,
+									f_id: items[i].f_id,
+									'qty': cartItemDetails[i].qty,
+									'price': totalEachitem[i].total
+								}
+							allItemDetail[i] = eachItemDetail;
+							itemDetail( i+1, callItemDetail);
+						}else{
+							callItemDetail();
+						}
+					}
+
+					itemDetail(0, function(){
+						dataToStore = {
+							c_id: c_id.c_id,
+							order_detail: allItemDetail,
+							address: u.address,
+							zipcode: u.zipcode,
+							city: u.city,
+							state: u.state,
+							contact: u.contact,
+							sub_total: ans.grandTotal,
+							tax: ans.tax,
+							ship_cost: ans.delivery_charge,
+							total: ans.finalTotal,
+							drop_time: req.drop_time
+						}
+						console.log(dataToStore);
+					})
+					// order_detail = 
+				})
 				returnData = { 'suc': 'true'};
 				callback(null, JSON.stringify(returnData));
+			}else{
+
 			}
 		})
 	});
