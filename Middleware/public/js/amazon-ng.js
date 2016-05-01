@@ -40,6 +40,30 @@ app.controller("amazon",function($scope, $http, $location){
 		}
 	};
 
+//Get Address
+
+	$scope.getAddress = function(){
+          $http({
+            method: "GET",
+            url: '/user/address'
+          }).success(function(res){
+            if(res.status == 200){
+              console.log(res.data);
+              $scope.user = res.data;
+              $scope.state = res.data[0].state;
+              $scope.address = res.data[0].address;
+              $scope.city = res.data[0].city;
+              $scope.zipcode = res.data[0].zipcode;
+              $scope.card_number = res.data[0].card_number;
+              $scope.name_on_card = res.data[0].name_on_card;
+              
+            }
+          });
+        }
+
+
+
+
 	//REDIRECT TO USER PROFILE PAGE
 	$scope.userRedirect= function(id){
 		window.location.assign("/search?q="+id);

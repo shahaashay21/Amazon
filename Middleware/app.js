@@ -190,7 +190,7 @@ app.get('/myOrders', function(req, res){
 // });
 
 
->>>>>>> 81465fc2b169d136b0fbb05961d718dced160867
+
 app.get('/customerAccount', function(req, res){
 
   if(typeof req.session.user != 'undefined'){
