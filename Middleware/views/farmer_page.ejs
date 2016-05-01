@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon-Fresh</title>
+    <% include lib.ejs %>
+    <script type="text/javascript">
+$(window).load(function(){
+  $('#rating_1').RatingStar({callback:function(val){$('#result_1').html(val)}});
+ $('#rating_2').RatingStar();
+});
+</script>
+  </head>
+  <body ng-app="amazon" ng-controller="amazon">
+    <% include menu.ejs %>
+    <div style="height: 50px; display: block;"></div>
+    <div class="container-fluid">
+      <div class="col-lg-9">
+      <div class="row">
+      <div class="col-lg-5">
+      <br><br>
+      <h4> Farmer Name: <%= farmer.object[0].fname %> <%= farmer.object[0].lname %></h4>
+      <h4> Email: <%= farmer.object[0].email %> </h4> <br>
+      <h4> Introduction: <%= farmer.object[0].intro %> </h4>    
+    </div>
+      <div class="col-lg-7">
+    <iframe width="550" height="350" src="<%= farmer.object[0].video %>">
+</iframe></div>
+      
+</div>
+      <h1>Products by <%= farmer.object[0].fname %></h1>
+      <% for(var i=0; i < products.length; i++) { %>
+        <div class="col-xs-3 no-padding">
+      <div class="product-wrapper">
+        <div class="itemInnerBorader">
+          <a href="">
+            <img src="<%= products[i].product_img %>" class="" style="width: 140px; height: 140px; margin: 35px 45px 20px;">
+          </a>
+          <div class="productDetails">
+            <div>
+              <b>$<%= products[i].price %></b>
+              <span class="unitPrice"> ($<%= products[i].price_unit %>/<%= products[i].unit %>) </span>
+            </div>
+            <div class="shortDetail capitalize">
+              <a href="#">
+                <%= products[i].name %>, <%= products[i].weight %> <%= products[i].unit %>
+              </a>
+            </div>
+            <div class="bottomProduct">
+              <div class="form-group pull-left">
+                <select class="form-control productQuant" id="product<%= products[i].p_id %>">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+              <% if(typeof user == 'object') {%>
+                <button class="add-to-cart" ng-click="addItem(<%= products[i].p_id %>)">Add to Cart</button>
+              <% }else{ %>
+                <button class="add-to-cart" style="background: #aaa; cursor: not-allowed; color: #fff">Add to Cart</button>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+      </div>
+      <div class="col-xs-3">
+        <!-- CART WILL BE HERE -->
+        <% include cart.ejs %>
+      </div>
+    </div>
+    </div>
+    <div class="review" >
+          <h4>Customer Ratings and Reviews</h4><br>
+<button type="button" class="btn btn-sm" data-toggle="modal" data-target="#myModal" style="background-color: lightgrey; color: black; border-color: lightgrey;">Create a Review</button>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h1 class="modal-title">Create your Review</h1>
+        </div>
+        <div class="modal-body">
+<html>
+<body>
+<div class="review" style="width:80%">  
+    <div class="customerReviews">
+        <form name="TheForm1" action="/f_create_review" method="post">
+        <input type="hidden" name="p_id" id="p_id" value="<%= farmer.object[0].f_id %>"></input>
+            <div class="createReview">
+                How do you rate this item?
+                <span id="rating_1" class="rating" ></span>
+                <span><label id="result_1" ng-model="starr"></label></span>
+            </div>
+            <div class="createReview">
+                <br>What is the title of your review? <span class="titleBox"><input class="textField" ng-model="frm.title" id="Title" type="text" maxlength="100" size="40" name="title"></span>    
+            </div>
+            <div class="createReview">
+                Write your review <br><br>                   
+<span class="reviewBox"><textarea class="textArea" id="YourReview" cols="100" ng-model="frm.review" rows="10" name="review" style="width:80%"></textarea></span> 
+            </div>
+<button type="submit" class="btn btn-primary btn-sm" style="background-color: green;border-color: green">Submit</button>
+        </form>
+    </div>
+</div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  <br><br>
+  
+  
+<% for(var i=0; i < farmer.object[0].reviews.length; i++) { %>
+  <div style="border: 4px solid;border-color: #DAD8D8; margin-bottom: 10px;">
+      <div style="border-bottom: 2px solid #DAD8D8">
+      User: <%= farmer.object[0].reviews[i].username %> <br>
+      </div>
+      Ratings: <%= farmer.object[0].reviews[i].rating %>/5 <br>
+      Title: <%= farmer.object[0].reviews[i].review_title %> <br>
+          Review: <%= farmer.object[0].reviews[i].review_desc %>
+            </div>
+<% } %>
+          
+          
+  </div>
+    
+    <% include footer.ejs %>
+    <% include js-lib.ejs %>
+  </body>
+</html>

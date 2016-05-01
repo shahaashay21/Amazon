@@ -30,20 +30,44 @@ exports.getProducts = function(req, res){
 	});
 };
 
+
+exports.getCategory = function(req,res){
+	mq.make_request('product_queue', {'service' : 'getCategory'}, function(err,doc){
+		if(err){
+			res.send(500);
+		}else{
+			res.send(doc);
+		}
+	});
+}
+
+
+
+exports.suggest = function(req, res){
+	q = req.param('q');
+	var msg_payload = {'service': 'suggest', 'q': q};
+	console.log(q);
+	mq.make_request('product_queue', msg_payload, function(err, done){
+		res.send(done);
+	})
+}
+
 exports.createProduct = function(req,res){
-
-
 
 	var msg_payload = {
 		"service" : "createProduct",
 		//"p_id" : req.param("p_id"),
 		"name" : req.param("name"),
+		"f_id" : req.param("f_id"),
+		//"f_name": req.param("f_name"),
 		"cat_id" : req.param("cat_id"),
 		"price" : req.param("price"),
 		"weight" : req.param("weight"),
-		"details" : req.param("details"),
 		"unit" : req.param("unit"),
+		"quantity": req.param("quantity"),
+		"details" : req.param("details"),
 		"description" : req.param("description"),
+		"features": req.param("features"),
 		"sid":req.sessionID
 	};
 
@@ -108,14 +132,17 @@ exports.editProduct = function(req,res){
 
 	var msg_payload = {
 		"service" : "editProduct",
-		//"p_id" : req.param("p_id"),
+		"p_id" : req.param("p_id"),
 		"name" : req.param("name"),
+		"f_id": req.param("f_id"),
 		"cat_id" : req.param("cat_id"),
 		"price" : req.param("price"),
 		"weight" : req.param("weight"),
+		"unit": req.param("unit"),
 		"details" : req.param("details"),
-		//"description" : req.param("description"),
-		"unit" : req.param("unit"),
+		"description" : req.param("description"),
+		"features" : req.param("features"),
+		"quantity" : req.param("quantity"),
 		"sid":req.sessionID
 	};
 
@@ -142,11 +169,13 @@ exports.editProduct = function(req,res){
 };
 
 exports.prod_details = function(req,res){
+	console.log("In middlewares prod.js");
 	var msg_payload = {
 		"service" : "get_prod",
-		"p_id" : req.param("p_id"),
+		"p_id" : req.param("id"),
 		"sid":req.session.user
 	};
+	console.log(msg_payload);
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
 		{
@@ -156,10 +185,10 @@ exports.prod_details = function(req,res){
 		else
 		{
 			if(prod.code == 200){
-				console.log(prod);
+				//console.log(Object.keys(prod.reviews));
 				if(typeof req.session.user != 'undefined'){
-				console.log(req.session.user);
-				//var arrayLength = prod.reviews.length;
+				console.log("session is active yipppy");
+
 				//for (var i = 0; i < arrayLength; i++) {
 				//console.log("star value"+prod.reviews.rating);
 				//console.log("star value1"+prod.reviews[0].rating);
@@ -173,21 +202,56 @@ exports.prod_details = function(req,res){
 			}
 			else
 			{
-				res.send(resGen.responseGenerator(401, null));
+				res.send("Sorry the product that you are searching for does not exist.");
 			}
 		}
 	});
 };
 
-exports.create_review = function(req,res){
-	console.log();
+exports.prod_search = function(req,res){
+	console.log("In middlewares prod.js");
 	var msg_payload = {
-		"service" : "create_review",
-		"p_id" : req.param("p_id"),
-		"star" : req.param("star"),
+		"service" : "prod_search",
+		"cat_id" : req.param("id"),
+		"search": req.param("search"),
+		"sid":req.session.user
+	};
+	
+	console.log(msg_payload);
+  	mq.make_request('product_queue', msg_payload, function(err,prod){
+		if(err)
+		{
+		    console.log(err);
+			res.send(resGen.responseGenerator(401, null));
+		}
+		else
+		{
+			if(prod.code == 200){
+				//console.log(Object.keys(prod.reviews));
+				if(typeof req.session.user != 'undefined'){
+					res.render('ProductSearch', { user: req.session.user, products: prod, session: true });
+				}else{
+					console.log("No session on");
+					console.log(prod);
+					res.render('ProductSearch', { products: prod, session: false });
+				}
+			}
+			else
+			{
+				res.send("Sorry the product that you are searching for does not exist.");
+			}
+		}
+	});
+};
+
+exports.f_create_review = function(req,res){
+	var msg_payload = {
+		"service" : "f_create_review",
+		"f_id" : req.param("p_id"),
+		"star" : req.param("vue"),
 		"title": req.param("title"),
 		"review": req.param("review"), 
-		"sid":req.session.user
+		"sid":req.session.user.fname
 	};
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
@@ -198,13 +262,87 @@ exports.create_review = function(req,res){
 		else
 		{
 			if(prod.code == 200){
-				console.log(prod);
-					console.log(req.session.user);
-					res.send(200);
-			}
+				res.redirect("/farmer_page?id="+req.param("p_id"));
+		}
 			else
 			{
 				res.send(resGen.responseGenerator(401, null));
+			}
+		}
+	});
+};
+
+exports.create_review = function(req,res){
+	
+	var msg_payload = {
+		"service" : "create_review",
+		"p_id" : req.param("p_id"),
+		"star" : req.param("vue"),
+		"title": req.param("title"),
+		"review": req.param("review"), 
+		"sid": req.session.user.fname
+	};
+  	mq.make_request('product_queue', msg_payload, function(err,prod){
+		if(err)
+		{
+		    console.log(err);
+			res.send(resGen.responseGenerator(401, null));
+		}
+		else
+		{
+			if(prod.code == 200){
+				res.redirect("/product?id="+req.param("p_id"));
+				
+				console.log(prod);
+					console.log(req.session.user);	
+		}
+			else
+			{
+				res.send(resGen.responseGenerator(401, null));
+			}
+		}
+	});
+};
+
+exports.farmer_page = function(req,res){
+	console.log("In middlewares prod.js");
+	var msg_payload = {
+		"service" : "farmer_page",
+		"f_id" : req.param("id"),
+		"sid":req.session.user
+	};
+	console.log(msg_payload);
+  	mq.make_request('product_queue', msg_payload, function(err,prod){
+		if(err)
+		{
+		    console.log(err);
+			res.send(resGen.responseGenerator(401, null));
+		}
+		else
+		{
+			if(prod.farmer.code == 200){
+				//console.log(Object.keys(prod.reviews));
+				if(typeof req.session.user != 'undefined'){
+				//console.log("1");
+				//console.log(prod.farmer);
+				//console.log("2");
+				//console.log(prod.product);
+				//for (var i = 0; i < arrayLength; i++) {
+				//console.log("star value"+prod.reviews.rating);
+				//console.log("star value1"+prod.reviews[0].rating);
+				//console.log("In array should run once");
+				//}
+				console.log(req.session.user);
+				res.render('farmer_page', { user: req.session.user, products: prod.product, farmer: prod.farmer, session: true });
+				}else{
+					console.log("No session on");
+					//res.send(prod);
+					res.render('farmer_page', { user: null, products: prod, session: false });
+				}
+			}
+			else
+			{
+				res.send("Sorry the product that you are searching for does not exist.");
 			}
 		}
 	});

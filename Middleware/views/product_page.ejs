@@ -14,10 +14,9 @@ $(window).load(function(){
     <% include menu.ejs %>
     <div style="height: 50px; display: block;"></div>
 
-<div ng-app="Product" ng-controller="formCtrl">
- 
- <div class="row">
-    <div class="col-sm-10" >
+<div ng-app="Product" ng-controller="formCtrl" class="container-fluid">
+ <div class="ro">
+    <div class="col-sm-9" >
     <div class="col-sm-3">
       <a ng-href="{{magic_zoom}}" class="MagicZoom"><img ng-src="{{lrg_image}}" style="width: 300px; height: 300px;"></a>
       <div id="imageCaption"style="font-size: 0.92em;text-align: center;">Roll over image to zoom in</div>
@@ -60,52 +59,40 @@ $(window).load(function(){
       </div>
       <div class="col-sm-9">
       <br><br>
-      <h3><%= products.object[0].name %>, <%= products.object[0].weight %> <%= products.object[0].unit %></h3>
-      <h5 style="font-size: 0.9em">Other products by <a href="/farmer_page"><%= products.object[0].farmer_name %></a></h5>
-      <div>
+      <h3 class="capitalize"><%= products.object[0].name %>, <%= products.object[0].weight %> <%= products.object[0].unit %></h3>
+      <h5 style="font-size: 0.9em">Other products by <a href="/farmer_page?id=<%= products.object[0].f_id %>"> <%= products.object[0].f_name %> </a></h5>
+      <div class="row">
+      <% if(typeof products.object[0].reviews[0] != 'undefined') {
+            if(products.object[0].reviews[0] != "") { %>
     <span id="rating_2" class="rating" data-val="<%= products.object[0].reviews[0].rating %>" data-stars="5" data-change="false"></span>
-    
+    <% } }%>
+    <span id="rating_2" class="rating" data-val="0" data-stars="5" data-change="false"></span>
 </div>
 <div class="price">
-                <span class="value"><h4><strong>$<%= products.object[0].price %></strong>  ($<%= products.object[0].per_unit %>/<%= products.object[0].unit %>)</h4></span>
+                <span class="value"><h4><strong>$<%= products.object[0].price %></strong>  ($<%= products.object[0].price_unit %>/<%= products.object[0].unit %>)</h4></span>
 </div><br>
-<div class="row"  ng-show="quantity">
-<select ng-model= "quantity">
-  <option value="1" selected="selected">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
-  <option value="6">6</option>
-  <option value="7">7</option>
-  <option value="8">8</option>
-  <option value="9">9</option>
-  <option value="10">10</option>
-</select>
-<button type="button" class="checkout-btn" style="width: 102px;height: 31px;color: black;margin: 0px" ng-click="addcart()" class="checkout-btn" >Add to Cart</button>
+<div class="row">
+<select class="form-control productQuant" id="product<%= products.object[0].p_id %>">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+<button type="button" class="checkout-btn" style="width: 102px;height: 31px;color: black;margin: 0px;font-weight: none" ng-click="addItem(<%= products.object[0].p_id %>)" class="checkout-btn" >Add to Cart</button>
 </div>
 <button type="button" class="checkout-btn" style="width: 102px;height: 31px;color: black;margin: 0px" ng-model="disabled_button" ng-show="addtocart" disabled>Add to Cart</button>
 <h5 style="font-size: 0.9em">Sold by AmazonFresh. Shipped by AmazonFresh.</h5>
       </div>
     </div>
-    <div class="col-sm-2"  style="border: 1px solid #e0ddd6;text-align: center;" ng-show="cart">
-    Deliver to {{fname}}-{{city}} <br><br>
-    <button type="button" ng-click="cart()" style="margin-bottom: 10px;width: 100%;" class="checkout-btn btn-md">Proceed to Checkout</button>
-    Minimum subtotal for checkout is $50<br>
-    <div>
-               <div class="col-sm-7" style="color: #669900;"><h4>Subtotal ${{cart_total}}</h4></div>
-               <div class="col-sm-5"><h4>({{item_number}} items)</h4></div>
-         </div><br><br>
-    <div  style="border-top: 1px dashed #e0ddd6" ng-show="empty_cart">There are currently no items in your cart. You can add an item by clicking on any <strong>Add to cart</strong> button.</div>
-  </div>
-  <div class="col-sm-2"  style="border: 1px solid #e0ddd6;text-align: center;" ng-show="signin">
-  <br>
-  <h5>AmazonFresh is available exclusively to Prime Fresh members in eligible zip codes.</h5>
-   <button type="button" ng-click="signin()" style="margin-bottom: 10px;width: 100%;" class="checkout-btn btn-md">Sign in with Amazon account</button>
-  </div>
-<br>
-
-</div>
+    <div class="col-sm-3" ng-show="cart">
+     <% include cart.ejs %>
+ </div>
 
 <div class="row">
   <div class="col-sm-10">
@@ -139,7 +126,7 @@ $(window).load(function(){
 </div>
 <div class="review" >
           <h4>Customer Ratings and Reviews</h4><br>
-<button type="button" class="btn btn-sm" data-toggle="modal" data-target="#myModal" style="background-color: lightgrey; color: black; border-color: lightgrey;">Create  a Review</button>
+<button type="button" class="btn btn-sm" data-toggle="modal" data-target="#myModal" style="background-color: lightgrey; color: black; border-color: lightgrey;">Create a Review</button>
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -155,11 +142,12 @@ $(window).load(function(){
 <body>
 <div class="review" style="width:80%">	
     <div class="customerReviews">
-        <form name="TheForm1">
+        <form name="TheForm1" action="/create_review" method="post">
+        <input type="hidden" name="p_id" id="p_id" value="<%= products.object[0].p_id %>"></input>
             <div class="createReview">
-                How do you rate this item? 
+                How do you rate this item?
                 <span id="rating_1" class="rating" ></span>
-                <span id="result_1" ng-bind="starr"></span>
+                <span><label id="result_1" ng-model="starr"></label></span>
             </div>
             <div class="createReview">
                 <br>What is the title of your review? <span class="titleBox"><input class="textField" ng-model="frm.title" id="Title" type="text" maxlength="100" size="40" name="title"></span>    
@@ -168,7 +156,7 @@ $(window).load(function(){
                 Write your review <br><br>                   
 <span class="reviewBox"><textarea class="textArea" id="YourReview" cols="100" ng-model="frm.review" rows="10" name="review" style="width:80%"></textarea></span> 
             </div>
-<button type="button" ng-click="create_review(frm)" class="btn btn-primary btn-sm" style="background-color: green;border-color: green">Submit</button>
+<button type="submit" class="btn btn-primary btn-sm" style="background-color: green;border-color: green">Submit</button>
         </form>
     </div>
 </div>
@@ -180,16 +168,29 @@ $(window).load(function(){
   </div>
   <br><br>
   
+  
+<% for(var i=0; i < products.object[0].reviews.length; i++) { %>
   <div style="border: 4px solid;border-color: #DAD8D8; margin-bottom: 10px;">
-          Title: <%= products.object[0].reviews[0].review_title %> <br><br>
-          Review: <%= products.object[0].reviews[0].review_desc %>
+      <div style="border-bottom: 2px solid #DAD8D8">
+      User: <%= products.object[0].reviews[i].username %> <br>
+      </div>
+      Ratings: <%= products.object[0].reviews[i].rating %>/5 <br>
+      Title: <%= products.object[0].reviews[i].review_title %> <br>
+          Review: <%= products.object[0].reviews[i].review_desc %>
             </div>
+<% } %>
           
-  </div><br>
-  <div class="disclaimerText" style="border: 1px solid #95A8A6"> 
+          
+  </div>
+  <br>
+  <div class="disclaimerText" style=" font-size: 10px;  width: 1560px;
+    height: 22px;
+    border: 1px solid black;"> 
     <strong>Freshness Guarantee:</strong> AmazonFresh guarantees every product will be delivered to your home well within the manufacturer's recommended <i>use by</i>, <i>sell by</i>, <i>best by</i>, or <i>expiration</i> date.
 </div><br>
-<div class="disclaimerText"  style="border: 1px solid #95A8A6">  
+<div class="disclaimerText"  style=" font-size: 10px;  width: 1560px;
+    height: 72px;
+    border: 1px solid black;">  
     <strong>Disclaimer:</strong>  While we work to ensure that product information is correct, on occasion manufacturers may alter their ingredient lists. Actual product packaging and materials may contain more and/or different information than that shown on our Web site. We recommend that you do not solely rely on the information presented and that you always read labels, warnings, and directions before using or consuming a product. For additional information about a product, please contact the manufacturer. Content on this site is for reference purposes and is not intended to substitute for advice given by a physician, pharmacist, or other licensed health-care professional. You should not use this information as self-diagnosis or for treating a health problem or disease. Contact your health-care provider immediately if you suspect that you have a medical problem. Information and statements regarding dietary supplements have not been evaluated by the Food and Drug Administration and are not intended to diagnose, treat, cure, or prevent any disease or health condition. AmazonFresh assumes no liability for inaccuracies or misstatements about products.
 </div>
 </div>

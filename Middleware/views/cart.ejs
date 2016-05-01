@@ -1,77 +1,103 @@
 <div class="col-xs-12">
 	<div class="cart-body">
-		<div class="cart-head">
-			<span>
-				<% if(typeof user != 'undefined') {%>
-					Deliver to 
-					<b> <%= user.fname %> <%= user.lname %>
-					<% if(typeof user.city != 'undefined'){ %>
-						 - <%= user.city %>
+		<% if(typeof user == 'object') {%>
+			<div class="cart-head">
+				<span class="capitalize">
+					<% if(typeof user != 'undefined') {%>
+						Deliver to 
+						<b> <%= user.fname %> <%= user.lname %>
+						<% if(user.city){ %>
+							 - <%= user.city %>
+						<% } %>
+						</b>
 					<% } %>
-					</b>
-				<% } %>
-			</span><br>
-			<span>
-				<a href="/addressDetails" style="text-decoration: underline;">(change delivery address)</a>
-			</span>
-		</div>
-		<div class="cart-proceed">
-			<div ng-if="cartTotal < 50">
-				<a href="#">
-					<div class="checkout-btn" style="background: #aaa; cursor: no-drop">Proceed to Checkout</div>
-				</a>
-			</div>
-			
-			<div ng-if="cartTotal >= 50">
-				<a href="/PreviewOrder">
-					<div class="checkout-btn aaa">Proceed to Checkout</div>
-				</a>
-			</div>
-		</div>
-		<div class="cart-total">
-			<div class="pull-left">
-				<span style="color: #669900;">
-					Subtotal ${{ cartTotal }}
-				</span>
-			</div>
-			<div class="pull-right">
+				</span><br>
 				<span>
-					({{ cartQty }} Items)
+					<a href="/addressDetails" style="text-decoration: underline;">(change delivery address)</a>
 				</span>
 			</div>
-		</div>
-		<div class="cart-items">
-			<ul class="no-padding no-margin">
+			<div class="cart-proceed">
+				<div ng-if="cartTotal < 50">
+					<a href="#">
+						<div class="checkout-btn" style="background: #aaa; cursor: no-drop">Proceed to Checkout</div>
+					</a>
+				</div>
 				
-				<li ng-repeat="item in cartItems">
-					<div class="changeQuantity">
-						<div class="quantity">{{ cartItemDetails[$index].qty }}</div>
-						<div class="buttons">
-							<div class="plusButton" ng-click="addItem(item.p_id, '1')">
-								<span class="glyphicon glyphicon-plus" style="padding-top: 4px"></span>
+				<div ng-if="cartTotal >= 50">
+					<a href="/PreviewOrder">
+						<div class="checkout-btn aaa">Proceed to Checkout</div>
+					</a>
+				</div>
+			</div>
+			<div class="cart-total">
+				<div class="pull-left">
+					<span style="color: #669900;">
+						Subtotal ${{ cartTotal }}
+					</span>
+				</div>
+				<div class="pull-right">
+					<span>
+						({{ cartQty }} Items)
+					</span>
+				</div>
+			</div>
+			<div class="cart-items">
+				<ul class="no-padding no-margin">
+					
+					<li ng-repeat="item in cartItems">
+						<div class="changeQuantity">
+							<div class="quantity">{{ cartItemDetails[$index].qty }}</div>
+							<div class="buttons">
+								<div class="plusButton" ng-click="addItem(item.p_id, '1')">
+									<span class="glyphicon glyphicon-plus" style="padding-top: 4px"></span>
+								</div>
+								<div class="minusButton" ng-click="addItem(item.p_id, '-1')">
+									<span class="glyphicon glyphicon-minus" style="padding-top: 4px"></span>
+								</div>
 							</div>
-							<div class="minusButton" ng-click="addItem(item.p_id, '-1')">
-								<span class="glyphicon glyphicon-minus" style="padding-top: 4px"></span>
+						</div>
+						<div class="cart-product-image">
+							<img ng-src="{{ item.product_img }}" height="100%" width="100%">
+						</div>
+						<div class="cart-detailsBox pull-left">
+							<div class="itemTitle capitalize">
+								<a href="">{{ item.name }}</a>
+							</div>
+							<div class="priceBox">
+								${{ totalEachItem[$index].total }}
 							</div>
 						</div>
-					</div>
-					<div class="cart-product-image">
-						<img ng-src="{{ item.product_img }}" height="100%" width="100%">
-					</div>
-					<div class="cart-detailsBox pull-left">
-						<div class="itemTitle capitalize">
-							<a href="">{{ item.name }}</a>
+						<div class="cart-remove pull-right">
+							<div class="glyphicon glyphicon-remove-sign" ng-click="addItem(item.p_id, '0')"></div>
 						</div>
-						<div class="priceBox">
-							${{ totalEachItem[$index].total }}
-						</div>
-					</div>
-					<div class="cart-remove pull-right">
-						<div class="glyphicon glyphicon-remove-sign" ng-click="addItem(item.p_id, '0')"></div>
-					</div>
-				</li>
-				
-			</ul>
-		</div>
+					</li>
+					
+				</ul>
+			</div>
+		<% }else{ %>
+			<div class="cart-head">
+				<br>
+				<div>
+					AmazonFresh is available exclusively to Prime Fresh members.
+				</div>
+				<br>
+				<div>
+					<a href="/login">
+						<div class="checkout-btn" style="background: #690">Sign in with Amazon account</div>
+					</a>
+				</div>
+				<br>
+				<div>
+					Not a Prime Fresh member? <a href="/signup" style="text-decoration: underline; color: #00f"> Start your 30-day FREE trial today</a>.
+				</div>
+				<br>
+			</div>
+		<% }%>
 	</div>
 </div>
+
+<% if(typeof user == 'object') {%>
+<script>
+	c_id = <%= user.c_id; %>
+</script>
+<% } %>

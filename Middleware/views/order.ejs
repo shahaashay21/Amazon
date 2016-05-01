@@ -9,7 +9,112 @@
     <div style="height: 50px; display: block;"></div>
 
     <div class="container-fluid">
-      <div class="col-lg-offset-1 col-lg-10">
+      <div class="col-xs-12" style="margin-top: 50px;">
+        <div class="col-lg-offset-2 col-lg-8">
+          <div class="col-lg-7">
+            <div>
+              <img src="img/checkout-arrow.png">
+            </div>
+            <div class="pull-left">
+              <div class="checkout-order-box del-time-box">
+                <span><b>Delivery Time</b></span>
+                <span class="pull-right">
+                  <a href="" style="text-decoration: underline; color: #669900">edit</a>
+                </span>
+                <br>
+                <div class="delivery-date-time" style="display: table; margin-top: 10px;">
+                  <select class="delivery-date pull-left" style="width: 65px" name="dayDate" id="dayDate">
+                    <option ng-repeat="dateopt in del_day_date" value="{{$index + 1}}">{{ dateopt }}</option>
+                  </select>
+                  <select class="delivery-time" style="margin-left: 40px" name="time" id="time">
+                    <option ng-repeat="timeopt in del_time">{{ timeopt }}:00</option>
+                  </select>
+                </div>
+                <div class="text-muted" style="margin-top: 10px">
+                  (you won't be disturbed when the delivery is made)
+                </div>
+              </div>
+              <div class="checkout-order-box del_address">
+                <span><b>Delivery Address</b></span>
+                <span class="pull-right">
+                  <a href="/addressDetails" style="text-decoration: underline; color: #669900">edit</a>
+                </span>
+                <div class="address uppercase" style="width: 180px; overflow: hidden; margin-top: 12px">
+                  <% if(user.address) {%>
+                  <span><%= user.address %></span><br>
+                  <span><%= user.city %></span>
+                  <span><%= user.state %></span>
+                  <span><%= user.zipcode %></span>
+                  <% } %>
+                </div>
+              </div>  
+            </div>
+            <div class="pull-left">
+              <div class="checkout-order-box del-time-box">
+                <div><b>Card Details</b></div>
+                <% if(typeof cardDetails !=  'undefined') { %>
+                <div style="margin: 10px 0">
+                  <div class="capitalize" style="margin-bottom: 5px;">Name on card: <span><b><%= cardDetails.name_on_card %></b></span></div>
+                  <select>
+                    <option>**** **** **** <%= lastFourDigit %></option>
+                  </select>
+                </div>
+                <% } %>
+                <div>
+                  <a href="/paymentOptions" style="color: #006699; text-decoration: underline;">Add a new credit card</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <!-- PAYMENT DETAILS -->
+            <div ng-if="cartTotal < 50">
+              <div class="checkout-btn place_order" style="background: #aaa; cursor: no-drop">
+                Place Order
+              </div>
+            </div>
+            <div ng-if="cartTotal >= 50">
+              <div class="checkout-btn place_order" style="cursor: pointer;" ng-click="finalOrder()">
+                Place Order
+              </div>
+            </div>
+            <div class="extra-shop">
+              <span><b>Did you forget something?</b></span>
+              <br>
+              <span>
+                Add more items to your order now. You can also add more items after you place this order. 
+              </span>
+              <br><br>
+              <a href="">
+                <div class="btn btn-warning btn-xs">
+                  Add additional items
+                </div>
+              </a>
+            </div>
+            <div>
+              <ul style="list-style-type: none; font-size: 18px; margin-top: 15px;">
+                <li style="margin: 2px 0">
+                  <span style="color: #669900">Item Subtotal: </span>
+                  <span>${{ cartTotal }}</span>
+                </li>
+                <li style="margin: 2px 0">
+                  <span style="color: #669900">Delivery Charge: </span>
+                  <span>${{ delivery_charge }}</span>
+                </li>
+                <li style="margin: 2px 0 6px; padding-bottom: 6px; border-bottom: 1px #aaa dashed; width: 220px">
+                  <span style="color: #669900">Estimated Tax*: </span>
+                  <span>${{ tax }}</span>
+                </li>
+                <li style="margin: 4px 0">
+                  <span style="color: #669900">Total: </span>
+                  <span>${{ finalTotal }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-offset-1 col-lg-8" style="margin-top: 50px;">
         <% include cart.ejs %>
       </div>
       
@@ -17,5 +122,9 @@
   	
     <% include footer.ejs %>
     <% include js-lib.ejs %>
+    <script>
+      var isCard = "<%= isCard %>";
+      var isAddress = "<%= isAddress %>"
+    </script>
   </body>
 </html>

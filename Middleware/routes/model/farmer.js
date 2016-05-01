@@ -4,7 +4,8 @@ var autoIncrement = require('mongoose-auto-increment');
 var connection = mongoose.createConnection("mongodb://localhost/amazon");
 autoIncrement.initialize(connection);
 
-var reviewSchema = mongoose.schema({
+var reviewSchema = mongoose.Schema({
+	username: {type: String, required: true},
 	rating: {type: Number, required: true},
 	review_title: {type: String, required: true},
 	review_desc: {type:String, required:true}
@@ -12,20 +13,23 @@ var reviewSchema = mongoose.schema({
 
 var farmerSchema = mongoose.Schema({
 	f_id: {type: Number, required: true, index: true},
-	isActive : {type: Boolean, default: true},
+	isActive : {type: Boolean, default: false},
 	fname: {type: String, required: true},
 	lname: {type: String, required: true},
 	email: {type: String, required: true},
 	pass: {type: String, required: true},
-	address: {type: String, required: true},
-	city: {type: String, required: true},
-	state: {type: String, required: true},
-	zipCode: {type: Number, required:true},
-	contacts: [Number],
-	reviews: [reviewSchema],
-	intro: {type: String, required: true},
+	intro: {type: String, required: true, default: "Hello!"},
 	video: String,
-	tax: {type: Number, required: true}
+	tax: {type: Number, required: true, default: 5},
+	contacts: Number,
+	address: {type: String, required: true, default: "Type Address Here"},
+	city: {type: String, required: true, default: "Your City"},
+	state: {type: String, required: true, default: "Your State"},
+	zipcode: {type: Number, required:true, default: 12345},
+	reviews: [reviewSchema],
+
+	isAvailable: {type: Boolean,default:true},
+
 },{
 	collection: 'farmers',
     timestamps: true,

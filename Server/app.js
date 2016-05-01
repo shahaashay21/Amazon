@@ -13,6 +13,7 @@ var express = require('express')
   , order = require('./services/order')
   , truck = require('./services/truck')
   , driver = require('./services/driver')
+  , farmerLogin = require('./services/farmerLogin')
   , http = require('http')
   , path = require('path')
   , amqp = require('amqp')
@@ -88,8 +89,9 @@ cnn.on('ready', function(){
 				case "createFarmer":
 					util.log("createFarmer");
 					farmer.createFarmer(message, function(err,res){
-						//util.log("Correlation ID: " + m.correlationId);
+						util.log("Correlation ID: " + m.correlationId);
 						// return index sent
+						util.log(JSON.stringify(res));
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
@@ -123,9 +125,25 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+
+				case "farmerSignUp":
+					util.log("farmerSignUp");
+					farmerLogin.farmerSignUp(message, function(err,res){
+						util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
 			}
 		});
 	});
+
+	console.log("listening on product_queue");
 
 	cnn.queue('product_queue', function(q){
 		q.subscribe(function(message, headers, deliveryInfo, m){
@@ -134,9 +152,38 @@ cnn.on('ready', function(){
 			//util.log("DeliveryInfo: "+JSON.stringify(deliveryInfo));
 
 			switch (message.service) {
+				case "suggest":
+					product.suggest(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
 				case "get_prod":
-					util.log("getProducts");
+					util.log("Product Page");
 					product.get_prod(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+					case "prod_search":
+					util.log("Product Search Page");
+					product.prod_search(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+				case "farmer_page":
+					util.log("getFarmers");
+					product.farmer_page(message, function(err,res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
@@ -147,6 +194,16 @@ cnn.on('ready', function(){
 				case "create_review":
 					util.log("Create_review");
 					product.create_review(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+					case "f_create_review":
+					util.log("Farmer page Create_review");
+					product.f_create_review(message, function(err,res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
@@ -170,7 +227,7 @@ cnn.on('ready', function(){
 				case "createProduct":
 					util.log("createProduct");
 					product.createProduct(message, function(err,res){
-						//util.log("Correlation ID: " + m.correlationId);
+						util.log("Correlation ID: " + m.correlationId);
 						// return index sent
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
@@ -205,10 +262,26 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+
+				case "getCategory":
+					util.log("getCategory");
+					product.getCategory(message, function(err,res){
+						//util.log("Correlation ID: " + m.correlationId);
+						// return index sent
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+
+
 			}
 		});
 	});
-	
+
 	console.log("listening on admin_queue");
 
 	cnn.queue('admin-queue', function(q) {
@@ -229,6 +302,94 @@ cnn.on('ready', function(){
 			}
 		});
 	});
+
+
+
+
+// 	cnn.queue('user_queue', function(q){
+// 	q.subscribe(function(message, headers, deliveryInfo, m){
+// 		util.log(util.format( deliveryInfo.routingKey, message));
+// 		//util.log("Message: "+JSON.stringify(message));
+// 		//util.log("DeliveryInfo: "+JSON.stringify(deliveryInfo));
+
+// 		switch (message.service) {
+// 			case "getAddress":
+// 				//util.log("getOrders");
+// 				user.getAddress(message, function(err,res){
+// 					//util.log("Correlation ID: " + m.correlationId);
+// 					// return index sent
+// 					cnn.publish(m.replyTo, JSON.stringify(res), {
+// 						contentType: 'application/json',
+// 						contentEncoding: 'utf-8',
+// 						correlationId: m.correlationId
+// 					});
+// 				});
+// 				break;
+// 		}
+// 	});
+// });
+
+
+	console.log("listening on user_queue");
+	
+	cnn.queue('user_queue', function(q){
+	q.subscribe(function(message, headers, deliveryInfo, m){
+		//util.log(util.format( deliveryInfo.routingKey, message));
+		//util.log("Message: "+JSON.stringify(message));
+		//util.log("DeliveryInfo: "+JSON.stringify(deliveryInfo));
+
+		switch (message.service) {
+			
+
+			case "editCard":
+					//util.log("getFarmers");
+					user.editCard(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+
+			case "editAddress":
+				//util.log("editAddress");
+				user.editAddress(message, function(err,res){
+					//util.log("Correlation ID: " + m.correlationId);
+					// return index sent
+					cnn.publish(m.replyTo, JSON.stringify(res), {
+						contentType: 'application/json',
+						contentEncoding: 'utf-8',
+						correlationId: m.correlationId
+					});
+				});
+
+				break;
+
+				case "getAddress":
+				//util.log("getOrders");
+				user.getAddress(message, function(err,res){
+					//util.log("Correlation ID: " + m.correlationId);
+					// return index sent
+					cnn.publish(m.replyTo, JSON.stringify(res), {
+						contentType: 'application/json',
+						contentEncoding: 'utf-8',
+						correlationId: m.correlationId
+					});
+				});
+				break;
+
+
+			
+
+			
+		}
+	});
+});
+
+
+	
 
 	console.log("listening on cart_queue");
 
@@ -253,17 +414,18 @@ cnn.on('ready', function(){
 							correlationId: m.correlationId
 						});
 					})
+					break;
 			}
 		});
 	});
 
 	console.log("listening on order_queue");
 
-	cnn.queue('order-queue', function(q) {
+	cnn.queue('order_queue', function(q) {
 		q.subscribe(function(message, headers, deliveryInfo, m) {
 			switch(message.service) {
 				case 'createOrder':
-					util.log("createOrder");
+					// util.log("createOrder");
 					order.createOrder(message, function(err, res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
@@ -272,6 +434,19 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+
+					case 'getOrders':
+					//util.log("createOrder");
+					order.getOrders(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						})
+					});
+					break;
+
+
 			}
 		})
 	});
@@ -380,5 +555,4 @@ cnn.on('ready', function(){
 			}
 		});
 	});
-
 });

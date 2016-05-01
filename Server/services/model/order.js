@@ -14,8 +14,14 @@ var detailSchema = mongoose.Schema({
 		type: Number, 
 		required: true
 	},
-	qty: Number,
-	price: Number
+	qty: {
+		type: Number, 
+		required: true
+	},
+	price: {
+		type: Number, 
+		required: true
+	}
 });
 
 var orderSchema = mongoose.Schema({
@@ -26,10 +32,9 @@ var orderSchema = mongoose.Schema({
 		//ref: 'User.c_id'
 	},
 	driver_id: {
-		type: Number, 
-		required: true
+		type: Number
 	},
-	order_detail: detailSchema,
+	order_detail: [detailSchema],
 	address: {type: String, required:true},
 	zipcode: {type: Number, required: true},
 	city: {type: String, required: true},
@@ -38,11 +43,17 @@ var orderSchema = mongoose.Schema({
 	sub_total: Number,
 	tax: Number,
 	ship_cost: Number,
+	total: Number,
 	estimate_delivery_time: Number,
 	pickup_time: Date,
 	drop_time: Date,
 	distance: Number,
-	order_time: Date,
+	truck_id: Number,
+	status: {
+		type: String,
+		required: true,
+		default: 'pending'
+	}
 },
 {
 	collection: 'orders',

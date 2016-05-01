@@ -1,9 +1,28 @@
 var user = angular.module('adminModule',['xeditable']);
-user.controller('adminController',['$scope','$http','$sce', function($scope,$http,$sce){
-	/*
-	-------Created by Darshil Saraiya 4/27/16-------
-	-------Admin login Page operations-------
-	*/
+
+user.directive('addFarmerModal', function() {
+   return {
+     restrict: 'A',
+     link: function(scope, element, attr) {
+       scope.dismiss = function() {
+           element.modal('hide');
+       };
+     }
+   } 
+});
+
+user.directive('addProductModal', function() {
+   return {
+     restrict: 'A',
+     link: function(scope, element, attr) {
+       scope.dismiss = function() {
+           element.modal('hide');
+       };
+     }
+   } 
+});
+
+user.controller('adminController',['$scope','$http','$sce','$filter', function($scope,$http,$sce,$filter){
 	$scope.isBlankEmail = false;
 	$scope.isBlankPassword = false;
 	$scope.isIncorrectDetails = false;
@@ -56,10 +75,6 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 	}
 	//Admin login-page End
 
-	/*
-	-------Created by Darshil Saraiya 4/27/16-------
-	-------Admin order-list Page operations-------
-	*/
 	//add order
 	$scope.addOrder = function(){
 		console.log("addOrder ::");
@@ -586,6 +601,7 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 		angular.extend(data, {id: id});
 		console.log("saveFarmer data::");
 		console.log(data);
+		console.log("is active "+data.isActive);
 		$http({
 			method : "POST",
 			url : '/farmer/edit',
@@ -594,7 +610,15 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 				fname: data.fname,
 				lname: data.lname,
 				email: data.email,
-				address: data.address
+				address: data.address,
+				city: data.city,
+				state: data.state,
+				zipcode: data.zipcode,
+				intro: data.intro,
+				video: data.video,
+				tax: data.tax,
+				contacts: data.contacts,
+				isActive: data.isActive==1 ? true : false
 			}
 		}).success(function(res){
 			if (res.status === 200) {
@@ -657,11 +681,15 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 			data: {
 				p_id : id,
 				name: data.name,
+				f_id: data.f_id,
 				cat_id: data.cat_id,
 				price: data.price,
 				weight: data.weight,
+				unit: data.unit,
 				details: data.details,
-				unit: data.unit
+				description: data.description,
+				features: data.features,
+				quantity: data.quantity
 			}
 		}).success(function(res){
 			if (res.status === 200) {
@@ -697,16 +725,98 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 	//add farmer
 	$scope.addFarmer = function(){
 		console.log("addFarmer ::");
-
+		console.log($scope.isActive);
 		$http({
 			method : "POST",
-			url : "/admin/addFarmer"
+			url : "/farmer/create",
+			data: {
+				fname: $scope.fname,
+				lname: $scope.lname,
+				email: $scope.email,
+				pass: $scope.pass,
+				intro: $scope.intro,
+				contacts: $scope.contact_no,
+				video: $scope.video,
+				tax: $scope.tax,
+				address: $scope.address,
+				city: $scope.city,
+				state: $scope.state,
+				zipcode: $scope.zipcode
+			}
 		}).success(function(res) {
 			if(res.status == 200) {
 				console.log("success on add farmer :" + res.data);
-				return;
+				$scope.dismiss();
 			}
 		});
 	}
+
+	//add farmer
+	$scope.addProduct = function(){
+		console.log("addProduct ::");
+
+		$http({
+			method : "POST",
+			url : "/product/create",
+			data: {
+				name: $scope.product_name,
+				f_id: $scope.f_id,
+				//f_name: $scope.f_name,
+				cat_id: $scope.category,
+				price: $scope.price,
+				weight: $scope.weight,
+				unit: $scope.unit,
+				details: $scope.product_info,
+				description: $scope.description,
+				features: $scope.features,
+				quantity: $scope.quantity
+			}
+		}).success(function(res) {
+			if(res.status == 200) {
+				console.log("success on add product :" + res.data);
+				$scope.dismiss();
+			}
+		});
+	}
+
+	$scope.statuses = [
+	    {value: 1, text: 'Aprroved'},
+	    {value: 2, text: 'Rejected'},
+  	]; 
+
+  	$scope.getCategory = function(){
+  		$http({
+  			method: "GET",
+  			url: "/category/get"
+  		}).success(function(res){
+  			$scope.categs = res.data;
+  			$scope.categories = [];
+  			console.log(res.data);
+  			for(var i in res.data){
+				$scope.categories[i] = { value : Number(res.data[i].cat_id), text: res.data[i].name }
+			}
+  			console.log($scope.categories);
+  		});
+  	};
+
+  	$scope.showStatus = function(farmer) {
+	    var selected = [];
+	    var temp = farmer.isActive==true ? 1 : 2;
+	   	//console.log("temp ::"+temp);
+    	selected = $filter('filter')($scope.statuses, {value: temp });
+	    
+	    //console.log(selected);
+	    return selected.length ? selected[0].text : 'Not set';
+  	};
+
+
+  	$scope.showCategory = function(product){
+  		var selected = [];
+	    var temp = product.cat_id;
+	   	console.log("temp ::"+temp);
+    	selected = $filter('filter')($scope.categories, {value: temp });
+	    console.log(selected);
+	    return selected.length ? selected[0].text : 'Not set';
+  	}
 	//editableOptions.theme = 'bs3';
 }]);

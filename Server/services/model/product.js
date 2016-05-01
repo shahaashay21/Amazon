@@ -6,6 +6,7 @@ autoIncrement.initialize(connection);
 
 var reviewSchema = mongoose.Schema({
 	rating: {type: Number, required: true},
+	username: {type:String, required: true},
 	review_title: {type: String, required: true},
 	review_desc: {type:String, required:true}
 });
@@ -14,7 +15,7 @@ var reviewSchema = mongoose.Schema({
 var productSchema = mongoose.Schema({
 	p_id: {type: Number, required: true, index: true},
 	f_id: {type: Number, required: true},
-	farmer_name: {type: String, required: true},
+	f_name: {type: String, required: true},
 	cat_id: {
 		type: Number
 	},
@@ -29,7 +30,8 @@ var productSchema = mongoose.Schema({
 	details: {type: String},
 	description: String,
 	features: {type: String, required: true},
-	isActive: {type: Boolean, default: true}
+	isActive: {type: Boolean, default: true},
+	quantity: {type: Number, required: true}
 },{
 	collection: 'products',
     timestamps: true,

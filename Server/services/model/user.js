@@ -3,6 +3,16 @@ var autoIncrement = require('mongoose-auto-increment');
 var connection = mongoose.createConnection("mongodb://localhost/amazon");
 autoIncrement.initialize(connection);
 
+var contactsSchema = mongoose.Schema({
+	number: {type: String, required: true},
+	default_card: {type:String, required:true, default: 'false'}
+});
+
+// var cardDetailsSchema = mongoose.Schema({
+// 	,
+// 	default_card: {type:String, required:true, default: 'false'}
+// });
+
 var userSchema = mongoose.Schema({
 	c_id: {type: Number, required: true, index: true},
 	fname: {type: String, required: true},
@@ -10,11 +20,15 @@ var userSchema = mongoose.Schema({
 	email: {type: String, required: true},
 	pass: {type: String, required: true},
 	address: {type: String},
-	zipCode: Number,
+	zipcode: Number,
 	city: String,
 	state: String,
-	contacts: [String],
-	cardDetails: [String],
+	card_number: {type: Number},
+	name_on_card: {type: String},
+	exp_month: {type:Number},
+	exp_year: {type:Number},
+	cvv: {type:Number},
+	contacts: [contactsSchema],
 },
 {
 	collection: 'users',

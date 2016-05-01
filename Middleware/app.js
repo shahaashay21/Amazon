@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -15,6 +14,7 @@ var express = require('express')
   , order = require('./routes/order')
   , truck = require('./routes/truck')
   , driver =  require('./routes/driver')
+  ,farmerLogin = require('./routes/farmerLogin')
   //ADMIN
   , admin = require('./routes/admin');
 
@@ -69,7 +69,8 @@ if ('development' == app.get('env')) {
 //GET REQUEST
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.get('/PreviewOrder', order.home);
+app.get('/PreviewOrder', isAuthenticated, order.home);
+
 
 //ADMIN API
 app.get('/admin/home',admin.home);
@@ -84,9 +85,6 @@ app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
 //app.post('/admin/addFarmer', admin.addFarmer);;
 
-//ORDERS API
-app.post('/order/create', order.createOrder);
-
 //TRUCK API
 app.post('/truck/create', truck.createTruck);
 app.get('/truck/all', truck.getTrucks);
@@ -99,21 +97,64 @@ app.get('/driver/all', driver.getDrivers);
 app.post('/driver/edit', driver.editDriver);
 app.delete('/driver/delete',driver.deleteDriver);
 
+app.post('/farmer/login', function(req, res, next) {
+  passport.authenticate('farmerLogin', function(err, farmer, info) {
+    if(err) {
+      console.log(err);
+      return next(err);
+    }
+    
+    if(!farmer) {
+      req.session.wrongSignIn = true;
+      console.log("login failed");
+      return res.redirect('/farmer/login');
+    }
+    else{
+      req.logIn(farmer, {session: false}, function(err) {
+        if(err) {
+          return next(err);
+        }
+        console.log("login success");
+        req.session.user = user;
+        return res.redirect('/farmer/home');
+      })
+    }
+  })(req, res, next);
+});
+app.post('/farmer/signup',farmerLogin.signup);
+app.get('/farmer/signup',farmerLogin.userSignUp);
+app.get('/farmer/login',farmerLogin.userSignIn);
+app.get('/farmer/checkEmail',farmerLogin.checkEmail);
+app.get('/farmer/home',farmerLogin.home);
+app.get('/farmer/product/all', function(req,res){ res.render('/farmer/productlist'); });
+app.get('/farmer/order/pending', function(req,res){ res.render('/farmer/pendinglist'); });
+app.get('/farmer/order/complete', function(req,res){ res.render('/farmer/completelist'); });
 app.get('/farmer/all',farmer.getFarmers);
 app.post('/farmer/create',farmer.createFarmer);
 app.delete('/farmer/delete',farmer.deleteFarmer);
 app.post('/farmer/edit',farmer.editFarmer);
 
+app.post('/user/address/update',user.editAddress);
+app.post('/user/card/update',user.editCard);
+app.get('/user/address',user.getAddress);
+// app.get('/user/orders',user.getOrders);
+
+
 app.get('/product/all',product.getProducts);
 app.post('/product/create',product.createProduct);
 app.delete('/product/delete',product.deleteProduct);
 app.post('/product/edit',product.editProduct);
+
+
+app.get('/category/get', product.getCategory);
+
+
 //app.get('/prod_details', user.prod_details);
+app.get('/search', product.prod_search);
 app.get('/product', product.prod_details);
-app.post('/create_review',product.create_review)
-
-
-
+app.post('/create_review',product.create_review);
+app.post('/f_create_review',product.f_create_review); 
+app.get('/farmer_page',product.farmer_page);
 
 app.get('/frame', function(req,res){
   res.render('frame');
@@ -121,13 +162,13 @@ app.get('/frame', function(req,res){
 app.get('/login', login.signIn);
 app.get('/signup', login.signUp);
 app.get('/logout', function(req,res) {
-  req.session.destroy();
-  res.redirect('/');
+  req.session.destroy(function(err){
+    res.redirect('/');
+  })
 });
 
-
 app.get('/search', function(req, res){
-  
+
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('ProductSearch', { user: req.session.user });
@@ -136,11 +177,29 @@ app.get('/search', function(req, res){
   }
 });
 
+app.get('/myOrders', function(req, res){
 
+  if(typeof req.session.user != 'undefined'){
+    console.log(req.session.user);
+    res.render('myOrders', { user: req.session.user });
+  }else{
+    res.render('index');
+  }
+});
+
+// app.get('/orderDetails', function(req, res){
+
+//   if(typeof req.session.user != 'undefined'){
+//     console.log(req.session.user);
+//     res.render('orderDetails', { user: req.session.user });
+//   }else{
+//     res.render('index');
+//   }
+// });
 
 
 app.get('/customerAccount', function(req, res){
-  
+
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('customerAccount', { user: req.session.user });
@@ -150,7 +209,7 @@ app.get('/customerAccount', function(req, res){
 });
 
 app.get('/help', function(req, res){
-  
+
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('help', { user: req.session.user });
@@ -263,6 +322,8 @@ app.post('/login', function(req, res, next) {
 app.post('/reg', login.regUser);
 app.post('/additem', cart.addItem);
 app.post('/cart', cart.cartItems);
+app.post('/suggest', product.suggest);
+app.post('/order', order.createOrder);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

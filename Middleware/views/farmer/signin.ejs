@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>Farmer Signup</title>
+     <% include ../lib.ejs %>
+   
+    <script>
+    	angular.module('farmerSignIn', [])
+    	.controller('farmerSignInController',[ '$scope', '$http' , function($scope,$http){
+    		$scope.login_meessage = "";
+    		$scope.farmerSingIn = function(){
+    			$scope.login_meessage = "";
+          console.log("login");
+    			$http({
+    				method: "POST",
+    				url: '/farmer/login',
+    				data: {
+    					email: $scope.email,
+    					pass: $scope.password
+    				}
+    			}).success(function(res){
+              if(res.data == 402){
+                $scope.login_meessage = "Waiting for admin to approve."
+              }
+              console.log(res);
+    			});
+    		}
+    	}]);
+    </script>
+</head>
+<body ng-app="farmerSignIn" ng-controller="farmerSignInController">
+		  <div style="height: 50px; display: block;"></div>
+    
+    <div class="container">
+
+
+      <div class="login-wrapper">
+        <div style="margin-bottom: 40px;">
+          <h3><b>Farmer SignIn</b></h3>
+        </div>
+        <form class="pull-left">
+          <fieldset class="form-group has-feedback">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" placeholder="Enter email" name="email" ng-model="email">
+            <span class="glyphicon form-control-feedback"></span>
+          </fieldset>
+            <fieldset class="form-group has-feedback">
+              <label for="email">Password</label>
+              <input type="password" class="form-control" id="pass" placeholder="Password" name="pass" ng-model="password">
+              <span class="glyphicon form-control-feedback"></span>
+            </fieldset>
+            <fieldset>
+              <input type="submit" ng-click="farmerSingIn();" class="btn btn-success submit-reg" value="Sign Up">
+              </br>
+              <span ng-model="login_meessage"></span>
+            </fieldset>
+
+          <div class="pull-right" style="margin-top: -10px">
+            <span class="forgot-pass">
+              <a href="/farmer/login"> Farmer Login </a>
+              </br>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div
+
+</body>
+</html>
