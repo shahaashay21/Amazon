@@ -1,4 +1,3 @@
-var ejs= require('ejs');
 var mysql = require('mysql');
 var Sequelize = require('sequelize');
 

@@ -12,6 +12,8 @@ var express = require('express')
   , login = require('./routes/login')
   , cart = require('./routes/cart')
   , order = require('./routes/order')
+  , truck = require('./routes/truck')
+  , driver =  require('./routes/driver')
   ,farmerLogin = require('./routes/farmerLogin')
   //ADMIN
   , admin = require('./routes/admin');
@@ -83,6 +85,17 @@ app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
 //app.post('/admin/addFarmer', admin.addFarmer);;
 
+//TRUCK API
+app.post('/truck/create', truck.createTruck);
+app.get('/truck/all', truck.getTrucks);
+app.post('/truck/edit', truck.editTruck);
+app.delete('/truck/delete',truck.deleteTruck);
+
+//DRIVER API
+app.post('/driver/create', driver.createDriver);
+app.get('/driver/all', driver.getDrivers);
+app.post('/driver/edit', driver.editDriver);
+app.delete('/driver/delete',driver.deleteDriver);
 
 app.post('/farmer/login', function(req, res, next) {
   passport.authenticate('farmerLogin', function(err, farmer, info) {
