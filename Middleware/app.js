@@ -12,6 +12,7 @@ var express = require('express')
   , login = require('./routes/login')
   , cart = require('./routes/cart')
   , order = require('./routes/order')
+  ,farmerLogin = require('./routes/farmerLogin')
   //ADMIN
   , admin = require('./routes/admin');
 
@@ -83,6 +84,38 @@ app.get('/admin/orders/list',admin.ordersList);
 //app.post('/admin/addFarmer', admin.addFarmer);;
 
 
+app.post('/farmer/login', function(req, res, next) {
+  passport.authenticate('farmerLogin', function(err, farmer, info) {
+    if(err) {
+      console.log(err);
+      return next(err);
+    }
+    
+    if(!farmer) {
+      req.session.wrongSignIn = true;
+      console.log("login failed");
+      return res.redirect('/farmer/login');
+    }
+    else{
+      req.logIn(farmer, {session: false}, function(err) {
+        if(err) {
+          return next(err);
+        }
+        console.log("login success");
+        req.session.user = user;
+        return res.redirect('/farmer/home');
+      })
+    }
+  })(req, res, next);
+});
+app.post('/farmer/signup',farmerLogin.signup);
+app.get('/farmer/signup',farmerLogin.userSignUp);
+app.get('/farmer/login',farmerLogin.userSignIn);
+app.get('/farmer/checkEmail',farmerLogin.checkEmail);
+app.get('/farmer/home',farmerLogin.home);
+app.get('/farmer/product/all', function(req,res){ res.render('/farmer/productlist'); });
+app.get('/farmer/order/pending', function(req,res){ res.render('/farmer/pendinglist'); });
+app.get('/farmer/order/complete', function(req,res){ res.render('/farmer/completelist'); });
 app.get('/farmer/all',farmer.getFarmers);
 app.post('/farmer/create',farmer.createFarmer);
 app.delete('/farmer/delete',farmer.deleteFarmer);
@@ -104,6 +137,7 @@ app.get('/category/get', product.getCategory);
 
 
 //app.get('/prod_details', user.prod_details);
+app.get('/search', product.prod_search);
 app.get('/product', product.prod_details);
 app.post('/create_review',product.create_review);
 app.post('/f_create_review',product.f_create_review); 
@@ -119,7 +153,6 @@ app.get('/logout', function(req,res) {
     res.redirect('/');
   })
 });
-
 
 app.get('/search', function(req, res){
 
@@ -150,10 +183,6 @@ app.get('/myOrders', function(req, res){
 //     res.render('index');
 //   }
 // });
-
-
-
-
 
 
 app.get('/customerAccount', function(req, res){

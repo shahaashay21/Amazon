@@ -208,6 +208,42 @@ exports.prod_details = function(req,res){
 	});
 };
 
+exports.prod_search = function(req,res){
+	console.log("In middlewares prod.js");
+	var msg_payload = {
+		"service" : "prod_search",
+		"cat_id" : req.param("id"),
+		"search": req.param("search"),
+		"sid":req.session.user
+	};
+	
+	console.log(msg_payload);
+  	mq.make_request('product_queue', msg_payload, function(err,prod){
+		if(err)
+		{
+		    console.log(err);
+			res.send(resGen.responseGenerator(401, null));
+		}
+		else
+		{
+			if(prod.code == 200){
+				//console.log(Object.keys(prod.reviews));
+				if(typeof req.session.user != 'undefined'){
+					res.render('ProductSearch', { user: req.session.user, products: prod, session: true });
+				}else{
+					console.log("No session on");
+					console.log(prod);
+					res.render('ProductSearch', { products: prod, session: false });
+				}
+			}
+			else
+			{
+				res.send("Sorry the product that you are searching for does not exist.");
+			}
+		}
+	});
+};
+
 exports.f_create_review = function(req,res){
 	var msg_payload = {
 		"service" : "f_create_review",
