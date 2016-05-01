@@ -29,7 +29,7 @@ var orderSchema = mongoose.Schema({
 		type: Number, 
 		required: true
 	},
-	order_detail: detailSchema,
+	order_detail: [detailSchema],
 	address: {type: String, required:true},
 	zipcode: {type: Number, required: true},
 	city: {type: String, required: true},
@@ -43,6 +43,8 @@ var orderSchema = mongoose.Schema({
 	drop_time: Date,
 	distance: Number,
 	order_time: Date,
+	truck_id: Number,
+	status: String
 },
 {
 	collection: 'orders',

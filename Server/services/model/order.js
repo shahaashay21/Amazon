@@ -43,6 +43,8 @@ var orderSchema = mongoose.Schema({
 	drop_time: Date,
 	distance: Number,
 	order_time: Date,
+	truck_id: Number,
+	status: String
 },
 {
 	collection: 'orders',
