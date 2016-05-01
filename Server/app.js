@@ -139,7 +139,7 @@ cnn.on('ready', function(){
 					});
 					break;
 				case "get_prod":
-					util.log("getProducts");
+					util.log("Product Page");
 					product.get_prod(message, function(err,res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
@@ -161,6 +161,16 @@ cnn.on('ready', function(){
 				case "create_review":
 					util.log("Create_review");
 					product.create_review(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+					case "f_create_review":
+					util.log("Farmer page Create_review");
+					product.f_create_review(message, function(err,res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
