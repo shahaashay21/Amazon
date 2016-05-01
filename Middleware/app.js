@@ -154,9 +154,6 @@ app.get('/logout', function(req,res) {
   })
 });
 
-
-<<<<<<< HEAD
-=======
 app.get('/search', function(req, res){
 
   if(typeof req.session.user != 'undefined'){
@@ -177,11 +174,6 @@ app.get('/myOrders', function(req, res){
   }
 });
 
-
-
-
-
->>>>>>> f1773cd9ac3f1fb925273c8153d2eaddc236a5c1
 
 app.get('/customerAccount', function(req, res){
 
