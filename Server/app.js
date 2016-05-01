@@ -163,6 +163,16 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+					case "prod_search":
+					util.log("Product Search Page");
+					product.prod_search(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
 				case "farmer_page":
 					util.log("getFarmers");
 					product.farmer_page(message, function(err,res){
@@ -284,6 +294,94 @@ cnn.on('ready', function(){
 			}
 		});
 	});
+
+
+
+
+// 	cnn.queue('user_queue', function(q){
+// 	q.subscribe(function(message, headers, deliveryInfo, m){
+// 		util.log(util.format( deliveryInfo.routingKey, message));
+// 		//util.log("Message: "+JSON.stringify(message));
+// 		//util.log("DeliveryInfo: "+JSON.stringify(deliveryInfo));
+
+// 		switch (message.service) {
+// 			case "getAddress":
+// 				//util.log("getOrders");
+// 				user.getAddress(message, function(err,res){
+// 					//util.log("Correlation ID: " + m.correlationId);
+// 					// return index sent
+// 					cnn.publish(m.replyTo, JSON.stringify(res), {
+// 						contentType: 'application/json',
+// 						contentEncoding: 'utf-8',
+// 						correlationId: m.correlationId
+// 					});
+// 				});
+// 				break;
+// 		}
+// 	});
+// });
+
+
+	console.log("listening on user_queue");
+	
+	cnn.queue('user_queue', function(q){
+	q.subscribe(function(message, headers, deliveryInfo, m){
+		//util.log(util.format( deliveryInfo.routingKey, message));
+		//util.log("Message: "+JSON.stringify(message));
+		//util.log("DeliveryInfo: "+JSON.stringify(deliveryInfo));
+
+		switch (message.service) {
+			
+
+			case "editCard":
+					//util.log("getFarmers");
+					user.editCard(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+
+			case "editAddress":
+				//util.log("editAddress");
+				user.editAddress(message, function(err,res){
+					//util.log("Correlation ID: " + m.correlationId);
+					// return index sent
+					cnn.publish(m.replyTo, JSON.stringify(res), {
+						contentType: 'application/json',
+						contentEncoding: 'utf-8',
+						correlationId: m.correlationId
+					});
+				});
+
+				break;
+
+				case "getAddress":
+				//util.log("getOrders");
+				user.getAddress(message, function(err,res){
+					//util.log("Correlation ID: " + m.correlationId);
+					// return index sent
+					cnn.publish(m.replyTo, JSON.stringify(res), {
+						contentType: 'application/json',
+						contentEncoding: 'utf-8',
+						correlationId: m.correlationId
+					});
+				});
+				break;
+
+
+			
+
+			
+		}
+	});
+});
+
+
+	
 
 	console.log("listening on cart_queue");
 
