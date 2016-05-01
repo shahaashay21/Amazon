@@ -1,7 +1,7 @@
 var Order = require('./model/order');
-var OrderDetail = require('./model/orderdetail');
 var Product = require('./model/product');
 var User = require('./model/user');
+var Cart = require('./model/cart');
 var cart = require('./cart');
 
 
@@ -45,6 +45,7 @@ exports.createOrder = function(req, callback) {
 	// console.log(req.drop_time);
 	// console.log(req.user);
 	var c_id = {c_id: req.user.c_id};
+	availableProductQuant = [];
 	cart.cartItems(c_id, function(res, ans){
 		// console.log(ans);
 		ans = JSON.parse(ans);
@@ -56,6 +57,7 @@ exports.createOrder = function(req, callback) {
 			if(i < items.length){
 				Product.findOne({p_id: items[i].p_id}, 'quantity', function(err, q){
 					// console.log(q.quantity);
+					availableProductQuant[i] =  q.quantity;
 					if(q.quantity < cartItemDetails[i].qty){
 						// console.log(items[i].name);
 						itemAvailFlag = 'true';
@@ -78,8 +80,7 @@ exports.createOrder = function(req, callback) {
 				//ALL QUANTITY IS AVAILABLE, NOW WE CAN DO FURTHER
 				//EVERY LOGIC FOR ORDER
 				User.findOne({c_id: c_id.c_id}, 'address city zipcode state contact', function(err, u){
-					console.log(u);
-					console.log(u.contact);
+					// console.log(u);
 
 					allItemDetail = [];
 					function itemDetail(i, callItemDetail){
@@ -98,6 +99,7 @@ exports.createOrder = function(req, callback) {
 					}
 
 					itemDetail(0, function(){
+						o = new Order();
 						dataToStore = {
 							c_id: c_id.c_id,
 							order_detail: allItemDetail,
@@ -112,12 +114,48 @@ exports.createOrder = function(req, callback) {
 							total: ans.finalTotal,
 							drop_time: req.drop_time
 						}
-						console.log(dataToStore);
-					})
-					// order_detail = 
+
+						//DATA TO STORE
+						o.c_id = dataToStore.c_id;
+						o.order_detail = dataToStore.order_detail;
+						o.address = dataToStore.address;
+						o.zipcode = dataToStore.zipcode;
+						o.city = dataToStore.city;
+						o.state = dataToStore.state;
+						o.contact = dataToStore.contact;
+						o.sub_total = dataToStore.sub_total;
+						o.tax = dataToStore.tax;
+						o.ship_cost = dataToStore.ship_cost;
+						o.total = dataToStore.total;
+						o.drop_time = dataToStore.drop_time;
+
+						o.save(function (err){
+							// console.log(err);
+							Cart.remove({c_id: c_id.c_id}, function(err){
+
+								function updateQuant(i,callUpdateQuant){
+									if(i < items.length){
+										decrementItemQuant = Number('-'+cartItemDetails[i].qty);
+										// console.log(decrementItemQuant);
+										Product.update({p_id: items[i].p_id},{$inc: {'quantity': decrementItemQuant}}, function(err, up){
+											updateQuant( i+1, callUpdateQuant);
+										});
+									}else{
+										callUpdateQuant();
+									}
+								}
+
+								updateQuant(0, function(){
+									returnData = { 'suc': 'true'};
+									callback(null, JSON.stringify(returnData));
+								});
+							});
+						});
+						// console.log(dataToStore);
+						// o = new Order();
+
+					});
 				})
-				returnData = { 'suc': 'true'};
-				callback(null, JSON.stringify(returnData));
 			}else{
 
 			}
