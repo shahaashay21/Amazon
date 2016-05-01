@@ -44,7 +44,7 @@ exports.getAddress = function(req,res){
 exports.editCard = function(req,res){
 
 	var msg_payload = {
-		"service" : "updateCardDetails",
+		"service" : "editCard",
 		//"p_id" : req.param("p_id"),
 		"card_number" : req.param("card_number"),
 		"name_on_card" : req.param("name_on_card"),
@@ -108,7 +108,7 @@ console.log(msg_payload);
 
 			doc = JSON.parse(doc);
 			if(doc.status == 200){
-				console.log("Edied address");
+				console.log("Edited address");
 				console.log(doc);
        			res.send(doc);
        			res.redirect("/help");

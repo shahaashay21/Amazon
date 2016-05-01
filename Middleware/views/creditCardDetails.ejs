@@ -5,35 +5,33 @@
     <% include lib.ejs %>
 
 
-                        <script>
-                          angular.module('cardModule', []).controller('cardController', function($scope, $http, $location) {
-                            
-                            $scope.updateCardDetails = function(){
-                              //console.log($scope.zipCode);
-                              var data = {
-                                  card_number: $scope.card_number,
-                                  name_on_card: $scope.name_on_card,
-                                  exp_month: $scope.exp_month,
-                                  exp_year: $scope.exp_year,
-                                  cvv: $scope.cvv
-                                };
+                  <script>
+                angular.module('cardModule', []).controller('cardController', function($scope, $http, $location) {
+                  
+                  $scope.updateCardDetails = function(){
+                    console.log($scope.zipCode);
+                    var data = {
+                        card_number: $scope.card_number,
+                        name_on_card: $scope.name_on_card,
+                        exp_month: $scope.exp_month,
+                        exp_year: $scope.exp_year,
+                        cvv: $scope.cvv
+                      };
 
-                              $http({
-                                method: "POST",
-                                url: '/user/card/update',
-                                data: data
-                              }).success(function(res){
-                                if(res){
-                                  console.log(res.data);
-                                  console.log("Found Details")
+                    $http({
+                      method: "POST",
+                      url: '/user/card/update',
+                      data: data
+                    }).success(function(res){
+                      if(res){
+                        console.log(res.data);
+                        window.location.assign('/customerAccount');
+                      }
+                    });
+                  }
 
-                                  window.location.assign('/help');
-                                }
-                              });
-                            }
-
-                        });
-                        </script>
+              });
+              </script>
 
 
 
