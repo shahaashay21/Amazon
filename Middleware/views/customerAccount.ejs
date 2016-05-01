@@ -56,7 +56,9 @@
                 <h5 style="color: green; font-weight: bold;" >
                   Payment Options
                 </h5>
+                <div ng-if="card_number">
                 <h5 style="color:green;">Card Number: <span style="color:black; font-weight: bold;">{{card_number}}</span> | Name On Card <span style="color:black; font-weight: bold;">{{name_on_card}}</span></h5>
+                </div>
 
                 <span><h5>You can Edit your Payment options under: <a style="text-decoration: underline;" href="/paymentOptions">Manage Your Payment Options</a> </h5></span>
 
@@ -66,8 +68,12 @@
                 <h5 style="color: green; font-weight: bold;">
                   Primary Delivery Address
                 </h5>
-                <span><h5>{{address}} , {{city}}</h4><h5>{{state}} , {{zipcode}}</h5><h5>Update Your Address from Here :   <a style="text-decoration: underline;" href="/addressDetails">Update</a> </h5></span>
-
+                
+                  
+                  <div ng-if="city">
+                <h5>{{address}} , {{city}}</h4><h5>{{state}} , {{zipcode}}</h5>
+                </div>
+                <h5>Update Your Address from Here :   <a style="text-decoration: underline;" href="/addressDetails">Update</a> </h5>
 <hr>
 
                 <h5 style="color: green; font-weight: bold;">
