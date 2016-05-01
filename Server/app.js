@@ -22,9 +22,6 @@ var express = require('express')
 
 var app = express();
 
-//JUST FOR PASSPORT LOGIN
-var passport = require('passport');
-require('./services/passport')(passport);
 
 // all environments
 app.set('port', process.env.PORT || 3001);
@@ -42,7 +39,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.use(passport.initialize());
+
 
 //app.get('/', routes.index);
 app.get('/users', user.list);
