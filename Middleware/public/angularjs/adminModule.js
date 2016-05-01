@@ -442,7 +442,6 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 		console.log("t_id : " + $scope.t_id);
 		var newCustomer = [
 			{
-				"t_id" : $scope.t_id.toUpperCase(),
 				"fname" : $scope.fname,
 				"lname" : $scope.lname,
 				"email" : $scope.email,
@@ -450,6 +449,11 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 				"city" : $scope.city,
 				"state" : $scope.state,
 				"zipCode" : $scope.zipCode,
+				"card_number" : $scope.card_number,
+				"name_on_card" : $scope.name_on_card,
+				"exp_month" : $scope.exp_month,
+				"exp_year" : $scope.exp_year,
+				"cvv" : $scope.cvv,
 				"contacts" : Number($scope.contacts)
 			}
 		];
@@ -483,8 +487,8 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 		//}
 	}
 
-	//save Truck
-	$scope.saveDriver = function(data, id) {
+	//save Customer
+	$scope.saveCustomer = function(data, id) {
 	//$scope.user not updated yet
 		angular.extend(data, {id: id});
 		console.log("saveDriver data::");
@@ -524,7 +528,7 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 	};
 
 	// remove driver
-	$scope.removeDriver = function(id) {
+	$scope.removeCustomer = function(id) {
 		
 		console.log("removeDriver ::");
 		
@@ -567,7 +571,7 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 			return "Empty First Name!";
 	}
 	/*
-		Admin drivers-list page Operations end
+		Admin customers-list page Operations end
 	*/
 
 

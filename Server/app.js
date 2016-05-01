@@ -22,10 +22,6 @@ var express = require('express')
 
 var app = express();
 
-//JUST FOR PASSPORT LOGIN
-var passport = require('passport');
-require('./services/passport')(passport);
-
 // all environments
 app.set('port', process.env.PORT || 3001);
 app.set('views', __dirname + '/views');
@@ -42,8 +38,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.use(passport.initialize());
-
 //app.get('/', routes.index);
 app.get('/users', user.list);
 
@@ -55,7 +49,6 @@ var cnn = amqp.createConnection({host:'127.0.0.1'});
 mongoose.connect(mongoConnectURL, function() {
   console.log('Connected to mongo at: ' + mongoConnectURL);
 });
-
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

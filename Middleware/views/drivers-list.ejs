@@ -110,9 +110,9 @@
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content" style="overflow: scroll;">
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="overflow: scroll; width: auto;">
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">Drivers Data Table</h3>
@@ -194,8 +194,8 @@
                         </button>
                         </form>
                         <div class="buttons" ng-show="!driverform.$visible">
-                        <button class="btn btn-primary editable-table-button btn-xs" ng-click="driverform.$show()">Edit</button>
-                        <button class="btn btn-danger editable-table-button btn-xs" ng-click="removeDriver(driver.driver_id)">Delete</button>
+                          <button class="btn btn-primary editable-table-button btn-xs" ng-click="driverform.$show()">Edit</button>
+                          <button class="btn btn-danger editable-table-button btn-xs" ng-click="removeDriver(driver.driver_id)">Delete</button>
                         </div>
                         </td>
                       </tr>
@@ -236,7 +236,6 @@
                     <div class="form-group">
                       <label for="t_id">Truck ID</label>
                       <input type="text" class="form-control" placeholder="Enter Truck ID" name="t_id" ng-model="t_id" required>
-                      <label>{{t_id}}</label>
                       <!-- <div role="alert">
                         <span class="error" ng-show="invalid_t_id">Invalid Truck ID!</span>
                       </div>
@@ -250,7 +249,6 @@
                     <div class="form-group">
                       <label for="fname">First Name</label>
                       <input type="text" class="form-control" placeholder="Enter First Name" name="fname" ng-model="fname" required>
-                      <label>{{fname}}</label>
                       <!-- <div role="alert">
                         <span class="error" ng-show="adddriverform.fname.$error.required">Invalid First Name!</span>
                       </div> -->
@@ -311,7 +309,7 @@
               </div>
             </div>
           </div>
-          <!-- Add Truck Modal End -->
+          <!-- Add Driver Modal End -->
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
