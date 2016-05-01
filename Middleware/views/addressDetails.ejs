@@ -40,6 +40,7 @@
               $scope.address = res.data[0].address;
               $scope.city = res.data[0].city;
               $scope.zipcode = res.data[0].zipcode;
+              $scope.card_number = res.data[0].zipcode;
               
             }
           });
@@ -100,10 +101,7 @@
                       <label for="zip">
                         Zip
                       </label>
-
-
                       <input type="text" class="form-control" placeholder="Zip" ng-model="zipcode" />
-
                     </div>
                   </div>
                 </div>
@@ -113,8 +111,6 @@
 
 
           
- 
-
                 
  
                   <div class="col-md-3"></div>

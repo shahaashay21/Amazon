@@ -21,7 +21,8 @@
               $scope.address = res.data[0].address;
               $scope.city = res.data[0].city;
               $scope.zipcode = res.data[0].zipcode;
-              
+              $scope.card_number = res.data[0].card_number;
+              $scope.name_on_card = res.data[0].name_on_card;
             }
           });
         }
@@ -55,7 +56,9 @@
                 <h5 style="color: green;">
                   Payment Options
                 </h5>
-                <span><h5>You can add, remove, or edit your Payment options under: <a style="text-decoration: underline;" href="/paymentOptions">Manage Your Payment Options</a> </h5></span>
+                <h5 style="color:green;">Card Number: <span style="color:black; font-weight: bold;">{{card_number}}</span> | Name On Card <span style="color:black; font-weight: bold;">{{name_on_card}}</span></h5>
+
+                <span><h5>You can Edit your Payment options under: <a style="text-decoration: underline;" href="/paymentOptions">Manage Your Payment Options</a> </h5></span>
 
 
                 <hr>

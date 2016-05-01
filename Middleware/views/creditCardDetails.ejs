@@ -30,13 +30,35 @@
                     });
                   }
 
+
+                  $scope.getAddress = function(){
+          $http({
+            method: "GET",
+            url: '/user/address'
+          }).success(function(res){
+            if(res.status == 200){
+              console.log(res.data);
+              $scope.user = res.data;
+              $scope.state = res.data[0].state;
+              $scope.address = res.data[0].address;
+              $scope.city = res.data[0].city;
+              $scope.zipcode = res.data[0].zipcode;
+              $scope.card_number = res.data[0].card_number;
+              $scope.name_on_card = res.data[0].name_on_card;
+              $scope.exp_month = res.data[0].exp_month;
+               $scope.exp_year = res.data[0].exp_year;
+
+            }
+          });
+        }
+
               });
               </script>
 
 
 
   </head>
-  <body ng-app="cardModule" ng-controller="cardController">
+  <body ng-app="cardModule" ng-controller="cardController" ng-init="getAddress();">
     <% include menu1.ejs %>
     <div style="height: 50px; display: block;"></div>
         <div class="container-fluid">
