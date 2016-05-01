@@ -30,7 +30,8 @@ var productSchema = mongoose.Schema({
 	details: {type: String},
 	description: String,
 	features: {type: String, required: true},
-	isActive: {type: Boolean, default: true}
+	isActive: {type: Boolean, default: true},
+	quantity: {type: Number, required: true}
 },{
 	collection: 'products',
     timestamps: true,

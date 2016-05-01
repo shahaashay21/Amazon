@@ -119,7 +119,7 @@ exports.editProduct = function(req,res){
 
 	var msg_payload = {
 		"service" : "editProduct",
-		//"p_id" : req.param("p_id"),
+		"p_id" : req.param("p_id"),
 		"name" : req.param("name"),
 		"f_id": req.param("f_id"),
 		"cat_id" : req.param("cat_id"),
@@ -174,7 +174,7 @@ exports.prod_details = function(req,res){
 			if(prod.code == 200){
 				//console.log(Object.keys(prod.reviews));
 				if(typeof req.session.user != 'undefined'){
-				console.log(req.session.user);
+				console.log("session is active yipppy");
 
 				//for (var i = 0; i < arrayLength; i++) {
 				//console.log("star value"+prod.reviews.rating);
@@ -241,22 +241,24 @@ exports.farmer_page = function(req,res){
 		}
 		else
 		{
-			if(prod.code == 200){
+			if(prod.farmer.code == 200){
 				//console.log(Object.keys(prod.reviews));
 				if(typeof req.session.user != 'undefined'){
-				console.log(req.session.user);
-
+				//console.log("1");
+				//console.log(prod.farmer);
+				//console.log("2");
+				//console.log(prod.product);
 				//for (var i = 0; i < arrayLength; i++) {
 				//console.log("star value"+prod.reviews.rating);
 				//console.log("star value1"+prod.reviews[0].rating);
 				//console.log("In array should run once");
 				//}
-
-					res.render('farmer_page', { user: req.session.user, products: prod, session: true });
+				console.log(req.session.user);
+				res.render('farmer_page', { user: req.session.user, products: prod.product, farmer: prod.farmer, session: true });
 				}else{
 					console.log("No session on");
 					//res.send(prod);
-					res.render('farmer_page', { products: prod, session: false });
+					res.render('farmer_page', { user: null, products: prod, session: false });
 				}
 			}
 			else

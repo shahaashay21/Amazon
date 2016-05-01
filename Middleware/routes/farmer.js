@@ -62,6 +62,7 @@ exports.createFarmer = function(req,res){
 			"city" : req.param("city"),
 			"state": req.param("state"),
 			"zipcode" : req.param("zipcode"),
+			"isActive" : req.param("isActive"),
 			"sid":req.sessionID
 		};
 
@@ -131,11 +132,12 @@ exports.editFarmer = function(req,res){
 		err = 1;
 	}
 
-	if(req.param("f_id").length!=9){
+	if(req.param("f_id").toString().length!=9){
 		res.send(resGen.responseGenerator(500,null));
 		err = 1;
 	}
 
+	console.log("err "+err);
 	if( err == 0){
 		var msg_payload = {
 			"service" : "editFarmer",
@@ -151,6 +153,7 @@ exports.editFarmer = function(req,res){
 			"video": req.param("video"),
 			"tax": req.param("tax"),
 			"contacts": req.param("contacts"),
+			"isActive" : req.param("isActive"),
 			//"city" : req.param("city"),
 			//"zipcode" : req.param("zipcode"),
 			//"intro" : req.param("intro"),

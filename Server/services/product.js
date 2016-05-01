@@ -1,4 +1,5 @@
 var Product = require('./model/product');
+var Farmer = require('./model/farmer');
 var resGen = require('./commons/responseGenerator');
 var Farmer = require('./model/farmer');
 
@@ -44,7 +45,8 @@ exports.get_prod = function(msg, callback){
 	console.log("In servers get prod");
 	console.log(msg);
 	console.log(msg.p_id);
-	Product.find({p_id: msg.p_id}, function(err, product) {
+
+	Product.find({p_id: msg.p_id,isActive: true}, function(err, product) {
 		if(product == "")
 				{
 				console.log(err);
@@ -63,26 +65,47 @@ exports.get_prod = function(msg, callback){
 };
 
 exports.farmer_page = function(msg, callback){
-	var res = {};
-	console.log("In servers get farmers");
-	console.log(msg);
-	console.log(msg.p_id);
-	Product.find({f_id: msg.f_id}, function(err, product) {
-		if(product == "")
+	var p= {};
+	var f= {};
+	
+	//console.log("In servers get farmers");
+	Farmer.find({f_id: msg.f_id}, function(err, farmer) {
+		if(farmer == "")
 				{
 				console.log(err);
-				res.code = "401";
-				res.value = "Failed to fetch farmer_page";
+				farmer.code = "401";
+				farmer.value = "Failed to fetch farmer_page";
 				}
 			else
 				{
-				console.log(product);
-				res.code = "200";
-				res.value = "Farmer Fetched";
-				res.object = product;
+				//console.log(farmer);
+				f.code = "200";
+				f.value = "Farmer Fetched";
+				f.object = farmer;
+				Product.find({f_id: msg.f_id}, function(err, product) {
+		if(product == "")
+				{
+				console.log(err);
+				product.code = "401";
+				product.value = "Failed to fetch prod info";
 				}
-		callback(null, res);
+			else
+				{
+				//console.log(product);
+				p.code = "200";
+				p.value = "Farmer products Fetched";
+				p = product;
+				//console.log(p);
+				
+	//console.log(p);
+	//console.log(f);
+	var res = {"farmer": f,"product": p};
+	callback(null, res);
+				}
 	});
+				}
+	});
+	
 };
 
 exports.create_review = function(msg, callback){
@@ -131,12 +154,12 @@ exports.createProduct = function(req, res){
 			if(result){
 				console.log("result found");
 				farmer_name = result.fname + " " + result.lname;	
-				//console.log(farmer_name);	
+				console.log(farmer_name);	
 				var product = Product({
 					//p_id : req.p_id,
 					name : req.name,
 					f_id: req.f_id,
-					farmer_name: farmer_name,
+					f_name: farmer_name,
 					cat_id: req.cat_id,
 					price : req.price,
 					weight : req.weight,
@@ -169,7 +192,7 @@ exports.createProduct = function(req, res){
 			}
 			else{
 				console.log("no result add product");
-				resGen.send(null,res);
+				res.send(null,res);
 			}
 		}
 	});
@@ -185,9 +208,10 @@ exports.editProduct = function(req, res){
 		}
 		else
 		{
+			console.log(result);
 			if(result){
 				result.name = req.name;
-
+				
 				if(result.f_id != req.f_id){
 					Farmer.find({f_id:req.f_id}, {fname:1,lname:1,f_id:1}, function(err,res){
 						if(err){
@@ -198,7 +222,7 @@ exports.editProduct = function(req, res){
 						}
 					});
 				}
-
+				console.log(result.f_id);
 				result.cat_id = req.cat_id;
 				result.price = req.price;
 				result.weight = req.weight;
@@ -228,15 +252,17 @@ exports.editProduct = function(req, res){
 
 exports.deleteProduct = function(req, res){
 
-	Product.find({p_id:req.p_id},function(err,result){
+	console.log(req.p_id);
+	Product.findOne({p_id:req.p_id},function(err,result){
 		if(err)
 		{
 			resGen.error(err,res);
 		}
 		else
 		{
-			if(results){
-				console.log("all products found");
+			console.log(result);
+			if(result){
+				//console.log("all products found");
 				//console.log(result);
 				result.isActive = false;
 				result.save(function(err,doc){
