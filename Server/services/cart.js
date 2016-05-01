@@ -4,7 +4,7 @@ var Cart = require('./model/cart');
 
 exports.cartItems = function(req, callback){
 	c_id = req.c_id;
-	// console.log(c_id);
+	console.log(c_id);
 	Cart.find({c_id: c_id}).sort('p_id').exec(function(err, cartItemDetails){
 		p_id_array = [];
 		for(var i=0; i<cartItemDetails.length; i++){

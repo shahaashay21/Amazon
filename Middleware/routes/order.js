@@ -4,15 +4,14 @@ var mq = require('../rpc/client');
 //create and order
 exports.createOrder = function(req, res) {
 
-	var test = "test";
-
 	console.log("in createorder");
-
+	drop_time = req.param('drop_time');
+	console.log(req.session.user);
 	//messege payload for sending to server
-	msg_payload = {"service" : "createOrder", "test" : test};
-
+	msg_payload = {"service" : "createOrder", "drop_time" : drop_time, 'user': req.session.user};
+	console.log(msg_payload);
 	//making request to the server
-	mq.make_request('order-queue', msg_payload, function(err, results) {
+	mq.make_request('order_queue', msg_payload, function(err, results) {
 		if(err) {
 			console.log("Error occurred while requesting to server for createorder : " + err);
 			var json_resposes = {"statusCode" : 401, "error" : "Could not connect to server"};

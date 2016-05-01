@@ -297,7 +297,7 @@ cnn.on('ready', function(){
 
 	console.log("listening on order_queue");
 
-	cnn.queue('order-queue', function(q) {
+	cnn.queue('order_queue', function(q) {
 		q.subscribe(function(message, headers, deliveryInfo, m) {
 			switch(message.service) {
 				case 'createOrder':

@@ -72,7 +72,7 @@ exports.index = function(req, res){
 
 
 
-	Product.find({}).limit(10).exec(function(err, products){
+	Product.find({'isActive': true}).limit(10).exec(function(err, products){
 			console.log('products');
 			// if(typeof req.session.user != 'undefined'){
 			if(typeof req.session.user != 'undefined'){
