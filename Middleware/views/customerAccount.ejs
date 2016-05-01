@@ -3,8 +3,34 @@
   <head>
     <title>Amazon-Fresh</title>
     <% include lib.ejs %>
+ <script src="/angularjs/angular.min.js"></script>
+<script src="/angularjs/angular-route.min.js.map"></script>
+
+    <script>
+      angular.module('getAddressModule', [])
+      .controller('getAddressController',function($scope, $http) {
+        $scope.getAddress = function(){
+          $http({
+            method: "GET",
+            url: '/user/address'
+          }).success(function(res){
+            if(res.status == 200){
+              console.log(res.data);
+              $scope.user = res.data;
+              $scope.state = res.data[0].state;
+              $scope.address = res.data[0].address;
+              $scope.city = res.data[0].city;
+              $scope.zipcode = res.data[0].zipcode;
+              
+            }
+          });
+        }
+    });
+    </script>
+
+
   </head>
-  <body>
+  <body ng-app="getAddressModule" ng-controller="getAddressController" ng-init="getAddress();">
     <% include menu1.ejs %>
     <div style="height: 50px; display: block;"></div>
         <div class="container-fluid">
@@ -37,7 +63,7 @@
                 <h5 style="color: green;">
                   Primary Delivery Address
                 </h5>
-                <span><h5>Add your Address from Here :   <a style="text-decoration: underline;" href="/addressDetails">Add</a> </h5></span>
+                <span><h4>{{address}} , {{city}}</h4><h4>{{state}} , {{zipcode}}</h4><h5>Update Your Address from Here :   <a style="text-decoration: underline;" href="/addressDetails">Update</a> </h5></span>
 
 <hr>
 

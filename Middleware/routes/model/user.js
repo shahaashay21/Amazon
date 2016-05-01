@@ -8,14 +8,10 @@ var contactsSchema = mongoose.Schema({
 	default_card: {type:String, required:true, default: 'false'}
 });
 
-var cardDetailsSchema = mongoose.Schema({
-	card_number: {type: Number, required: true},
-	name_on_card: {type: String, required: true},
-	exp_month: {type:Number, required:true},
-	exp_year: {type:Number, required:true},
-	cvv: {type:Number, required:true},
-	default_card: {type:String, required:true, default: 'false'}
-});
+// var cardDetailsSchema = mongoose.Schema({
+	
+// 	default_card: {type:String, required:true, default: 'false'}
+// });
 
 var userSchema = mongoose.Schema({
 	c_id: {type: Number, required: true, index: true},
@@ -27,8 +23,12 @@ var userSchema = mongoose.Schema({
 	zipcode: Number,
 	city: String,
 	state: String,
+	card_number: {type: Number},
+	name_on_card: {type: String},
+	exp_month: {type:Number},
+	exp_year: {type:Number},
+	cvv: {type:Number},
 	contacts: [contactsSchema],
-	cardDetails: [cardDetailsSchema],
 },
 {
 	collection: 'users',

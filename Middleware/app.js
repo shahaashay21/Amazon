@@ -88,6 +88,12 @@ app.post('/farmer/create',farmer.createFarmer);
 app.delete('/farmer/delete',farmer.deleteFarmer);
 app.post('/farmer/edit',farmer.editFarmer);
 
+app.post('/user/address/update',user.editAddress);
+app.post('/user/card/update',user.editCard);
+app.get('/user/address',user.getAddress);
+
+
+
 app.get('/product/all',product.getProducts);
 app.post('/product/create',product.createProduct);
 app.delete('/product/delete',product.deleteProduct);
@@ -115,6 +121,16 @@ app.get('/search', function(req, res){
   if(typeof req.session.user != 'undefined'){
     console.log(req.session.user);
     res.render('ProductSearch', { user: req.session.user });
+  }else{
+    res.render('index');
+  }
+});
+
+app.get('/myOrders', function(req, res){
+
+  if(typeof req.session.user != 'undefined'){
+    console.log(req.session.user);
+    res.render('myOrders', { user: req.session.user });
   }else{
     res.render('index');
   }

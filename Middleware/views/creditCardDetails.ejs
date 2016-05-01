@@ -3,8 +3,42 @@
   <head>
     <title>Amazon-Fresh</title>
     <% include lib.ejs %>
+
+
+                        <script>
+                          angular.module('cardModule', []).controller('cardController', function($scope, $http, $location) {
+                            
+                            $scope.updateCardDetails = function(){
+                              //console.log($scope.zipCode);
+                              var data = {
+                                  card_number: $scope.card_number,
+                                  name_on_card: $scope.name_on_card,
+                                  exp_month: $scope.exp_month,
+                                  exp_year: $scope.exp_year,
+                                  cvv: $scope.cvv
+                                };
+
+                              $http({
+                                method: "POST",
+                                url: '/user/card/update',
+                                data: data
+                              }).success(function(res){
+                                if(res){
+                                  console.log(res.data);
+                                  console.log("Found Details")
+
+                                  window.location.assign('/help');
+                                }
+                              });
+                            }
+
+                        });
+                        </script>
+
+
+
   </head>
-  <body>
+  <body ng-app="cardModule" ng-controller="cardController">
     <% include menu1.ejs %>
     <div style="height: 50px; display: block;"></div>
         <div class="container-fluid">
@@ -19,7 +53,7 @@
                         <div class="col-md-12">
                           <div class="form-group has-feedback">
                             <label class="credit-card-labels-account">Card Number</label>
-                              <input type="text" class="form-control" placeholder="Card Number" name="card" />
+                              <input type="text" class="form-control" placeholder="Card Number" ng-model="card_number" />
                              
 
                           </div>
@@ -29,7 +63,7 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label class="credit-card-labels-account">Name on the Card</label>
-                              <input type="text" class="form-control" placeholder="Name on the Card" ng-model="" value=""/>
+                              <input type="text" class="form-control" placeholder="Name on the Card" ng-model="name_on_card" />
 
                           </div>
                         </div>
@@ -40,7 +74,7 @@
 
                             <div class="col-md-3">
                               <label class="credit-card-labels-account">Expiry Date</label>
-                              <select class="form-control" id="sel1" ng-model="" value="" >
+                              <select class="form-control" ng-model="exp_month" >
                                 <option>01</option>
                                 <option>02</option>
                                 <option>03</option>
@@ -58,7 +92,7 @@
 
                             <div class="col-md-4">
                               <label class="credit-card-labels-account">&nbsp;</label>
-                              <select class="form-control" id="sel1" ng-model="" value="">
+                              <select class="form-control" ng-model="exp_year">
                                 <option>2016</option>
                                 <option>2017</option>
                                 <option>2018</option>
@@ -71,7 +105,7 @@
                             <div class="col-md-2"></div>
                             <div class="col-md-3">
                               <label class="credit-card-labels-account">CVV</label>
-                                <input type="password" class="form-control" placeholder="CVV" ng-model="" value=""/>
+                                <input type="password" class="form-control" placeholder="CVV" ng-model="cvv"/>
 
                             </div>
 
@@ -85,7 +119,7 @@
                 <div class="row">
                   <div class="col-md-2"></div>
                   <div class="col-md-8">
-                      <button type="button" class="btn btn-primary btn-block btn-signup" ng-click="submit();">Update credit Card Details</button>
+                      <button type="button" class="btn btn-primary btn-block btn-signup" ng-click="updateCardDetails();">Update credit Card Details</button>
 
                   </div>
                   <div class="col-md-2"></div>
