@@ -119,7 +119,7 @@ exports.editProduct = function(req,res){
 
 	var msg_payload = {
 		"service" : "editProduct",
-		//"p_id" : req.param("p_id"),
+		"p_id" : req.param("p_id"),
 		"name" : req.param("name"),
 		"f_id": req.param("f_id"),
 		"cat_id" : req.param("cat_id"),

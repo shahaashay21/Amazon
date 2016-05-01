@@ -18,15 +18,16 @@ var farmerSchema = mongoose.Schema({
 	lname: {type: String, required: true},
 	email: {type: String, required: true},
 	pass: {type: String, required: true},
+	intro: {type: String, required: true},
+	video: String,
+	tax: {type: Number, required: true},
+	contacts: Number,
 	address: {type: String, required: true},
 	city: {type: String, required: true},
 	state: {type: String, required: true},
 	zipcode: {type: Number, required:true},
-	contacts: [Number],
 	reviews: [reviewSchema],
-	intro: {type: String, required: true},
-	video: String,
-	tax: {type: Number, required: true}
+	isAvailable: {type: Boolean, required: true}
 },{
 	collection: 'farmers',
     timestamps: true,

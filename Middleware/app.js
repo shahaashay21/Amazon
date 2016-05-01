@@ -82,8 +82,6 @@ app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
 //app.post('/admin/addFarmer', admin.addFarmer);;
 
-//ORDERS API
-app.post('/order/create', order.createOrder);
 
 app.get('/farmer/all',farmer.getFarmers);
 app.post('/farmer/create',farmer.createFarmer);
@@ -250,6 +248,7 @@ app.post('/reg', login.regUser);
 app.post('/additem', cart.addItem);
 app.post('/cart', cart.cartItems);
 app.post('/suggest', product.suggest);
+app.post('/order', order.createOrder);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

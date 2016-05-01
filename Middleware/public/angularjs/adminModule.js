@@ -1,5 +1,28 @@
 var user = angular.module('adminModule',['xeditable']);
-user.controller('adminController',['$scope','$http','$sce', function($scope,$http,$sce){
+
+user.directive('addFarmerModal', function() {
+   return {
+     restrict: 'A',
+     link: function(scope, element, attr) {
+       scope.dismiss = function() {
+           element.modal('hide');
+       };
+     }
+   } 
+});
+
+user.directive('addProductModal', function() {
+   return {
+     restrict: 'A',
+     link: function(scope, element, attr) {
+       scope.dismiss = function() {
+           element.modal('hide');
+       };
+     }
+   } 
+});
+
+user.controller('adminController',['$scope','$http','$sce','$filter', function($scope,$http,$sce,$filter){
 	/*
 	-------Created by Darshil Saraiya 4/27/16-------
 	-------Admin login Page operations-------
@@ -110,6 +133,7 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 		angular.extend(data, {id: id});
 		console.log("saveFarmer data::");
 		console.log(data);
+		console.log("is active "+data.isActive);
 		$http({
 			method : "POST",
 			url : '/farmer/edit',
@@ -125,7 +149,8 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 				intro: data.intro,
 				video: data.video,
 				tax: data.tax,
-				contacts: data.contacts
+				contacts: data.contacts,
+				isActive: data.isActive==1 ? true : false
 			}
 		}).success(function(res){
 			if (res.status === 200) {
@@ -232,7 +257,7 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 	//add farmer
 	$scope.addFarmer = function(){
 		console.log("addFarmer ::");
-
+		console.log($scope.isActive);
 		$http({
 			method : "POST",
 			url : "/farmer/create",
@@ -253,6 +278,7 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 		}).success(function(res) {
 			if(res.status == 200) {
 				console.log("success on add farmer :" + res.data);
+				$scope.dismiss();
 			}
 		});
 	}
@@ -280,8 +306,24 @@ user.controller('adminController',['$scope','$http','$sce', function($scope,$htt
 		}).success(function(res) {
 			if(res.status == 200) {
 				console.log("success on add product :" + res.data);
+				$scope.dismiss();
 			}
 		});
 	}
+
+	$scope.statuses = [
+	    {value: 1, text: 'Aprroved'},
+	    {value: 2, text: 'Rejected'},
+  	]; 
+
+  	$scope.showStatus = function(farmer) {
+	    var selected = [];
+	    var temp = farmer.isActive==true ? 1 : 2;
+	   	//console.log("temp ::"+temp);
+    	selected = $filter('filter')($scope.statuses, {value: temp });
+	    
+	    //console.log(selected);
+	    return selected.length ? selected[0].text : 'Not set';
+  	};
 	//editableOptions.theme = 'bs3';
 }]);

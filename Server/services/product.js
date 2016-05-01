@@ -5,15 +5,15 @@ var Farmer = require('./model/farmer');
 
 
 exports.suggest = function(req, callback){
-	console.log("SERVER suggest");
+	// console.log("SERVER suggest");
 	q = req.q;
-	console.log(q);
+	// console.log(q);
 
 	re = new RegExp('(^|\\s+)'+q,'i');
-	console.log(re);
+	// console.log(re);
 	Product.aggregate([{$match: {name: new RegExp('(^|\\s+)'+q,'i')}}, {$group: {_id:'$name', name: {$first:'$name'}}}, {$limit: 5}]).exec(function(err, name){
 		// Product.find({name: new RegExp('(^|\\s+)'+q,'i')}, 'name').exec(function(err, name){
-		console.log(name);
+		// console.log(name);
 		callback(null, JSON.stringify(name));
 	});
 	// Product.find()
@@ -171,12 +171,12 @@ exports.createProduct = function(req, res){
 			if(result){
 				console.log("result found");
 				farmer_name = result.fname + " " + result.lname;	
-				//console.log(farmer_name);	
+				console.log(farmer_name);	
 				var product = Product({
 					//p_id : req.p_id,
 					name : req.name,
 					f_id: req.f_id,
-					farmer_name: farmer_name,
+					f_name: farmer_name,
 					cat_id: req.cat_id,
 					price : req.price,
 					weight : req.weight,
@@ -209,7 +209,7 @@ exports.createProduct = function(req, res){
 			}
 			else{
 				console.log("no result add product");
-				resGen.send(null,res);
+				res.send(null,res);
 			}
 		}
 	});
@@ -225,9 +225,10 @@ exports.editProduct = function(req, res){
 		}
 		else
 		{
+			console.log(result);
 			if(result){
 				result.name = req.name;
-
+				
 				if(result.f_id != req.f_id){
 					Farmer.find({f_id:req.f_id}, {fname:1,lname:1,f_id:1}, function(err,res){
 						if(err){
@@ -238,7 +239,7 @@ exports.editProduct = function(req, res){
 						}
 					});
 				}
-
+				console.log(result.f_id);
 				result.cat_id = req.cat_id;
 				result.price = req.price;
 				result.weight = req.weight;
@@ -268,15 +269,17 @@ exports.editProduct = function(req, res){
 
 exports.deleteProduct = function(req, res){
 
-	Product.find({p_id:req.p_id},function(err,result){
+	console.log(req.p_id);
+	Product.findOne({p_id:req.p_id},function(err,result){
 		if(err)
 		{
 			resGen.error(err,res);
 		}
 		else
 		{
-			if(results){
-				console.log("all products found");
+			console.log(result);
+			if(result){
+				//console.log("all products found");
 				//console.log(result);
 				result.isActive = false;
 				result.save(function(err,doc){

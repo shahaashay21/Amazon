@@ -132,6 +132,7 @@
 												<th>Video</th>
 												<th>Tax</th>
 												<th>Contact No</th>
+												<th>Approve/Reject</th>
 												<th>Joined At</th>
 											</tr>
 										</thead>
@@ -195,9 +196,15 @@
 														 {{ farmer.contacts || 'empty' }}
 													</span>
 												</td>
+												<td>
+													<span editable-select="farmer.isActive" e-name="isActive" e-form="farmerform" e-ng-options="s.value as s.text for s in statuses">
+          												{{ showStatus(farmer) }}
+													</span>
+												</td>
+												
 												<td>{{farmer.createdAt | date: 'medium'}}</td>
 												<td>
-											  <form editable-form name="farmerform" ng-show="farmerform.$visible" class="form-buttons form-inline"
+											  	<form editable-form name="farmerform" ng-show="farmerform.$visible" class="form-buttons form-inline"
 													shown="inserted == farmer" onbeforesave="saveFarmer($data,farmer.f_id)">
 												<button type="submit" ng-disabled="farmerform.$waiting" class="btn btn-primary editable-table-button btn-xs">
 												  Save

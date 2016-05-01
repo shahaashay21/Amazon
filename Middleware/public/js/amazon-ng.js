@@ -42,7 +42,7 @@ app.controller("amazon",function($scope, $http, $location){
 
 	//REDIRECT TO USER PROFILE PAGE
 	$scope.userRedirect= function(id){
-		window.location.assign("/search/"+id);
+		window.location.assign("/search?q="+id);
 	};
 
 	$scope.getCartItems = function(){
@@ -96,6 +96,16 @@ app.controller("amazon",function($scope, $http, $location){
 		month = $scope.monthname();
 		drop_time = new Date(month+' '+(temp.getDate() + Number(dayDate))+', '+temp.getFullYear()+' '+time);
 		console.log(drop_time);
+		data = {'drop_time': drop_time};
+		url = '/order';
+		$http({
+			method: 'POST',
+			url: url,
+			data: data,
+			dataType: 'json'
+		}).then(function(data){
+			console.log(data);
+		});
 
 	}
 

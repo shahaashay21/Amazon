@@ -4,7 +4,7 @@ var resGen = require('./commons/responseGenerator');
 
 exports.getFarmers = function(req, res){
 
-	Farmer.find({isActive:true},{pass:0},function(err,results){
+	Farmer.find({isAvailable:true},{pass:0},function(err,results){
 		if(err)
 		{
 			resGen.error(err,res);
@@ -13,7 +13,7 @@ exports.getFarmers = function(req, res){
 		{
 			if(results.length > 0){
 				console.log("all farmers found");
-				console.log(results[1]);
+				//console.log(results[1]);
 				res(null,resGen.responseGenerator(200, results));
 			}
 			else
@@ -39,7 +39,7 @@ exports.createFarmer = function(req, res){
 		address : req.address,
 		city : req.city,
 		state: req.state,
-		zipCode : req.zipcode,
+		zipcode : req.zipcode
 		//,f_id : req.f_id
 	});
 
@@ -53,7 +53,7 @@ exports.createFarmer = function(req, res){
 		{
 			if(results){
 				console.log("farmer created");
-				console.log(results);
+				//console.log(results);
 				res(null,resGen.responseGenerator(200, results));
 			}
 			else
@@ -74,6 +74,7 @@ exports.editFarmer = function(req, res){
 		}
 		else
 		{
+			//console.log(result);
 			if(result){
 				result.fname = req.fname;
 				result.lname = req.lname;
@@ -81,11 +82,13 @@ exports.editFarmer = function(req, res){
 				result.address = req.address;
 				result.city = req.city;
 				result.state = req.state;
-				result.zipCode = req.zipcode;
+				result.zipcode = req.zipcode;
 				result.intro = req.intro;
 				result.video = req.video;
 				result.tax = req.tax;
 				result.contacts = req.contacts;
+				result.isActive = req.isActive;
+				console.log(req.isActive);
 				//result.city = req.city ? req.city : result.city;
 				//result.zipcode = req.zipcode ? req.zipcode : result.zipcode;
 				//result.intro = req.intro ? req.intro : result.intro;
@@ -94,7 +97,7 @@ exports.editFarmer = function(req, res){
 						resGen.error(err,res);
 					} else {
 						console.log("farmer edited");
-						console.log(doc);
+						//console.log(doc);
 						res(null,resGen.responseGenerator(200,doc));
 					}
 				});
@@ -118,14 +121,14 @@ exports.deleteFarmer = function(req, res){
 		{
 			if(result){
 				console.log("farmer found");
-				console.log(result);
-				result.isActive = false;
+				//console.log(result);
+				result.isAvailable = false;
 				result.save(function(err,doc){
 					if(err){
 						resGen.error(err,res);
 					} else {
 						console.log("farmer inactive now");
-						console.log(doc);
+						//console.log(doc);
 						res(null,resGen.responseGenerator(200, doc.isActive));
 					}
 				});
