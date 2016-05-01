@@ -6,7 +6,8 @@ exports.createOrder = function(req, callback) {
 	console.log("create Order");
 	console.log(req.drop_time);
 	console.log(req.user);
-	cart.cartItems(req.user.c_id,function(res, ans){
+	var x = {c_id: req.user.c_id};
+	cart.cartItems(x,function(res, ans){
 		console.log(ans);
 	})
 	callback(null, JSON.stringify('yes'));
