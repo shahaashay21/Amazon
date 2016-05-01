@@ -64,33 +64,31 @@ var Cart = require('./model/cart.js');
 var User = require('./model/user');
 
 exports.home = function(req, res){
-	User.find({c_id: req.session.user.c_id, 'cardDetails.default_card': 'true'}, 'cardDetails', function(err, ans){
-		User.findOne({c_id: req.session.user.c_id}, 'address', function(err, address){
-			
-			console.log(typeof address.address);
-			if(typeof address.address != 'undefined'){
+	User.findOne({c_id: req.session.user.c_id}, 'address card_number name_on_card', function(err, ans){
+		// User.findOne({c_id: req.session.user.c_id}, 'address', function(err, address){
+			console.log(ans);
+			console.log(typeof ans.address);
+			if(typeof ans.address != 'undefined'){
 				isAddress = 'yes';
-				console.log(address.address);
+				console.log(ans.address);
 			}else{
 				isAddress = 'no';
 			}
-			if(ans.length > 0){
-				isCard = 'yes';
-			}else{
-				isCard = 'no';
-			}
 			console.log(isAddress);
-			if(ans.length > 0){
-				cardinfo = ans[0].cardDetails[0];
+			if(typeof ans.card_number != 'undefined'){
+				// cardinfo = ans[0].cardDetails[0];
+				isCard = 'yes';
+				name_on_card = ans.name_on_card;
 
-				x = cardinfo.card_number.toString();
+				x = ans.card_number.toString();
 				lastFourDigit = x.substring(x.length - 4);
 
-				res.render('order', { user: req.session.user, 'cardDetails':  cardinfo, 'lastFourDigit': lastFourDigit, 'isCard': isCard, 'isAddress': isAddress});	
+				res.render('order', { user: req.session.user, 'name_on_card':  name_on_card, 'lastFourDigit': lastFourDigit, 'isCard': isCard, 'isAddress': isAddress});	
 			}else{
+				isCard = 'no';
 				res.render('order', { user: req.session.user, 'isCard': isCard, 'isAddress': isAddress});	
 			}
-		})
+		// })
 	})
 	
 }

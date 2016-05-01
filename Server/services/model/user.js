@@ -28,7 +28,7 @@ var userSchema = mongoose.Schema({
 	exp_month: {type:Number},
 	exp_year: {type:Number},
 	cvv: {type:Number},
-	contacts: [contactsSchema],
+	contact: String,
 },
 {
 	collection: 'users',

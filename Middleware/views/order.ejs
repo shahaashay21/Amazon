@@ -57,9 +57,11 @@
             <div class="pull-left">
               <div class="checkout-order-box del-time-box">
                 <div><b>Card Details</b></div>
+
                
-                <div style="margin: 10px 0" ng-if="card_number">
+                <div style="margin: 10px 0" ng-if="card_number" ng-if="card_number">
                   <div class="capitalize" style="margin-bottom: 5px;">Name on card: <span><b>{{name_on_card}}</b></span></div>
+
                   <select>
                     <option>{{card_number}}</option>
                   </select>

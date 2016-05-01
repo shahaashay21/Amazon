@@ -121,7 +121,7 @@ app.controller("amazon",function($scope, $http, $location){
 		time = angular.element('#time').val();
 		temp = new Date();
 		month = $scope.monthname();
-		drop_time = new Date(month+' '+(temp.getDate() + Number(dayDate))+', '+temp.getFullYear()+' '+time);
+		drop_time = new Date(month+' '+(temp.getDate() + Number(dayDate))+', '+temp.getFullYear()+' '+time+':00:00');
 		console.log(drop_time);
 		data = {'drop_time': drop_time};
 		url = '/order';
@@ -134,6 +134,11 @@ app.controller("amazon",function($scope, $http, $location){
 			console.log(data);
 			if(data.data.suc == 'false'){
 				alertline('alert-notify-danger','<b>Sorry</b>, We have only <b>'+data.data.availableQuant+'</b> quantity available of <b>'+data.data.itemName+'</b>');
+			}else{
+				alertline('alert-notify-success','<b>Your has been placed successfully.</b>');
+				setTimeout(function(){
+					window.location.assign('/')
+				}, 4000);
 			}
 		});
 

@@ -64,7 +64,7 @@ $(window).load(function(){
       <div class="row">
       <% if(typeof products.object[0].reviews[0] != 'undefined') {
             if(products.object[0].reviews[0] != "") { %>
-    <span id="rating_2" class="rating" data-val="<%= products.object[0].reviews[0].rating %>" data-stars="5" data-change="false"></span>
+    <span id="rating_2" class="rating" data-val="<%= avg_rating %>" data-stars="5" data-change="false"></span> (<%= t_length %>)
     <% } }%>
     <span id="rating_2" class="rating" data-val="0" data-stars="5" data-change="false"></span>
 </div>
