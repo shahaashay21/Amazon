@@ -2,8 +2,7 @@
         main.controller('formCtrl', ['$scope', '$http', function ($scope, $http) {
         	$scope.quantity = false;
         	$scope.addtocart = true;
-        	$scope.cart = false;
-        	$scope.signin = true;
+        	$scope.cart = true;
         	$scope.review = false;
             $scope.description = true;
             $scope.details = true;
@@ -12,6 +11,7 @@
         	$scope.magic_zoom = window.image1;
 
         	function checksession()  {
+                console.log("in checksession");
         		if(window.session == true)
         		{
 
