@@ -23,10 +23,6 @@ user.directive('addProductModal', function() {
 });
 
 user.controller('adminController',['$scope','$http','$sce','$filter', function($scope,$http,$sce,$filter){
-	/*
-	-------Created by Darshil Saraiya 4/27/16-------
-	-------Admin login Page operations-------
-	*/
 	$scope.isBlankEmail = false;
 	$scope.isBlankPassword = false;
 	$scope.isIncorrectDetails = false;
@@ -79,10 +75,6 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 	}
 	//Admin login-page End
 
-	/*
-	-------Created by Darshil Saraiya 4/27/16-------
-	-------Admin order-list Page operations-------
-	*/
 	//add order
 	$scope.addOrder = function(){
 		console.log("addOrder ::");
@@ -316,6 +308,21 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 	    {value: 2, text: 'Rejected'},
   	]; 
 
+  	$scope.getCategory = function(){
+  		$http({
+  			method: "GET",
+  			url: "/category/get"
+  		}).success(function(res){
+  			$scope.categs = res.data;
+  			$scope.categories = [];
+  			console.log(res.data);
+  			for(var i in res.data){
+				$scope.categories[i] = { value : Number(res.data[i].cat_id), text: res.data[i].name }
+			}
+  			console.log($scope.categories);
+  		});
+  	};
+
   	$scope.showStatus = function(farmer) {
 	    var selected = [];
 	    var temp = farmer.isActive==true ? 1 : 2;
@@ -325,5 +332,15 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 	    //console.log(selected);
 	    return selected.length ? selected[0].text : 'Not set';
   	};
+
+
+  	$scope.showCategory = function(product){
+  		var selected = [];
+	    var temp = product.cat_id;
+	   	console.log("temp ::"+temp);
+    	selected = $filter('filter')($scope.categories, {value: temp });
+	    console.log(selected);
+	    return selected.length ? selected[0].text : 'Not set';
+  	}
 	//editableOptions.theme = 'bs3';
 }]);

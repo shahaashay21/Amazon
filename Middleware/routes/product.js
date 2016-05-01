@@ -30,6 +30,19 @@ exports.getProducts = function(req, res){
 	});
 };
 
+
+exports.getCategory = function(req,res){
+	mq.make_request('product_queue', {'service' : 'getCategory'}, function(err,doc){
+		if(err){
+			res.send(500);
+		}else{
+			res.send(doc);
+		}
+	});
+}
+
+
+
 exports.suggest = function(req, res){
 	q = req.param('q');
 	var msg_payload = {'service': 'suggest', 'q': q};

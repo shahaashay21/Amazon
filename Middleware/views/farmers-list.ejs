@@ -152,32 +152,32 @@
 													</span>
 												</td>
 												<td>
-													<span editable-text="farmer.email" e-name="email" e-form="farmerform" onbeforesave="checkEmail($data)">
+													<span editable-text="farmer.email" e-name="email" e-form="farmerform" onbeforesave="checkEmail($data)" e-required>
 														 {{ farmer.email || 'empty' }}
 													</span>
 												</td>
 												<td>
-													<span editable-text="farmer.address" e-name="address" e-form="farmerform">
+													<span editable-text="farmer.address" e-name="address" e-form="farmerform" e-required>
 														 {{ farmer.address || 'empty' }}
 													</span>
 												</td>
 												<td>
-													<span editable-text="farmer.city" e-name="city" e-form="farmerform">
+													<span editable-text="farmer.city" e-name="city" e-form="farmerform" e-required>
 														 {{ farmer.city || 'empty' }}
 													</span>
 												</td>
 												<td>
-													<span editable-text="farmer.state" e-name="state" e-form="farmerform">
+													<span editable-text="farmer.state" e-name="state" e-form="farmerform" e-required>
 														 {{ farmer.state || 'empty' }}
 													</span>
 												</td>
 												<td>
-													<span editable-text="farmer.zipcode" e-name="zipcode" e-form="farmerform">
+													<span editable-text="farmer.zipcode" e-name="zipcode" e-form="farmerform" e-required>
 														 {{ farmer.zipcode || 'empty' }}
 													</span>
 												</td>
 												<td>
-													<span editable-text="farmer.intro" e-name="intro" e-form="farmerform">
+													<span editable-text="farmer.intro" e-name="intro" e-form="farmerform" e-required>
 														 {{ farmer.intro || 'empty' }}
 													</span>
 												</td>
@@ -187,17 +187,17 @@
 													</span>
 												</td>
 												<td>
-													<span editable-text="farmer.tax" e-name="tax" e-form="farmerform">
+													<span editable-text="farmer.tax" e-name="tax" e-form="farmerform" e-required>
 														 {{ farmer.tax || 'empty' }}
 													</span>
 												</td>
 												<td>
-													<span editable-text="farmer.contacts" e-name="contacts" e-form="farmerform">
+													<span editable-text="farmer.contacts" e-name="contacts" e-form="farmerform" e-required>
 														 {{ farmer.contacts || 'empty' }}
 													</span>
 												</td>
 												<td>
-													<span editable-select="farmer.isActive" e-name="isActive" e-form="farmerform" e-ng-options="s.value as s.text for s in statuses">
+													<span editable-select="farmer.isActive" e-name="isActive" e-form="farmerform" e-ng-options="s.value as s.text for s in statuses" e-required>
           												{{ showStatus(farmer) }}
 													</span>
 												</td>
