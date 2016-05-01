@@ -175,6 +175,7 @@ exports.prod_details = function(req,res){
 		"p_id" : req.param("id"),
 		"sid":req.session.user
 	};
+var avg_rating=0;var total_rating=0;var t_length=0;
 	console.log(msg_payload);
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
@@ -185,19 +186,18 @@ exports.prod_details = function(req,res){
 		else
 		{
 			if(prod.code == 200){
-				//console.log(Object.keys(prod.reviews));
+				t_length=prod.object[0].reviews.length;
+				avg_rating = total_rating/t_length;
+				 for (var i = 0; i < t_length; i++) {
+				total_rating = Number(total_rating) + Number(prod.object[0].reviews[i].rating);
+				} 
+				avg_rating = Number(total_rating)/Number(t_length);
 				if(typeof req.session.user != 'undefined'){
 				console.log("session is active yipppy");
-
-				//for (var i = 0; i < arrayLength; i++) {
-				//console.log("star value"+prod.reviews.rating);
-				//console.log("star value1"+prod.reviews[0].rating);
-				//console.log("In array should run once");
-				//}
-					res.render('product_page', { user: req.session.user, products: prod, session: true });
+					res.render('product_page', { user: req.session.user, products: prod, session: true, avg_rating: avg_rating , t_length: t_length});
 				}else{
 					console.log("No session on");
-					res.render('product_page', { products: prod, session: false });
+					res.render('product_page', { products: prod, session: false, avg_rating: avg_rating, t_length: t_length });
 				}
 			}
 			else
@@ -251,7 +251,8 @@ exports.f_create_review = function(req,res){
 		"star" : req.param("vue"),
 		"title": req.param("title"),
 		"review": req.param("review"), 
-		"sid":req.session.user.fname
+		"name":req.session.user.fname,
+		"id": req.session.user.c_id
 	};
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
@@ -280,7 +281,8 @@ exports.create_review = function(req,res){
 		"star" : req.param("vue"),
 		"title": req.param("title"),
 		"review": req.param("review"), 
-		"sid": req.session.user.fname
+		"name":req.session.user.fname,
+		"id": req.session.user.c_id
 	};
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
