@@ -237,8 +237,7 @@ user.controller('adminController',['$scope','$http','$sce','$filter', 'Upload', 
 	-------Created by Darshil Saraiya 4/30/16-------
 	-------Admin drivers-list Page operations-------
 	*/
-	//getDrivers();
-
+	
 	$scope.getDrivers = function(){
 		console.log("getDrivers ::");
 		$http({
@@ -573,6 +572,158 @@ user.controller('adminController',['$scope','$http','$sce','$filter', 'Upload', 
 	}
 	/*
 		Admin customers-list page Operations end
+	*/
+
+
+	/*
+	-------Created by Darshil Saraiya 4/30/16-------
+	-------Admin orders-list Page operations-------
+	*/
+	$scope.isButtonClicked = false;
+	$scope.isPendingClicked = false;
+	$scope.isInProgressClicked = false;
+	$scope.isCompleteClicked = false;
+	$scope.isCancelClicked = false;
+	
+	$scope.getPending = function() {
+	$scope.isButtonClicked = true;
+	$scope.isPendingClicked = true;
+	$scope.isInProgressClicked = false;
+	$scope.isCompleteClicked = false;
+	$scope.isCancelClicked = false;
+		console.log("getPending");
+
+		$http({
+			method : "POST",
+			url : '/order/pending'
+		}).success(function(res){
+			if (res.status === 200) {
+				console.log("success on getPending : " + res.data);
+				$scope.orders = res.data;
+			}
+		});
+	}
+
+	$scope.isDriverIDValid = false;
+	$scope.assignDriverId = function(o_id, driver_id) {
+		
+		console.log("o_id :: " + o_id);
+		console.log("driver_id :: " + driver_id);
+		$scope.isDriverIDValid = false;
+		if(driver_id && driver_id.length != 9) {
+			$http({
+				method : 'POST',
+				url : '/order/assignDriverId',
+				data : {
+					o_id : o_id,
+					driver_id : driver_id 
+				}
+
+			}).success(function(res) {
+				if(res.status == 200) {
+					console.log(res);
+					$scope.getPending();
+				} else if(res.status == 401){
+					console.log("err : " + res.error);
+					return;
+				}
+				
+			}).error(function(err) {
+				console.log("error ::" + err);
+			});
+		} else {
+			$scope.isDriverIDValid = true;
+			$scope.invalidDriverId = o_id;
+		}
+	}
+	
+	$scope.getInProgress = function() {
+		$scope.isButtonClicked = true;
+		$scope.isPendingClicked = false;
+		$scope.isInProgressClicked = true;
+		$scope.isCompleteClicked = false;
+		$scope.isCancelClicked = false;
+		console.log("getInProgress");
+
+		$http({
+			method : "POST",
+			url : '/order/inprogress'
+		}).success(function(res){
+			if (res.status === 200) {
+				console.log("success on getInProgress : " + res.data);
+				$scope.orders = res.data;
+			}
+		});
+	}
+
+	$scope.assignComplete = function(o_id) {
+		
+		console.log("o_id :: " + o_id);
+		//if(driver_id && driver_id.length != 9) {
+			$http({
+				method : 'POST',
+				url : '/order/assignComplete',
+				data : {
+					o_id : o_id,
+				}
+			}).success(function(res) {
+				if(res.status == 200) {
+					console.log(res);
+					$scope.getInProgress();
+				} else if(res.status == 401){
+					console.log("err : " + res.error);
+					return;
+				}
+				
+			}).error(function(err) {
+				console.log("error ::" + err);
+			});
+		/*} else {
+			$scope.isDriverIDValid = true;
+			$scope.invalidDriverId = o_id;
+		}*/
+	}
+
+	$scope.getComplete = function() {
+		$scope.isButtonClicked = true;
+		$scope.isPendingClicked = false;
+		$scope.isInProgressClicked = false;
+		$scope.isCompleteClicked = true;
+		$scope.isCancelClicked = false;
+		console.log("getComplete");
+
+		$http({
+			method : "POST",
+			url : '/order/complete'
+		}).success(function(res){
+			if (res.status === 200) {
+				console.log("success on getComplete : " + res.data);
+				$scope.orders = res.data;
+			}
+		});
+	}
+
+	$scope.getCancel = function() {
+		$scope.isButtonClicked = true;
+		$scope.isPendingClicked = false;
+		$scope.isInProgressClicked = false;
+		$scope.isCompleteClicked = false;
+		$scope.isCancelClicked = true;
+		console.log("getCancel");
+
+		$http({
+			method : "POST",
+			url : '/order/cancel'
+		}).success(function(res){
+			if (res.status === 200) {
+				console.log("success on getCancel : " + res.data);
+				$scope.orders = res.data;
+			}
+		});
+	}
+
+	/*
+		Admin orders-list page Operations end
 	*/
 
 

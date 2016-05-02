@@ -185,6 +185,7 @@ exports.farmer_page = function(msg, callback){
 				console.log(err);
 				farmer.code = "401";
 				farmer.value = "Failed to fetch farmer_page";
+
 				}
 			else
 				{
@@ -192,6 +193,7 @@ exports.farmer_page = function(msg, callback){
 				f.code = "200";
 				f.value = "Farmer Fetched";
 				f.object = farmer;
+				console.log(farmer);
 				Product.find({f_id: msg.f_id}, function(err, product) {
 		if(product == "")
 				{
@@ -201,7 +203,7 @@ exports.farmer_page = function(msg, callback){
 				}
 			else
 				{
-				//console.log(product);
+				console.log(product);
 				p.code = "200";
 				p.value = "Farmer products Fetched";
 				p = product;
@@ -334,6 +336,7 @@ exports.createProduct = function(req, res){
 					price : req.price,
 					weight : req.weight,
 					unit: req.unit,
+					price_unit: Number(req.price)/Number(req.weight),
 					quantity: req.quantity,
 					details : req.details,
 					description : req.description,
@@ -341,6 +344,8 @@ exports.createProduct = function(req, res){
 					product_img: req.product_img
 				});
 				product.images[0] = req.image1;
+				product.images[1] = req.image2;
+				product.images[2] = req.image3;
 				console.log(req.product_img);
 				product.save(function(err,results){
 					if(err)
