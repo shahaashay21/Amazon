@@ -7,6 +7,8 @@ var mq = require('../rpc/client');
 //var mysql = require('./mysql');
 var resGen = require('./commons/responseGenerator');
 
+var Product = require('./model/product');
+
 
 /*uploadFilename = "";
 
@@ -280,31 +282,35 @@ exports.prod_search = function(req,res){
 		"sid":req.session.user
 	};
 	
-	console.log(msg_payload);
-  	mq.make_request('product_queue', msg_payload, function(err,prod){
-		if(err)
-		{
-		    console.log(err);
-			res.send(resGen.responseGenerator(401, null));
+	cat_id = req.param("id");
+	name = req.param("search");
+
+	//CREATE BY AASHAY
+	searchData = {};
+	if(typeof cat_id != 'undefined'){
+
+		searchData.cat_id = cat_id;
+	}
+	if(typeof name != 'undefined'){
+		regexp = new RegExp('(^|\\s+)'+name,'i')
+		searchData.name = regexp;	
+	}
+	
+	console.log(searchData);
+
+	Product.find(searchData, function(err, product){
+
+		if(typeof req.session.user != 'undefined'){
+			res.render('ProductSearch', { user: req.session.user, products: product, session: true });
+		}else{
+			console.log("No session on");
+			console.log(product);
+			res.render('ProductSearch', { products: product, session: false });
 		}
-		else
-		{
-			if(prod.code == 200){
-				//console.log(Object.keys(prod.reviews));
-				if(typeof req.session.user != 'undefined'){
-					res.render('ProductSearch', { user: req.session.user, products: prod, session: true });
-				}else{
-					console.log("No session on");
-					console.log(prod);
-					res.render('ProductSearch', { products: prod, session: false });
-				}
-			}
-			else
-			{
-				res.send("Sorry the product that you are searching for does not exist.");
-			}
-		}
+		// callback(null, res);
 	});
+
+
 };
 
 exports.f_create_review = function(req,res){
