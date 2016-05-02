@@ -19,7 +19,11 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
+    <script src="/angularjs/angular.min.js"></script>
 
+    <link href="/dist/css/xeditable.css" rel="stylesheet">
+    <script src="/dist/js/xeditable.js"></script>
+    <script src="/angularjs/adminModule.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -27,7 +31,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="hold-transition skin-blue sidebar-mini">
+  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule" ng-controller="adminController" ng-init="getCustomers()">
     <div class="wrapper">
       <header class="main-header">
         <% include ./partials/admin-header %>
@@ -104,9 +108,9 @@
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content" style="overflow: scroll;">
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="overflow: scroll; width: auto;">
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">Customers Data Table</h3>
@@ -116,140 +120,221 @@
                     <thead>
                       <tr>
                         <th>Customer Id</th>
-                        <th>Customer Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Address</th>
                         <th>City</th>
                         <th>State</th>
                         <th>ZIP</th>
-                        <th>Contacts</th>
+                        <th>Contact</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>customer1</td>
-                        <td>Frank Nolan</td>
-                        <td>frank.nolan@gmail.com</td>
-                        <td>frank@1234</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>customer2</td>
-                        <td>Frank Nolan</td>
-                        <td>frank.nolan@gmail.com</td>
-                        <td>frank@1234</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>customer3</td>
-                        <td>Frank Nolan</td>
-                        <td>frank.nolan@gmail.com</td>
-                        <td>frank@1234</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>customer4</td>
-                        <td>Frank Nolan</td>
-                        <td>frank.nolan@gmail.com</td>
-                        <td>frank@1234</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>customer5</td>
-                        <td>Frank Nolan</td>
-                        <td>frank.nolan@gmail.com</td>
-                        <td>frank@1234</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>customer6</td>
-                        <td>Frank Nolan</td>
-                        <td>frank.nolan@gmail.com</td>
-                        <td>frank@1234</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>customer7</td>
-                        <td>Frank Nolan</td>
-                        <td>frank.nolan@gmail.com</td>
-                        <td>frank@1234</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
-                      </tr>
-                      <tr>
-                        <td>customer8</td>
-                        <td>Frank Nolan</td>
-                        <td>frank.nolan@gmail.com</td>
-                        <td>frank@1234</td>
-                        <td>1 Washington Sq</td>
-                        <td>San Jose</td>
-                        <td>CA</td>
-                        <td>95112</td>
-                        <td>14088889999,
-                          18889994444,
-                          17075557777</td>
+                      <tr ng-repeat="customer in customers">
+                        <td>
+                          {{customer.c_id}}
+                        </td>
+                        <td>
+                          <span editable-text="customer.fname" e-name="fname" e-form="customerform" e-required>
+                             {{ customer.fname || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="customer.lname" e-name="lname" e-form="customerform">
+                             {{ customer.lname || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="customer.email" e-name="email" e-form="customerform" onbeforesave="checkEmail($data)" e-required>
+                             {{ customer.email || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="customer.address" e-name="address" e-form="customerform" e-required>
+                             {{ customer.address || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="customer.city" e-name="city" e-form="customerform" e-required>
+                             {{ customer.city || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="customer.state" e-name="state" e-form="customerform" e-required>
+                             {{ customer.state || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="customer.zipcode" e-name="zipcode" e-form="customerform" e-required>
+                             {{ customer.zipcode || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                          <span editable-text="customer.contact" e-name="contact" e-form="customerform" e-required>
+                             {{ customer.contact || 'empty' }}
+                          </span>
+                        </td>
+                        <td>
+                        <form editable-form name="customerform" ng-show="customerform.$visible" class="form-buttons form-inline"
+                          shown="inserted == customer" onbeforesave="saveCustomer($data,customer.c_id)">
+                        <button type="submit" ng-disabled="customerform.$waiting" class="btn btn-primary editable-table-button btn-xs">
+                          Save
+                        </button>
+                        <button type="button" ng-disabled="customerform.$waiting" ng-click="customerform.$cancel()" class="btn btn-default editable-table-button btn-xs">
+                          Cancel
+                        </button>
+                        </form>
+                        <div class="buttons" ng-show="!customerform.$visible">
+                          <button class="btn btn-primary editable-table-button btn-xs" ng-click="customerform.$show()">Edit</button>
+                          <button class="btn btn-danger editable-table-button btn-xs" ng-click="removeCustomer(customer.c_id)">Delete</button>
+                        </div>
+                        </td>
                       </tr>
                     </tbody>
                     <tfoot>
                       <tr>
                         <th>Customer Id</th>
-                        <th>Customer Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Address</th>
                         <th>City</th>
                         <th>State</th>
                         <th>ZIP</th>
-                        <th>Contacts</th>
+                        <th>Contact</th>
                       </tr>
                     </tfoot>
                   </table>
+                  <button class="btn btn-default" id = "addcustomer" data-toggle = "modal" data-target = "#addCustomerModal">Add Customer</button>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
           </div><!-- /.row -->
+
+          <!-- Add Cusomer Modal -->
+          <div id="addCustomerModal" class= "modal fade" role = "dialog">
+            <div class= "modal-dialog modal-md">
+              <!-- Add Driver Modal Content -->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h3 class="moda-title">Add Customer</h3>
+                </div>
+                <div class="modal-body">
+                  <div role="form" name="addcustomerform">
+                    <div class="form-group">
+                      <label for="fname">First Name</label>
+                      <input type="text" class="form-control" placeholder="Enter First Name" name="fname" ng-model="fname" required>
+                      <label>{{fname}}</label>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.fname.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="lname">Last Name</label>
+                      <input type="text" class="form-control" placeholder="Enter Last Name" name="lname" ng-model="lname">
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.lname.$error.required">Invalid Last Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="email" class="form-control" placeholder="Enter Email" name="email" ng-model="email" required>
+                      <div role="alert">
+                        <span class="error" ng-show="adddcustomerform.email.$error.required">Invalid Email!</span>
+                      </div>
+                      <div role="alert">
+                        <span class="error" ng-show="customer_exist">Customer Email already exist!</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" class="form-control" placeholder="Enter Password" name="pass" ng-model="pass" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="address">Address</label>
+                      <input type="text" class="form-control" placeholder="Enter Address" name="address" ng-model="address" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="address">City</label>
+                      <input type="text" class="form-control" placeholder="Enter City" name="city" ng-model="city" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="state">State</label>
+                      <input type="text" class="form-control" placeholder="Enter State" name="state" ng-model="state" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="zipcode">Zip Code</label>
+                      <input type="text" class="form-control" placeholder="Enter Zip Code" name="zipcode" ng-model="zipcode" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="card_number">Card Number</label>
+                      <input type="text" class="form-control" placeholder="Enter Card Number" name="card_number" ng-model="card_number" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="name_on_card">Name On Card</label>
+                      <input type="text" class="form-control" placeholder="Enter Name On Card" name="name_on_card" ng-model="name_on_card" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="exp_month">Expiry Month</label>
+                      <input type="text" class="form-control" placeholder="Enter Expiry Month" name="exp_month" ng-model="exp_month" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="exp_year">Expiry Year</label>
+                      <input type="text" class="form-control" placeholder="Enter Expiry Year" name="exp_year" ng-model="exp_year" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="cvv">CVV</label>
+                      <input type="password" class="form-control" placeholder="Enter CVV" name="cvv" ng-model="cvv" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="contact">Contact</label>
+                      <input type="text" class="form-control" placeholder="Enter Contact" name="contact" ng-model="contact" required>
+                      <!-- <div role="alert">
+                        <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
+                      </div> -->
+                    </div>
+                    <button class="btn btn-default" ng-click="addCustomer();">Add Customer</button>
+                  </div>
+                </div>
+                <!-- Content End for Modal-->
+              </div>
+            </div>
+          </div>
+          <!-- Add Customer Modal End -->
+
+
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
       <footer class="main-footer">
@@ -278,7 +363,7 @@
     <script src="/dist/js/demo.js"></script>
     <!-- page script -->
     <script>
-      $(function () {
+      /*$(function () {
         $("#example1").DataTable();
         $('#example2').DataTable({
           "paging": true,
@@ -288,7 +373,7 @@
           "info": true,
           "autoWidth": false
         });
-      });
+      });*/
     </script>
   </body>
 </html>

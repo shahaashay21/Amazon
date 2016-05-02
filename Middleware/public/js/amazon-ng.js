@@ -54,7 +54,14 @@ app.controller("amazon",function($scope, $http, $location){
               $scope.address = res.data[0].address;
               $scope.city = res.data[0].city;
               $scope.zipcode = res.data[0].zipcode;
-              $scope.card_number = res.data[0].card_number;
+
+              if(res.data[0].card_number){
+        	   		x = (res.data[0].card_number).toString();
+					lastFourDigit = x.substring(x.length - 4);
+
+            		$scope.card_number = lastFourDigit;   	
+              }
+           
               $scope.name_on_card = res.data[0].name_on_card;
               
             }
@@ -66,7 +73,8 @@ app.controller("amazon",function($scope, $http, $location){
 
 	//REDIRECT TO USER PROFILE PAGE
 	$scope.userRedirect= function(id){
-		window.location.assign("/search?q="+id);
+		console.log(id);
+		window.location.assign("/product?id="+id);
 	};
 
 	$scope.getCartItems = function(){

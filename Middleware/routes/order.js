@@ -1,16 +1,22 @@
 //Required Files
 var mq = require('../rpc/client');
+var resGen = require('./commons/responseGenerator');
+var ejs = require("ejs");
 
 
 
 
-exports.getOrders = function(req,res){
+
+//get Order Details
+
+
+exports.orderDetails = function(req,res){
 
 	var msg_payload = {
-		"service":"getOrders",
+		"service":"orderDetails",
 		 "c_id": req.session.user.c_id ,
 		 "sid":req.sessionID};
-			console.log(req.session.user.c_id);
+	console.log(req.session.user.c_id);
   	mq.make_request('order_queue', msg_payload, function(err,doc){
 		if(err)
 		{
@@ -21,7 +27,7 @@ exports.getOrders = function(req,res){
 		{
 			doc = JSON.parse(doc);
 			if(doc.status == 200){
-				console.log("reply from getOrders");
+				console.log("reply from orderDetails");
 				res.send(doc);
 			}
 			else
@@ -31,9 +37,6 @@ exports.getOrders = function(req,res){
 		}
 	});
 }
-
-
-
 
 
 
@@ -64,17 +67,17 @@ var Cart = require('./model/cart.js');
 var User = require('./model/user');
 
 exports.home = function(req, res){
-	User.findOne({c_id: req.session.user.c_id}, 'address card_number name_on_card', function(err, ans){
+	User.findOne({c_id: req.session.user.c_id}, 'city state zipcode address card_number name_on_card', function(err, ans){
 		// User.findOne({c_id: req.session.user.c_id}, 'address', function(err, address){
 			console.log(ans);
-			console.log(typeof ans.address);
+			// console.log(typeof ans.address);
 			if(typeof ans.address != 'undefined'){
 				isAddress = 'yes';
-				console.log(ans.address);
+				// console.log(ans.address);
 			}else{
 				isAddress = 'no';
 			}
-			console.log(isAddress);
+			// console.log(isAddress);
 			if(typeof ans.card_number != 'undefined'){
 				// cardinfo = ans[0].cardDetails[0];
 				isCard = 'yes';
@@ -82,8 +85,8 @@ exports.home = function(req, res){
 
 				x = ans.card_number.toString();
 				lastFourDigit = x.substring(x.length - 4);
-
-				res.render('order', { user: req.session.user, 'name_on_card':  name_on_card, 'lastFourDigit': lastFourDigit, 'isCard': isCard, 'isAddress': isAddress});	
+				// console.log(lastFourDigit);
+				res.render('order', { user: req.session.user, 'cardinfo':  ans, 'lastFourDigit': lastFourDigit, 'isCard': isCard, 'isAddress': isAddress});	
 			}else{
 				isCard = 'no';
 				res.render('order', { user: req.session.user, 'isCard': isCard, 'isAddress': isAddress});	
