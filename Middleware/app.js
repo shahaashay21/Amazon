@@ -150,6 +150,7 @@ app.get('/category/get', product.getCategory);
 
 
 //app.get('/prod_details', user.prod_details);
+app.get('/myReviews', product.myReviews);
 app.get('/search', product.prod_search);
 app.get('/product', product.prod_details);
 app.post('/create_review',product.create_review);
@@ -188,7 +189,6 @@ app.get('/myOrders', function(req, res){
 //     res.render('index');
 //   }
 // });
-
 
 
 app.get('/customerAccount', function(req, res){
@@ -251,15 +251,6 @@ app.get('/paymentOptions', function(req, res){
   if(typeof req.session.user !== 'undefined'){
     console.log(req.session.user);
     res.render('creditCardDetails', { user: req.session.user });
-  }else{
-    res.render('index');
-  }
-  });
-
-app.get('/myReviews', function(req, res){
-  if(typeof req.session.user !== 'undefined'){
-    console.log(req.session.user);
-    res.render('myReviews', { user: req.session.user });
   }else{
     res.render('index');
   }
