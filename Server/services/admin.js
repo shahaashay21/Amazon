@@ -12,7 +12,7 @@ exports.checkLogin = function(req, res){
 
 		admin.sync();
 
-		admin.findOne({attributes :['fname','lname','email', 'createdAt', 'pass'],where :{email : email}})
+		admin.findOne({attributes :['fname','lname','email', 'createdAt', 'pass'],where :{email : email, pass : pass}})
 		.then(function(result) {
 			//here result is a large object from which data comes in dataValues object
 			if(result.dataValues == null){
@@ -21,13 +21,14 @@ exports.checkLogin = function(req, res){
 				res(null, JSON.stringify(json_responses));
 			}else {
 				console.log(result.dataValues);
-				bcrypt.compare(pass, result.dataValues.pass, function(errorPassword, ans) {
-					if(errorPassword) {
-						console.log("Unsuccessful Login!");
-						json_responses = {"statusCode" : 401, "error" : "Invalid Login"};
-						res(null, JSON.stringify(json_responses));
-					}
-					if (ans) {
+				//bcrypt.compare(pass, result.dataValues.pass, function(errorPassword, ans) {
+					//if(errorPassword) {
+					//	console.log("Unsuccessful Login!");
+					//	json_responses = {"statusCode" : 401, "error" : "Invalid Login"};
+					//	res(null, JSON.stringify(json_responses));
+					//}
+					//if (ans) {
+					if(result.dataValues) {
 						json_responses = {
 							"statusCode" : 200, 
 							"fname" : result.dataValues.fname, 
@@ -40,7 +41,7 @@ exports.checkLogin = function(req, res){
 						json_responses = {"statusCode" : 401, "error" : "Invalid Login"};
 						res(null, JSON.stringify(json_responses));
 					}
-				});
+				//});
 				
 			}	
 		}).catch(function(error) {
