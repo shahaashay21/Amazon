@@ -23,36 +23,36 @@ $(window).load(function(){
       <div id="imageCaption"style="font-size: 0.92em;text-align: center;">Roll over image to zoom in</div>
       <div id="thumbnailsWrapper" class="row" >
             <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
-                <img src="<%= products.object[0].product_img %>" ng-mouseover="change_image1()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
+                <img src="/<%= products.object[0].product_img %>" ng-mouseover="change_image1()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
             </span>
             <% if(typeof products.object[0].images[0] != 'undefined') {
             if(products.object[0].images[0] != "") { %>
         <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
-                <img src="<%= products.object[0].images[0] %>" ng-mouseover="change_image2()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
+                <img src="/<%= products.object[0].images[0] %>" ng-mouseover="change_image2()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
             </span>
             <% } }%>
             <% if(typeof products.object[0].images[1] != 'undefined') {
             if(products.object[0].images[1] != "") { %>
             <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
-                <img src="<%= products.object[0].images[1] %>" ng-mouseover="change_image3()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
+                <img src="/<%= products.object[0].images[1] %>" ng-mouseover="change_image3()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
             </span>
             <% } }%>
             <% if(typeof products.object[0].images[2] != 'undefined') {
             if(products.object[0].images[2] != "") { %>
              <span class="detailPageThumbnail col-sm-2" style="width: 50px;height: 50px;">
-                <img src="<%= products.object[0].images[2] %>" ng-mouseover="change_image4()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" style="width: 50px; height: 50px;">
+                <img src="/<%= products.object[0].images[2] %>" ng-mouseover="change_image4()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" style="width: 50px; height: 50px;">
             </span>
             <% } }%>
             <% if(typeof products.object[0].images[3] != 'undefined') {
             if(products.object[0].images[3] != "") { %>
             <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
-                <img src="<%= products.object[0].images[3] %>" ng-mouseover="change_image5()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
+                <img src="/<%= products.object[0].images[3] %>" ng-mouseover="change_image5()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
             </span>
             <% } }%>
             <% if(typeof products.object[0].images[4] != 'undefined') {
             if(products.object[0].images[4] != "") { %>
             <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
-                <img src="<%= products.object[0].images[4] %>" ng-mouseover="change_image6()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image">
+                <img src="/<%= products.object[0].images[4] %>" ng-mouseover="change_image6()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image">
             </span>
             <% } }%>
     </div>
