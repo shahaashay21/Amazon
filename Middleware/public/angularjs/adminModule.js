@@ -341,7 +341,7 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 					if (res.status === 200) {
 						console.log("success on save driver" + res.data);
 						$scope.driverformValidate = false;
-						getDrivers();
+						$scope.getDrivers();
 						return;
 					} else if(res.status == 401) {
 						console.log("error :: " + res.error);
@@ -414,7 +414,7 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 		}).success(function(res){
 			if (res.status === 200) {
 				console.log("success on getcustomers : " + res.data);
-				$scope.drivers = res.data;
+				$scope.customers = res.data;
 			}
 		});
 	}
@@ -422,10 +422,10 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 	//add customer
 	//$scope.invalid_t_id = false;
 	//$scope.unexpected_error = false;
-	//$scope.driver_exist = false;
+	$scope.customer_exist = false;
 	$scope.addCustomer = function(){
 		console.log("addCustomer ::");
-		
+		$scope.customer_exist = false;
 		/*$scope.invalid_t_id = false;
 		console.log(Number($scope.t_id));
 		console.log(angular.isNumber($scope.t_id));
@@ -439,18 +439,23 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 
 			return;
 		}*/
-		console.log("t_id : " + $scope.t_id);
+		
 		var newCustomer = [
 			{
-				"t_id" : $scope.t_id.toUpperCase(),
 				"fname" : $scope.fname,
 				"lname" : $scope.lname,
 				"email" : $scope.email,
+				"pass" : $scope.pass,
 				"address" : $scope.address,
 				"city" : $scope.city,
 				"state" : $scope.state,
-				"zipCode" : $scope.zipCode,
-				"contacts" : Number($scope.contacts)
+				"zipcode" : Number($scope.zipcode),
+				"card_number" : Number($scope.card_number),
+				"name_on_card" : $scope.name_on_card,
+				"exp_month" : Number($scope.exp_month),
+				"exp_year" : Number($scope.exp_year),
+				"cvv" : Number($scope.cvv),
+				"contact" : $scope.contact
 			}
 		];
 
@@ -458,18 +463,18 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 		//if(typeof $scope.number != 'undefined'){
 			$http({
 				method : "POST",
-				url : "/driver/create",
+				url : "/customer/create",
 				data : {
-					"newDriver" : newDriver
+					"newCustomer" : newCustomer
 				}
 			}).success(function(res) {
 				if(res.status == 200) {
-					console.log("success on add driver");
-					$scope.getDrivers(); //getting latest driver data again
+					console.log("success on add customer");
+					$scope.getCustomers(); //getting latest driver data again
 				} else if(res.status == 401) {
 					console.log("error :: " + res.error);
-					if(res.error == "Driver Exists")
-						$scope.driver_exist = true;
+					if(res.error == "Customer Exists")
+						$scope.customer_exist = true;
 					else
 						$scope.unexpected_error = true;
 				}
@@ -483,34 +488,33 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 		//}
 	}
 
-	//save Truck
-	$scope.saveDriver = function(data, id) {
+	//save Customer
+	$scope.saveCustomer = function(data, id) {
 	//$scope.user not updated yet
 		angular.extend(data, {id: id});
-		console.log("saveDriver data::");
+		console.log("saveCustomer data::");
 		console.log(data);
 		//if(data && id) {
 			//if(data.number.length == 7 && id.length == 9){
 				$http({
 					method : "POST",
-					url : '/driver/edit',
+					url : '/customer/edit',
 					data: {
-						driver_id : id,
-						t_id : data.t_id.toUpperCase(),
+						c_id : id,
 						fname : data.fname,
 						lname : data.lname,
 						email : data.email,
 						address : data.address,
 						city : data.city,
 						state : data.state,
-						zipCode : data.zipCode,
-						contacts : data.contacts
+						zipcode : data.zipcode,
+						contact : data.contact
 					}
 				}).success(function(res){
 					if (res.status === 200) {
-						console.log("success on save driver" + res.data);
-						$scope.driverformValidate = false;
-						getDrivers();
+						console.log("success on save customer" + res.data);
+						$scope.customerformValidate = false;
+						$scope.getCustomers();
 						return;
 					} else if(res.status == 401) {
 						console.log("error :: " + res.error);
@@ -522,25 +526,24 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 			//}
 		//}
 	};
-
-	// remove driver
-	$scope.removeDriver = function(id) {
+	// remove customer
+	$scope.removeCustomer = function(id) {
 		
-		console.log("removeDriver ::");
+		console.log("removeCustomer ::");
 		
 		if(id) {
 			//if(Number(id).length == 9){
-				console.log("remove driver call");
+				console.log("remove customer call");
 				$http({
 					method : "DELETE",
-					url : '/driver/delete',
+					url : '/customer/delete',
 					params: {
-						driver_id : id
+						c_id : id
 					}
 				}).success(function(res){
 					if (res.status === 200) {
-						console.log("success on remove driver" + res.data);
-						$scope.getDrivers();
+						console.log("success on remove customer" + res.data);
+						$scope.getCustomers();
 						return;
 					} else if (res.status == 401) {
 						console.log("error :: " + res.error);
@@ -567,7 +570,7 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 			return "Empty First Name!";
 	}
 	/*
-		Admin drivers-list page Operations end
+		Admin customers-list page Operations end
 	*/
 
 

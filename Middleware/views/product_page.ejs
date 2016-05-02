@@ -58,21 +58,26 @@ $(window).load(function(){
 
       </div>
       <div class="col-sm-9">
-      <br><br>
-      <h3 class="capitalize"><%= products.object[0].name %>, <%= products.object[0].weight %> <%= products.object[0].unit %></h3>
-      <h5 style="font-size: 0.9em">Other products by <a href="/farmer_page?id=<%= products.object[0].f_id %>"> <%= products.object[0].f_name %> </a></h5>
+      <br>
+      <h4 class="capitalize"><%= products.object[0].name %>, <%= products.object[0].weight %> <%= products.object[0].unit %></h4>
+      <h5 style="font-weight: bold;">Other products by | <a style="text-decoration: underline; color:green;" href="/farmer_page?id=<%= products.object[0].f_id %>"> <%= products.object[0].f_name %> </a></h5>
       <div class="row">
       <% if(typeof avg_rating != 'undefined') {
             if(avg_rating != "") { %>
-    <span id="rating_2" class="rating" data-val="<%= avg_rating %>" data-stars="5" data-change="false"></span> (<%= t_length %>)
+    <span id="rating_2" class="rating" data-val="<%= avg_rating %>" data-stars="5" data-change="false"> (<%= t_length %>)</span>
     <% } }%>
     <span id="rating_2" class="rating" data-val="0" data-stars="5" data-change="false"></span>
 </div>
 <div class="price">
                 <span class="value"><h4><strong>$<%= products.object[0].price %></strong>  ($<%= products.object[0].price_unit %>/<%= products.object[0].unit %>)</h4></span>
-</div><br>
+</div><br></div>
+
+<div class="row">
+
+
 <div class="row" ng-show="e_addtocart">
-<select class="form-control productQuant" id="product<%= products.object[0].p_id %>">
+<select class="form-control productQuant" style="width: 62px;height: 32px;" id="product<%= products.object[0].p_id %>">
+
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -84,10 +89,12 @@ $(window).load(function(){
                   <option value="9">9</option>
                   <option value="10">10</option>
                 </select>
+
 <button type="button" class="checkout-btn" style="width: 102px;height: 31px;color: black;margin: 0px;font-weight: none" ng-click="addItem(<%= products.object[0].p_id %>)" class="checkout-btn" >Add to Cart</button>
 </div>
 <button type="button" class="checkout-btn" style="width: 102px;height: 31px;color: black;margin: 0px" ng-model="disabled_button" ng-show="d_addtocart" disabled>Add to Cart</button>
 <h5 style="font-size: 0.9em">Sold by AmazonFresh. Shipped by AmazonFresh.</h5>
+
       </div>
     </div>
     <div class="col-sm-3" ng-show="cart">
@@ -101,7 +108,7 @@ $(window).load(function(){
   <% if(typeof products.object[0].features != 'undefined') {
             if(products.object[0].features != "") {
       %>
-  <h4>Product Features</h4>
+  <h5 style="font-weight: bold;">Product Features</h5>
   <ul style="list-style-type: disc;">
    <h5><%= products.object[0].features %></h5> 
         </ul>
@@ -112,7 +119,7 @@ $(window).load(function(){
         <% if(typeof products.object[0].description != 'undefined') {
             if(products.object[0].description != "") {
       %>
-        <h4>Product Description</h4>
+        <h5 style="font-weight: bold;">Product Description</h5>
             <h5><%= products.object[0].description %></h5> 
 <% } }%>
     </div>
@@ -120,12 +127,12 @@ $(window).load(function(){
   <% if(typeof products.object[0].details != 'undefined') {
             if(products.object[0].details != "") {
       %>
-  <h4>Product Details</h4>
+  <h5 style="font-weight: bold;">Product Details</h5>
   <h5><%= products.object[0].details %></h5>
 <% } }%>    
-</div>
+</div><br>
 <div class="review" >
-          <h4>Customer Ratings and Reviews</h4><br>
+          <h5>Customer Ratings and Reviews</h5>
 <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#myModal" style="background-color: lightgrey; color: black; border-color: lightgrey;">Create a Review</button>
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -156,7 +163,7 @@ $(window).load(function(){
                 Write your review <br><br>                   
 <span class="reviewBox"><textarea class="textArea" id="YourReview" cols="100" ng-model="frm.review" rows="10" name="review" style="width:80%"></textarea></span> 
             </div>
-<button type="submit" class="btn btn-primary btn-sm" style="background-color: green;border-color: green">Submit</button>
+<button type="submit" class="btn btn-primary btn-sm" >Submit</button>
         </form>
     </div>
 </div>
@@ -170,13 +177,13 @@ $(window).load(function(){
   
   
 <% for(var i=0; i < products.object[0].reviews.length; i++) { %>
-  <div style="border: 4px solid;border-color: #DAD8D8; margin-bottom: 10px;">
+  <div style="border: 2px solid;border-color: #DAD8D8; margin-bottom: 10px;">
       <div style="border-bottom: 2px solid #DAD8D8">
-      User: <%= products.object[0].reviews[i].username %> <br>
+     <h6> User: <%= products.object[0].reviews[i].username %>
       </div>
       Ratings: <%= products.object[0].reviews[i].rating %>/5 <br>
       Title: <%= products.object[0].reviews[i].review_title %> <br>
-          Review: <%= products.object[0].reviews[i].review_desc %>
+          Review: <%= products.object[0].reviews[i].review_desc %></h6>
             </div>
 <% } %>
           

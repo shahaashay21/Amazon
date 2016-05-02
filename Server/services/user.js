@@ -1,6 +1,6 @@
 var User = require('./model/user');
 var resGen = require('./commons/responseGenerator');
-
+var bcrypt = require('bcrypt-nodejs');
 
 exports.list = function(req, res){
   res.send("respond with a resource");
@@ -137,3 +137,185 @@ exports.editCard = function(req, res){
 		}
 	});
 };
+
+
+/*
+-------Created by Darshil Saraiya 5/01/16-------
+-------Customer related operations-------
+*/
+
+//getCustomers
+exports.getCustomers = function(req, res) {
+	console.log("get Customers");
+
+	User.find(function(err, results) {
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing find query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			console.log(results);
+			if(results != null && results.length > 0) {
+				console.log("All Customers Found!");
+				json_responses = {"status" : 200, "data" : results};
+				res(null, JSON.stringify(json_responses));
+
+			} else {
+				json_responses = {"status" : 401, "error" : "no customers data found"};
+				res(null, JSON.stringify(json_responses));
+			}
+
+		}
+	});
+};
+
+//create Customer
+exports.createCustomer = function(req, res){
+	console.log("create customer :: ");
+	var newCustomer = req.newCustomer;
+
+	newCustomer[0].pass = bcrypt.hashSync(newCustomer[0].pass);
+
+	User.findOne({email : newCustomer[0].email}, function(err, results) {
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing find query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			if(results) {
+				console.log("customer email exist!");
+				json_responses = {"status" : 401, "error" : "Customer Exists"};
+				res(null, JSON.stringify(json_responses));
+			} else {
+				var user = User({
+					fname : newCustomer[0].fname,
+					lname : newCustomer[0].lname,
+					email : newCustomer[0].email,
+					pass : newCustomer[0].pass,
+					address : newCustomer[0].address,
+					city : newCustomer[0].city,
+					state : newCustomer[0].state,
+					zipcode : newCustomer[0].zipcode,
+					card_number : newCustomer[0].card_number,
+					name_on_card : newCustomer[0].name_on_card,
+					exp_month : newCustomer[0].exp_month,
+					exp_year : newCustomer[0].exp_year,
+					cvv : newCustomer[0].cvv,
+					contact : newCustomer[0].contact
+				});
+
+				user.save(function(err, data) {
+					if(err) {
+						console.log("err :: " + err);
+						json_responses = {"status" : 401, "error" : "error occurred while executing save query"};
+						res(null, JSON.stringify(json_responses));
+					} else {
+						console.log("Customer Added!");
+						json_responses = {"status" : 200};
+						res(null, JSON.stringify(json_responses));
+					}
+				});
+			}
+		}
+	});
+}
+
+exports.editCustomer = function(req, res) {
+
+	console.log("editCustomer");
+	var c_id = req.c_id;
+	var fname = req.fname;
+	var lname = req.lname;
+	var email = req.email;
+	var address = req.address;
+	var city = req.city;
+	var state = req.state;
+	var zipcode = req.zipcode;
+	var contact = req.contact;
+
+	User.findOne({c_id : c_id}, function(err, result){
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing find query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			console.log("result finding a customer");
+			console.log(result);
+			if(result) {
+				console.log("customer exist");
+				result.fname = fname;
+				result.lname = lname,
+				result.email = email;
+				result.address = address;
+				result.city = city;
+				result.state = state;
+				result.zipcode = zipcode;
+				result.contact = contact;
+
+				result.save(function(err, doc) {
+					if(err) {
+						console.log("err :: " + err);
+						json_responses = {"status" : 401, "error" : "error occurred while executing edit query"};
+						res(null, JSON.stringify(json_responses));		
+					} else {
+						console.log("customer edited!");
+						json_responses = {"status" : 200};
+						res(null, JSON.stringify(json_responses));
+					}
+				});
+			}
+		}
+	});
+}
+
+exports.deleteCustomer = function(req, res ) {
+	console.log("delete customer");
+	var c_id = req.c_id;
+
+	User.remove({c_id : c_id}, function(err, result) {
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing remove query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			console.log("result removing a customer");
+			console.log(result);
+			if(result) {
+				console.log("customer deleted!");
+				json_responses = {"status" : 200};
+				res(null, JSON.stringify(json_responses));
+			} else {
+				json_responses = {"status" : 401, "error" : "error occurred while executing delete query"};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	})
+
+	/*User.findOne({c_id : c_id}, function(err, result) {
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing find query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			console.log("result finding a customer");
+			console.log(result);
+			if(result) {
+				console.log("customer exist");
+
+				result.isActive =false;
+
+				result.save(function(err, doc) {
+					if(err) {
+						console.log("err :: " + err);
+						json_responses = {"status" : 401, "error" : "error occurred while executing delete query"};
+						res(null, JSON.stringify(json_responses));		
+					} else {
+						console.log("customer deleted!");
+						json_responses = {"status" : 200};
+						res(null, JSON.stringify(json_responses));
+					}
+				});
+			}
+		}
+	});*/
+}

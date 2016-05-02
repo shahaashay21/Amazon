@@ -97,6 +97,12 @@ app.get('/driver/all', driver.getDrivers);
 app.post('/driver/edit', driver.editDriver);
 app.delete('/driver/delete',driver.deleteDriver);
 
+//CUSTOMER API
+app.post('/customer/create', user.createCustomer);
+app.get('/customer/all', user.getCustomers);
+app.post('/customer/edit', user.editCustomer);
+app.delete('/customer/delete',user.deleteCustomer);
+
 app.post('/farmer/login', function(req, res, next) {
   passport.authenticate('farmerLogin', function(err, farmer, info) {
     if(err) {
@@ -137,7 +143,8 @@ app.post('/farmer/edit',farmer.editFarmer);
 app.post('/user/address/update',user.editAddress);
 app.post('/user/card/update',user.editCard);
 app.get('/user/address',user.getAddress);
-// app.get('/user/orders',user.getOrders);
+app.get('/user/orders',order.orderDetails);
+ //app.get('/user/orders',user.getOrders);
 
 
 app.get('/product/all',product.getProducts);
@@ -150,6 +157,7 @@ app.get('/category/get', product.getCategory);
 
 
 //app.get('/prod_details', user.prod_details);
+app.get('/myReviews', product.myReviews);
 app.get('/search', product.prod_search);
 app.get('/product', product.prod_details);
 app.post('/create_review',product.create_review);
@@ -188,7 +196,6 @@ app.get('/myOrders', function(req, res){
 //     res.render('index');
 //   }
 // });
-
 
 
 app.get('/customerAccount', function(req, res){
@@ -251,15 +258,6 @@ app.get('/paymentOptions', function(req, res){
   if(typeof req.session.user !== 'undefined'){
     console.log(req.session.user);
     res.render('creditCardDetails', { user: req.session.user });
-  }else{
-    res.render('index');
-  }
-  });
-
-app.get('/myReviews', function(req, res){
-  if(typeof req.session.user !== 'undefined'){
-    console.log(req.session.user);
-    res.render('myReviews', { user: req.session.user });
   }else{
     res.render('index');
   }

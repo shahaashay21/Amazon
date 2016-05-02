@@ -22,7 +22,6 @@ var express = require('express')
 
 var app = express();
 
-
 // all environments
 app.set('port', process.env.PORT || 3001);
 app.set('views', __dirname + '/views');
@@ -39,8 +38,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-
-
 //app.get('/', routes.index);
 app.get('/users', user.list);
 
@@ -52,7 +49,6 @@ var cnn = amqp.createConnection({host:'127.0.0.1'});
 mongoose.connect(mongoConnectURL, function() {
   console.log('Connected to mongo at: ' + mongoConnectURL);
 });
-
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
@@ -181,6 +177,16 @@ cnn.on('ready', function(){
 				case "farmer_page":
 					util.log("getFarmers");
 					product.farmer_page(message, function(err,res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+					case "myReviews":
+					util.log("My reviews page");
+					product.myReviews(message, function(err,res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',
@@ -377,10 +383,51 @@ cnn.on('ready', function(){
 				});
 				break;
 
+				//Admin related oprations
+				case 'getCustomers' :
+					util.log("getCustomers");
+					user.getCustomers(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;	
 
-			
+				case 'createCustomer' :
+					util.log("createCustomer");
+					user.createCustomer(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
 
-			
+				case 'editCustomer':
+					util.log("editCustomer");
+					user.editCustomer(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case 'deleteCustomer':
+					util.log("deleteCustomer");
+					user.deleteCustomer(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+				//Admin realated oprations end
 		}
 	});
 });
@@ -432,9 +479,9 @@ cnn.on('ready', function(){
 					});
 					break;
 
-					case 'getOrders':
+					case 'orderDetails':
 					//util.log("createOrder");
-					order.getOrders(message, function(err, res){
+					order.orderDetails(message, function(err, res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',

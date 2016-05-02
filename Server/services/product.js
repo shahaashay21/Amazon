@@ -215,7 +215,50 @@ exports.farmer_page = function(msg, callback){
 	});
 				}
 	});
+};
+	exports.myReviews = function(msg, callback){
+	var p= {};
+	var f= {};
 	
+	//console.log("In servers get farmers");
+	Farmer.find({"reviews.username" : msg.sid}, function(err, farmer) {
+		if(farmer == "")
+				{
+				console.log(err);
+				farmer.code = "401";
+				farmer.value = "Failed to fetch farmer review";
+				console.log("No farmer fetched");
+				}
+			else
+				{
+				//console.log(farmer);
+				f.code = "200";
+				f.value = "Farmers review Fetched";
+				f.object = farmer;
+				}
+				Product.find({"reviews.username": msg.sid}, function(err, product) {
+		if(product == "")
+				{
+				console.log(err);
+				product.code = "401";
+				product.value = "Failed to fetch prod reviews";
+				}
+			else
+				{
+				//console.log(product);
+				p.code = "200";
+				p.value = "Products reviews Fetched";
+				p = product;
+				//console.log(p);
+				
+	console.log(p);
+	console.log(f.object);
+	var res = {"farmer": f,"product": p};
+	callback(null, res);
+				}
+	});
+				
+	});
 };
 
 exports.create_review = function(msg, callback){
