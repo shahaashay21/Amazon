@@ -125,6 +125,8 @@ app.post('/order/pending', order.getPending);
 app.post('/order/inprogress', order.getInProgress);
 app.post('/order/complete', order.getComplete);
 app.post('/order/cancel', order.getCancel);
+app.post('/order/assignDriverId', order.assignDriverId);
+app.post('/order/assignComplete', order.assignComplete);
 
 app.post('/farmer/login', function(req, res, next) {
   passport.authenticate('farmerLogin', function(err, farmer, info) {

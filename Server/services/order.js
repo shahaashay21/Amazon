@@ -196,6 +196,42 @@ exports.getPending = function(req, res) {
 	});
 }
 
+exports.assignDriverId = function(req, res) {
+	console.log("assignDriverId");
+
+	/*Order.update({"o_id" : req.o_id}, {"$set" : {"driver_id" : req.driver_id, "status" : "inprogress"}}, function(err, results) {
+		console.log("err :: " + err);
+		console.log(results);
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing update query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			if(results !=null) {
+				console.log("Pending Order Updated!");
+				json_responses = {"status" : 200};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	});*/
+
+	Order.update({"o_id" : req.o_id}, {"$set" : {"driver_id" : req.driver_id, "status" : "cancel"}}, function(err, results) {
+		console.log("err :: " + err);
+		console.log(results);
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing update query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			if(results !=null) {
+				console.log("Pending Order Updated!");
+				json_responses = {"status" : 200};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	});
+}
+
 exports.getInProgress = function(req, res) {
 	console.log("in progress orders");
 
@@ -217,7 +253,26 @@ exports.getInProgress = function(req, res) {
 			}
 		}
 	});
+}
 
+exports.assignComplete = function(req, res) {
+	console.log("assignComplete");
+
+	Order.update({"o_id" : req.o_id}, {"$set" : {"status" : "complete"}}, function(err, results) {
+		console.log("err :: " + err);
+		console.log(results);
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing update query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			if(results !=null) {
+				console.log("In Progress Order Updated to Complete!");
+				json_responses = {"status" : 200};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	});
 }
 
 exports.getComplete = function(req, res) {

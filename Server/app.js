@@ -501,6 +501,17 @@ cnn.on('ready', function(){
 					});
 					break;
 
+				case 'assignDriverId':
+					util.log("assignDriverId");
+					order.assignDriverId(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
 				case 'getInProgress':
 					util.log("getInProgress");
 					order.getInProgress(message, function(err, res){
@@ -512,6 +523,17 @@ cnn.on('ready', function(){
 					});
 					break;
 					
+				case 'assignComplete':
+					util.log("assignComplete");
+					order.assignComplete(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
 				case 'getComplete':
 					util.log("getComplete");
 					order.getComplete(message, function(err, res){
@@ -522,6 +544,8 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+
+
 
 				case 'getCancel':
 					util.log("getCancel");

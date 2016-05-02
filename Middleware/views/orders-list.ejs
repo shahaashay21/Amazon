@@ -24,6 +24,8 @@
 
     <link href="/dist/css/xeditable.css" rel="stylesheet">
     <script src="/dist/js/xeditable.js"></script>
+    <script src="/dist/js/ng-file-upload.min.js"></script>
+    <script src="/dist/js/ng-file-upload-shim.min.js"></script>
     <script src="/angularjs/adminModule.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -123,27 +125,36 @@
                   <button class="btn btn-default" id = "complete" ng-click = "getComplete()">Completed Orders</button>
                   <button class="btn btn-default" id = "cancel" ng-click = "getCancel();">Cancelled Orders</button>
                   </br>
+                  <label ng-show="isDriverIDValid" style="color:#db2e2e">Invalid Driver ID</label>
+                  </br>
                   <table id="example1" class="table table-bordered table-hover table-striped" ng-show = "isButtonClicked">
                     <thead>
                       <tr>
                         <th>Order Id</th>
                         <th>Customer Id</th>
-                        <th>Driver Id</th>
-                        <th>Contact</th>
                         <th>Date</th>
                         <th>Total</th>
                         <th>Drop Time</th>
+                        <th>Driver Id</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr ng-repeat = "order in orders">
-                        <td>{{order.o_id}}</td>
+                        <td ng-model = "o_id">{{order.o_id}}</td>
                         <td>{{order.c_id}}</td>
-                        <td>{{order.driver_id}}</td>
-                        <td>{{order.contact}}</td>
-                        <td>{{order.createdAt || date : 'medium'}}</td>
+                        <td>{{order.createdAt | date : 'short'}}</td>
                         <td>{{order.total}}</td>
                         <td>{{order.drop_time}}</td>
+                        <td ng-show = "!isPendingClicked && isCompleteClicked">{{order.driver_id}}</td>
+                        <td ng-show = "!isPendingClicked && !isInProgressClicked && !isCompleteClicked && isCancelClicked">{{order.driver_id}}</td>
+                        <td ng-show = "isPendingClicked && !isInProgressClicked">
+                          <input type="number" ng-model = "driver_id" name="driver_id"></input>
+                          <button class="btn btn-default" id = "assign" ng-click = "assignDriverId(order.o_id, driver_id);">Assign</button>
+
+                        </td>
+                        <td ng-show = "isInProgressClicked && !isPendingClicked">
+                          <button class="btn btn-default" id = "complete" ng-click = "assignComplete(order.o_id);">Complete</button>
+                        </td>
                       </tr>
                     </tbody>
                     <tfoot>
@@ -151,7 +162,6 @@
                         <th>Order Id</th>
                         <th>Customer Id</th>
                         <th>Driver Id</th>
-                        <th>Contact</th>
                         <th>Date</th>
                         <th>Total</th>
                         <th>Drop Time</th>

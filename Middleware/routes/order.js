@@ -118,6 +118,41 @@ exports.getPending = function(req, res) {
 	}
 }
 
+exports.assignDriverId = function(req, res) {
+ 
+      //messege payload for sending to server
+        msg_payload = {"service" : "assignDriverId", "o_id" : req.param("o_id"), "driver_id" : req.param("driver_id")};
+
+        //making request to the server
+        mq.make_request('order_queue', msg_payload,function(err, results) {
+          if(err) {
+            console.log("Error occurred while requesting to server for assignDriverId : " + err);
+            var json_resposes = {"status" : 401, "error" : "Could not connect to server"};
+            res.send(json_resposes);
+          } else {
+              res.send(JSON.parse(results));
+          }
+        });
+}
+
+exports.assignComplete = function(req, res) {
+ 
+      //messege payload for sending to server
+        msg_payload = {"service" : "assignComplete", "o_id" : req.param("o_id")};
+
+        //making request to the server
+        mq.make_request('order_queue', msg_payload,function(err, results) {
+          if(err) {
+            console.log("Error occurred while requesting to server for assignDriverId : " + err);
+            var json_resposes = {"status" : 401, "error" : "Could not connect to server"};
+            res.send(json_resposes);
+          } else {
+              res.send(JSON.parse(results));
+          }
+        });
+}
+
+
 exports.getInProgress = function(req, res) {
 	console.log("in progress orders");
 

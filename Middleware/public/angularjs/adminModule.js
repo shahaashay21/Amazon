@@ -602,7 +602,39 @@ user.controller('adminController',['$scope','$http','$sce','$filter', 'Upload', 
 				$scope.orders = res.data;
 			}
 		});
+	}
 
+	$scope.isDriverIDValid = false;
+	$scope.assignDriverId = function(o_id, driver_id) {
+		
+		console.log("o_id :: " + o_id);
+		console.log("driver_id :: " + driver_id);
+		$scope.isDriverIDValid = false;
+		if(driver_id && driver_id.length != 9) {
+			$http({
+				method : 'POST',
+				url : '/order/assignDriverId',
+				data : {
+					o_id : o_id,
+					driver_id : driver_id 
+				}
+
+			}).success(function(res) {
+				if(res.status == 200) {
+					console.log(res);
+					$scope.getPending();
+				} else if(res.status == 401){
+					console.log("err : " + res.error);
+					return;
+				}
+				
+			}).error(function(err) {
+				console.log("error ::" + err);
+			});
+		} else {
+			$scope.isDriverIDValid = true;
+			$scope.invalidDriverId = o_id;
+		}
 	}
 	
 	$scope.getInProgress = function() {
@@ -622,6 +654,34 @@ user.controller('adminController',['$scope','$http','$sce','$filter', 'Upload', 
 				$scope.orders = res.data;
 			}
 		});
+	}
+
+	$scope.assignComplete = function(o_id) {
+		
+		console.log("o_id :: " + o_id);
+		//if(driver_id && driver_id.length != 9) {
+			$http({
+				method : 'POST',
+				url : '/order/assignComplete',
+				data : {
+					o_id : o_id,
+				}
+			}).success(function(res) {
+				if(res.status == 200) {
+					console.log(res);
+					$scope.getInProgress();
+				} else if(res.status == 401){
+					console.log("err : " + res.error);
+					return;
+				}
+				
+			}).error(function(err) {
+				console.log("error ::" + err);
+			});
+		/*} else {
+			$scope.isDriverIDValid = true;
+			$scope.invalidDriverId = o_id;
+		}*/
 	}
 
 	$scope.getComplete = function() {
