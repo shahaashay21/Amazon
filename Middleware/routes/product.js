@@ -77,12 +77,36 @@ exports.getCategory = function(req,res){
 
 
 exports.suggest = function(req, res){
+	//Without REDIS
 	q = req.param('q');
 	var msg_payload = {'service': 'suggest', 'q': q};
 	console.log(q);
 	mq.make_request('product_queue', msg_payload, function(err, done){
 		res.send(done);
 	})
+
+
+ /*   //With REDIS
+    var msg_payload = {
+        "q" : request.param("q"),
+        "service" : "suggest",
+        "reqtype": "/reddis/search",
+        "httpreqtype" : "GET",
+        "data" : {
+            searchparam: q,
+            operation:'suggest'
+        }
+    };
+    console.log("Requsted to Reddis");
+    mq_client.make_request('product_queue', msg_payload, function(err,results) {
+        console.log(results);
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(results);
+        }
+    });*/
+
 }
 
 exports.createProduct = function(req,res){
@@ -448,8 +472,9 @@ exports.farmer_page = function(req,res){
 				res.render('farmer_page', { user: req.session.user, products: prod.product, farmer: prod.farmer, session: true });
 				}else{
 					console.log("No session on");
-					console.log(prod.farmer);
-					res.render('farmer_page', { user: null, products: prod, farmer: prod.farmer, session: false });
+					//res.send(prod);
+					console.log(prod.farmer.object[0].fname);
+					res.render('farmer_page', { user: null, products: prod.product, farmer: prod.farmer, session: false });
 				}
 			}
 			else
