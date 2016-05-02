@@ -57,8 +57,13 @@ function otherCharge(req, callback){
 			Farmer.findOne({f_id: f_id}, 'tax', function(err, tax){
 				// console.log(tax);
 				// console.log(totalEachitem[i].total);
-
-				taxEachItem = Number(( Number(totalEachitem[i].total) * Number(tax.tax) ) / 100 );
+				//console.log("tax :::"+ tax)
+				//console.log(tax.tax);
+				if(tax != null ){
+					taxEachItem = Number(( Number(totalEachitem[i].total) * Number(tax.tax) ) / 100 );	
+				}else{
+					taxEachItem = 0;
+				}
 				// console.log(taxEachItem);
 				totalTax += taxEachItem;
 				taxChargeLoop( i+1, callAgain);

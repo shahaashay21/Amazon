@@ -59,68 +59,94 @@ exports.getCategory = function(req,res){
 }
 
 exports.prod_search = function(msg, callback){
-	var res = {};
-	console.log("In servers prod search");
-	console.log(msg);
-	console.log(msg.cat_id);
-	console.log(msg.search);
-	if (msg.search != undefined && msg.cat_id != undefined) {
-	Product.find({name: /.*T.*/,cat_id: msg.cat_id,isActive: true}, function(err, product) {
-		if(product == "")
-				{
-				console.log(err);
-				res.code = "401";
-				res.value = "Failed to fetch Product";
-				}
-			else
-				{
-				console.log(product);
-				res.code = "200";
-				res.value = "Product Fetched";
-				res.object = product;
-				}
-		callback(null, res);
-	});
-	}	
-	if (msg.search != undefined && msg.cat_id == undefined) {
-		console.log("Category is undefined");
-	Product.find({name: /.*T.*/,isActive: true}, function(err, product) {
-		if(product == "")
-				{
-				console.log(err);
-				res.code = "401";
-				res.value = "Failed to fetch Product";
-				}
-			else
-				{
-				console.log(product);
-				res.code = "200";
-				res.value = "Product Fetched";
-				res.object = product;
-				console.log(product);
-				}
 
-		callback(null, res);
-	});
+	searchData = {};
+	if(typeof msg.cat_id != 'undefined'){
+
+		searchData.cat_id = msg.cat_id;
 	}
-	if (msg.search == undefined && msg.cat_id != undefined) {
-	Product.find({cat_id: msg.cat_id,isActive: true}, function(err, product) {
+	if(typeof msg.search != 'undefined'){
+		regexp = new RegExp('(^|\\s+)'+msg.search,'i')
+		searchData.name = regexp;	
+	}
+	
+	console.log(searchData);
+
+	Product.find(searchData, function(err, product){
 		if(product == "")
 				{
-				console.log(err);
-				res.code = "401";
-				res.value = "Failed to fetch Product";
+					console.log(err);
+					res.code = "401";
+					res.value = "Failed to fetch Product";
 				}
 			else
 				{
-				console.log(product);
-				res.code = "200";
-				res.value = "Product Fetched";
-				res.object = product;
+				// console.log(product);
+					res.code = "200";
+					res.value = "Product Fetched";
+					res.object = product;
 				}
 		callback(null, res);
 	});
-	}
+
+	// if (msg.search != undefined && msg.cat_id != undefined) {
+	// // Product.find({name: /.*T.*/, cat_id: msg.cat_id, isActive: true}, function(err, product) {
+	// Product.find({}, function(err, product) {
+	// 	if(product == "")
+	// 			{
+	// 			console.log(err);
+	// 			res.code = "401";
+	// 			res.value = "Failed to fetch Product";
+	// 			}
+	// 		else
+	// 			{
+	// 			// console.log(product);
+	// 			res.code = "200";
+	// 			res.value = "Product Fetched";
+	// 			res.object = product;
+	// 			}
+	// 	callback(null, res);
+	// });
+	// }	
+	// if (msg.search != undefined && msg.cat_id == undefined) {
+	// 	console.log("Category is undefined");
+	// Product.find({name: new RegExp('(^|\\s+)'+msg.search,'i'), isActive: true}, function(err, product) {
+	// 	if(product == "")
+	// 			{
+	// 			console.log(err);
+	// 			res.code = "401";
+	// 			res.value = "Failed to fetch Product";
+	// 			}
+	// 		else
+	// 			{
+	// 			// console.log(product);
+	// 			res.code = "200";
+	// 			res.value = "Product Fetched";
+	// 			res.object = product;
+	// 			// console.log(product);
+	// 			}
+
+	// 	callback(null, res);
+	// });
+	// }
+	// if (msg.search == undefined && msg.cat_id != undefined) {
+	// Product.find({cat_id: msg.cat_id,isActive: true}, function(err, product) {
+	// 	if(product == "")
+	// 			{
+	// 			console.log(err);
+	// 			res.code = "401";
+	// 			res.value = "Failed to fetch Product";
+	// 			}
+	// 		else
+	// 			{
+	// 			// console.log(product);
+	// 			res.code = "200";
+	// 			res.value = "Product Fetched";
+	// 			res.object = product;
+	// 			}
+	// 	callback(null, res);
+	// });
+	// }
 };
 
 
@@ -311,9 +337,11 @@ exports.createProduct = function(req, res){
 					quantity: req.quantity,
 					details : req.details,
 					description : req.description,
-					features: req.features
+					features: req.features,
+					product_img: req.product_img
 				});
-
+				product.images[0] = req.image1;
+				console.log(req.product_img);
 				product.save(function(err,results){
 					if(err)
 					{
@@ -336,7 +364,7 @@ exports.createProduct = function(req, res){
 			}
 			else{
 				console.log("no result add product");
-				res.send(null,res);
+				res(null,result);
 			}
 		}
 	});

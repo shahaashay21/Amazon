@@ -17,12 +17,14 @@
     				method: "POST",
     				url: '/farmer/login',
     				data: {
-    					email: $scope.email,
-    					pass: $scope.password
+    					username: $scope.email,
+    					password: $scope.password
     				}
     			}).success(function(res){
-              if(res.data == 402){
-                $scope.login_meessage = "Waiting for admin to approve."
+              if(res.status == 200){
+                $scope.login_meessage = "Waiting for admin to approve.";
+                console.log("hey there");
+                window.location.assign('/farmer/home');
               }
               console.log(res);
     			});

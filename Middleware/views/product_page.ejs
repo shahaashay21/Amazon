@@ -17,41 +17,42 @@ $(window).load(function(){
 <div ng-app="Product" ng-controller="formCtrl" class="container-fluid">
  <div class="ro">
     <div class="col-sm-9" >
+            <% if(value == true) { %>
     <div class="col-sm-3">
       <a ng-href="{{magic_zoom}}" class="MagicZoom"><img ng-src="{{lrg_image}}" style="width: 300px; height: 300px;"></a>
       <div id="imageCaption"style="font-size: 0.92em;text-align: center;">Roll over image to zoom in</div>
       <div id="thumbnailsWrapper" class="row" >
             <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
-                <img src="<%= products.object[0].product_img %>" ng-mouseover="change_image1()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
+                <img src="/<%= products.object[0].product_img %>" ng-mouseover="change_image1()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
             </span>
             <% if(typeof products.object[0].images[0] != 'undefined') {
             if(products.object[0].images[0] != "") { %>
         <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
-                <img src="<%= products.object[0].images[0] %>" ng-mouseover="change_image2()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
+                <img src="/<%= products.object[0].images[0] %>" ng-mouseover="change_image2()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
             </span>
             <% } }%>
             <% if(typeof products.object[0].images[1] != 'undefined') {
             if(products.object[0].images[1] != "") { %>
             <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
-                <img src="<%= products.object[0].images[1] %>" ng-mouseover="change_image3()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
+                <img src="/<%= products.object[0].images[1] %>" ng-mouseover="change_image3()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
             </span>
             <% } }%>
             <% if(typeof products.object[0].images[2] != 'undefined') {
             if(products.object[0].images[2] != "") { %>
              <span class="detailPageThumbnail col-sm-2" style="width: 50px;height: 50px;">
-                <img src="<%= products.object[0].images[2] %>" ng-mouseover="change_image4()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" style="width: 50px; height: 50px;">
+                <img src="/<%= products.object[0].images[2] %>" ng-mouseover="change_image4()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" style="width: 50px; height: 50px;">
             </span>
             <% } }%>
             <% if(typeof products.object[0].images[3] != 'undefined') {
             if(products.object[0].images[3] != "") { %>
             <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
-                <img src="<%= products.object[0].images[3] %>" ng-mouseover="change_image5()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
+                <img src="/<%= products.object[0].images[3] %>" ng-mouseover="change_image5()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image" >
             </span>
             <% } }%>
             <% if(typeof products.object[0].images[4] != 'undefined') {
             if(products.object[0].images[4] != "") { %>
             <span class="detailPageThumbnail col-sm-2" style="width: 50px; height: 50px;">
-                <img src="<%= products.object[0].images[4] %>" ng-mouseover="change_image6()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image">
+                <img src="/<%= products.object[0].images[4] %>" ng-mouseover="change_image6()" HEIGHT="50" WIDTH="50" border="0" class="thumbnail" alt="Product Image">
             </span>
             <% } }%>
     </div>
@@ -73,10 +74,13 @@ $(window).load(function(){
 </div><br></div>
 
 <div class="row">
-
-
+<% if(typeof products.object[0].quantity != 'undefined') {
+            if(products.object[0].quantity <= 5) { %>
+<h5 style="color: red">Only <%= products.object[0].quantity %> items remaining</h5>
+<% } }%>
 <div class="row" ng-show="e_addtocart">
-<select class="form-control productQuant" style=" align-content: left; width: 62px;height: 32px;" id="product<%= products.object[0].p_id %>">
+
+<select class="form-control productQuant" style=" align-content: left; width: 62px;height: 32px; float:left; margin-right: 20px" id="product<%= products.object[0].p_id %>">
 
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -91,16 +95,24 @@ $(window).load(function(){
                 </select>
 
 <button type="button" class="checkout-btn" style=" align-content: right; width: 102px;height: 31px;color: black;margin: 0px;font-weight: none" ng-click="addItem(<%= products.object[0].p_id %>)" class="checkout-btn" >Add to Cart</button>
+<<<<<<< HEAD
 </div>
+=======
+>>>>>>> 2001d83786338838e0a919693843468925e4cc37
 <button type="button" class="checkout-btn" style="width: 102px;height: 31px;color: black;margin: 0px" ng-model="disabled_button" ng-show="d_addtocart" disabled>Add to Cart</button>
 <h5 style="font-size: 0.9em">Sold by AmazonFresh. Shipped by AmazonFresh.</h5>
 
+
+</div>
+
       </div>
     </div>
+    </div>
+    <% } %>
     <div class="col-sm-3" ng-show="cart">
      <% include cart.ejs %>
  </div>
-
+<% if(value == true) { %>
 <div class="row">
   <div class="col-sm-10">
   
@@ -147,7 +159,7 @@ $(window).load(function(){
         <div class="modal-body">
 <html>
 <body>
-<div class="review" style="width:80%">	
+<div class="review" style="width:80%">  
     <div class="customerReviews">
         <form name="TheForm1" action="/create_review" method="post">
         <input type="hidden" name="p_id" id="p_id" value="<%= products.object[0].p_id %>"></input>
@@ -188,7 +200,7 @@ $(window).load(function(){
 <% } %>
           
           
-  </div>
+  </div> <% } %>
   <br>
   <div class="disclaimerText" style=" font-size: 10px;  width: 1560px;
     height: 22px;
@@ -203,6 +215,7 @@ $(window).load(function(){
 </div>
 </div>
  </div>
+<% if(value == true) { %>
  <script> 
  var session = <%= session %>;
  var image1 = "<%= products.object[0].product_img %>";
@@ -213,6 +226,7 @@ $(window).load(function(){
  var image6 = "<%= products.object[0].images[4] %>";
  var p_id =   "<%= products.object[0].p_id %>";
 </script>
+<% } %>
 <% include footer.ejs %>
 <% include js-lib.ejs %>
 </body>

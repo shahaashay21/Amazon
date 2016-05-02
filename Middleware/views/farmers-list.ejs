@@ -19,10 +19,13 @@
 		<!-- AdminLTE Skins. Choose a skin from the css/skins
 				 folder instead of downloading all of them to reduce the load. -->
 		<link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
+
 		<script src="/angularjs/angular.min.js"></script>
 
 		<link href="/dist/css/xeditable.css" rel="stylesheet">
 		<script src="/dist/js/xeditable.js"></script>
+		<script src="/dist/js/ng-file-upload.min.js"></script>
+		<script src="/dist/js/ng-file-upload-shim.min.js"></script>
 		<script src="/angularjs/adminModule.js"></script>
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -239,7 +242,7 @@
 										</tfoot>
 									</table>
 									</br>
-									<button class="btn btn-default" id = "addfarmer" data-toggle = "modal" data-target = "#addFarmerModal">Add Product</button>
+									<button class="btn btn-default" id = "addfarmer" data-toggle = "modal" data-target = "#addFarmerModal">Add Farmer</button>
 								</div><!-- /.box-body -->
 							</div><!-- /.box -->
 						</div><!-- /.col -->
@@ -287,7 +290,7 @@
 											<input type="text" class="form-control" placeholder="Enter Youtube Video Link" ng-model="video" required>
 										</div>
 										<div class="form-group">
-											<label for="tax">Tax</label>
+											<label for="tax">Tax (Percentage)</label>
 											<input type="Number" class="form-control" placeholder="Enter Tax" ng-model="tax" required>
 										</div>
 										<div class="form-group">

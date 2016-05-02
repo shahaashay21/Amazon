@@ -71,16 +71,20 @@ app.controller("amazon",function($scope, $http, $location){
 
 
 
-	//REDIRECT TO USER PROFILE PAGE
+	//REDIRECT TO PRODUCT PAGE
 	$scope.userRedirect= function(id){
-		console.log(id);
 		window.location.assign("/product?id="+id);
 	};
+
+	// REDIRECT USER TO SEARCH PAGE
+	$scope.searchItemRedirect = function(){
+		window.location.assign("/search/?search="+$scope.q);
+	}
 
 	$scope.getCartItems = function(){
 		$http({
 			method: 'POST',
-			url: 'cart',
+			url: '/cart',
 			dataType: 'json'
 		}).then(function(res){
 			// console.log(res.data);
@@ -143,7 +147,7 @@ app.controller("amazon",function($scope, $http, $location){
 			if(data.data.suc == 'false'){
 				alertline('alert-notify-danger','<b>Sorry</b>, We have only <b>'+data.data.availableQuant+'</b> quantity available of <b>'+data.data.itemName+'</b>');
 			}else{
-				alertline('alert-notify-success','<b>Your has been placed successfully.</b>');
+				alertline('alert-notify-success','<b>Order has been placed successfully.</b>');
 				setTimeout(function(){
 					window.location.assign('/')
 				}, 4000);
