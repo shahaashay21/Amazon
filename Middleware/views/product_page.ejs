@@ -74,8 +74,10 @@ $(window).load(function(){
 </div><br></div>
 
 <div class="row">
-
-
+<% if(typeof products.object[0].quantity != 'undefined') {
+            if(products.object[0].quantity <= 5) { %>
+<h5 style="color: red">Only <%= products.object[0].quantity %> items remaining</h5>
+<% } }%>
 <div class="row" ng-show="e_addtocart">
 <select class="form-control productQuant" style=" align-content: left; width: 62px;height: 32px;" id="product<%= products.object[0].p_id %>">
 
@@ -92,9 +94,11 @@ $(window).load(function(){
                 </select>
 
 <button type="button" class="checkout-btn" style=" align-content: right; width: 102px;height: 31px;color: black;margin: 0px;font-weight: none" ng-click="addItem(<%= products.object[0].p_id %>)" class="checkout-btn" >Add to Cart</button>
-</div>
 <button type="button" class="checkout-btn" style="width: 102px;height: 31px;color: black;margin: 0px" ng-model="disabled_button" ng-show="d_addtocart" disabled>Add to Cart</button>
 <h5 style="font-size: 0.9em">Sold by AmazonFresh. Shipped by AmazonFresh.</h5>
+
+
+</div>
 
       </div>
     </div>
