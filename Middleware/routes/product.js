@@ -194,15 +194,15 @@ var avg_rating=0;var total_rating=0;var t_length=0;
 				avg_rating = Number(total_rating)/Number(t_length);
 				if(typeof req.session.user != 'undefined'){
 				console.log("session is active yipppy");
-					res.render('product_page', { user: req.session.user, products: prod, session: true, avg_rating: avg_rating , t_length: t_length});
+					res.render('product_page', { user: req.session.user, products: prod, session: true, avg_rating: avg_rating , value: true ,t_length: t_length});
 				}else{
 					console.log("No session on");
-					res.render('product_page', { products: prod, session: false, avg_rating: avg_rating, t_length:t_length });
+					res.render('product_page', { products: prod, session: false, avg_rating: avg_rating, t_length:t_length, value: true });
 				}
 			}
 			else
 			{
-				res.send("Sorry the product that you are searching for does not exist.");
+				res.send("The product you are looking for does not exist.");
 			}
 		}
 	});
