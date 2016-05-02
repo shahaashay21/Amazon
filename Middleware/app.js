@@ -12,6 +12,8 @@ var express = require('express')
   , login = require('./routes/login')
   , cart = require('./routes/cart')
   , order = require('./routes/order')
+  , truck = require('./routes/truck')
+  , driver =  require('./routes/driver')
   ,farmerLogin = require('./routes/farmerLogin')
   //ADMIN
   , admin = require('./routes/admin');
@@ -84,6 +86,23 @@ app.get('/admin/customers/list',admin.customersList);
 app.get('/admin/orders/list',admin.ordersList);
 //app.post('/admin/addFarmer', admin.addFarmer);;
 
+//TRUCK API
+app.post('/truck/create', truck.createTruck);
+app.get('/truck/all', truck.getTrucks);
+app.post('/truck/edit', truck.editTruck);
+app.delete('/truck/delete',truck.deleteTruck);
+
+//DRIVER API
+app.post('/driver/create', driver.createDriver);
+app.get('/driver/all', driver.getDrivers);
+app.post('/driver/edit', driver.editDriver);
+app.delete('/driver/delete',driver.deleteDriver);
+
+//CUSTOMER API
+app.post('/customer/create', user.createCustomer);
+app.get('/customer/all', user.getCustomers);
+app.post('/customer/edit', user.editCustomer);
+app.delete('/customer/delete',user.deleteCustomer);
 
 app.post('/farmer/login', function(req, res, next) {
   passport.authenticate('farmerLogin', function(err, farmer, info) {
@@ -127,7 +146,8 @@ app.get('/farmer/get', function(req,res){ console.log(req.session.farmer); res.s
 app.post('/user/address/update',user.editAddress);
 app.post('/user/card/update',user.editCard);
 app.get('/user/address',user.getAddress);
-
+app.get('/user/orders',order.orderDetails);
+ //app.get('/user/orders',user.getOrders);
 
 
 app.get('/product/all',product.getProducts);
@@ -143,6 +163,7 @@ app.get('/category/get', product.getCategory);
 
 
 //app.get('/prod_details', user.prod_details);
+app.get('/myReviews', product.myReviews);
 app.get('/search', product.prod_search);
 app.get('/product', product.prod_details);
 app.post('/create_review',product.create_review);
@@ -160,15 +181,7 @@ app.get('/logout', function(req,res) {
   })
 });
 
-app.get('/search', function(req, res){
 
-  if(typeof req.session.user != 'undefined'){
-    console.log(req.session.user);
-    res.render('ProductSearch', { user: req.session.user });
-  }else{
-    res.render('index');
-  }
-});
 
 app.get('/myOrders', function(req, res){
 
@@ -179,6 +192,16 @@ app.get('/myOrders', function(req, res){
     res.render('index');
   }
 });
+
+// app.get('/orderDetails', function(req, res){
+
+//   if(typeof req.session.user != 'undefined'){
+//     console.log(req.session.user);
+//     res.render('orderDetails', { user: req.session.user });
+//   }else{
+//     res.render('index');
+//   }
+// });
 
 
 app.get('/customerAccount', function(req, res){
@@ -241,15 +264,6 @@ app.get('/paymentOptions', function(req, res){
   if(typeof req.session.user !== 'undefined'){
     console.log(req.session.user);
     res.render('creditCardDetails', { user: req.session.user });
-  }else{
-    res.render('index');
-  }
-  });
-
-app.get('/myReviews', function(req, res){
-  if(typeof req.session.user !== 'undefined'){
-    console.log(req.session.user);
-    res.render('myReviews', { user: req.session.user });
   }else{
     res.render('index');
   }

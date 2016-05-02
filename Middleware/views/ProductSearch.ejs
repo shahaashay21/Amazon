@@ -12,7 +12,9 @@
         <% include search.ejs %>
         </div>
         </div>
-        <div class="cat-list container-fluid">
+        <div class="container-fluid">
+        <div class="col-lg-9">
+        <div class="cat-list">
           <div class="row row-margin">
             <div class="col-md-2">
                    <h3>Show Results by</h3>
@@ -27,7 +29,7 @@
                   <h5><a href="/search?id=8">Fresh Cut Flowers</a></h5>
                   <h5><a href="/search?id=101">Seeds</a></h5>
 
-                  <h4>Refine By</h4><br>
+                  <!-- <h4>Refine By</h4><br>
                   <h6>Brands</h6><br>
                   <input class="form-control" id="inputdefault" type="text">
                   <div class="btn-group" >
@@ -48,7 +50,7 @@
       <label><input type="checkbox" style="font-size: 17px;" value="">Organic </label>
       </div>
 
-            </div>
+            </div> -->
 
 </div>
       <div class="col-md-8">
@@ -57,7 +59,7 @@
       <div class="product-wrapper">
         <div class="itemInnerBorader">
           <a href="">
-            <img src="<%= products.object[i].product_img %>" class="" style="width: 140px; height: 140px; margin: 35px 45px 20px;">
+            <img src="/<%= products.object[i].product_img %>" class="" style="width: 140px; height: 140px; margin: 35px 45px 20px;">
           </a>
           <div class="productDetails">
             <div>
@@ -96,13 +98,18 @@
     </div>
     <% } %>
       </div>
-       <div class="col-m-2">
+       
+         
+
+
+</div>
+</div>
+</div>
+  <div class="col-lg-3">
         <% include cart.ejs %>
-      </div>  
-
-
+      </div>
 </div>
-</div>
+
 <!-- 
         Vansh Shah -->
 

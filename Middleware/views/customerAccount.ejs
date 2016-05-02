@@ -38,11 +38,11 @@
         
         <% include search.ejs %>
 </div>
-                <div class="cat-list" >
+                <div style="padding: 5px 10px 10px 17px;" >
               <form role="form">
               <br>
-              <h4>Your Account!</h4><br>
-                <h5 style="color: green;">
+              <h4>Your Account!</h4>
+                <h5 style="color: green; font-weight: bold;">
                   Account Settings
                 </h5>
                   
@@ -53,24 +53,30 @@
               
                 <hr>
 
-                <h5 style="color: green;">
+                <h5 style="color: green; font-weight: bold;" >
                   Payment Options
                 </h5>
+                <div ng-if="card_number">
                 <h5 style="color:green;">Card Number: <span style="color:black; font-weight: bold;">{{card_number}}</span> | Name On Card <span style="color:black; font-weight: bold;">{{name_on_card}}</span></h5>
+                </div>
 
                 <span><h5>You can Edit your Payment options under: <a style="text-decoration: underline;" href="/paymentOptions">Manage Your Payment Options</a> </h5></span>
 
 
                 <hr>
 
-                <h5 style="color: green;">
+                <h5 style="color: green; font-weight: bold;">
                   Primary Delivery Address
                 </h5>
-                <span><h4>{{address}} , {{city}}</h4><h4>{{state}} , {{zipcode}}</h4><h5>Update Your Address from Here :   <a style="text-decoration: underline;" href="/addressDetails">Update</a> </h5></span>
-
+                
+                  
+                  <div ng-if="city">
+                <h5>{{address}} , {{city}}</h4><h5>{{state}} , {{zipcode}}</h5>
+                </div>
+                <h5>Update Your Address from Here :   <a style="text-decoration: underline;" href="/addressDetails">Update</a> </h5>
 <hr>
 
-                <h5 style="color: green;">
+                <h5 style="color: green; font-weight: bold;">
                   Your Orders
                 </h5>
                 <span><h5>To see your Order History :    <a style="text-decoration: underline;" href="/myOrders">Click Here</a> </h5></span>
@@ -78,7 +84,7 @@
 
                 <hr>
 
-                <h5 style="color: green;">
+                <h5 style="color: green; font-weight: bold;">
                   My Reviews
                 </h5>
                 <span><h5>Check all of my Reviews :    <a style="text-decoration: underline;" href="/myReviews">Here</a> </h5></span>

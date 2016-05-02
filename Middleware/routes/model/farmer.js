@@ -5,6 +5,7 @@ var connection = mongoose.createConnection("mongodb://localhost/amazon");
 autoIncrement.initialize(connection);
 
 var reviewSchema = mongoose.Schema({
+	c_id: {type: String, required: true},
 	username: {type: String, required: true},
 	rating: {type: Number, required: true},
 	review_title: {type: String, required: true},
@@ -27,7 +28,9 @@ var farmerSchema = mongoose.Schema({
 	state: {type: String, required: true, default: "Your State"},
 	zipcode: {type: Number, required:true, default: 12345},
 	reviews: [reviewSchema],
-	isAvailable: {type: Boolean, default:true}
+
+	isAvailable: {type: Boolean,default:true},
+
 },{
 	collection: 'farmers',
     timestamps: true,

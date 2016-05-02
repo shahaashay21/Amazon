@@ -238,6 +238,7 @@ exports.prod_details = function(req,res){
 		"p_id" : req.param("id"),
 		"sid":req.session.user
 	};
+var avg_rating=0;var total_rating=0;var t_length=0;
 	console.log(msg_payload);
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
@@ -248,24 +249,23 @@ exports.prod_details = function(req,res){
 		else
 		{
 			if(prod.code == 200){
-				//console.log(Object.keys(prod.reviews));
+				t_length=prod.object[0].reviews.length;
+				avg_rating = total_rating/t_length;
+				 for (var i = 0; i < t_length; i++) {
+				total_rating = Number(total_rating) + Number(prod.object[0].reviews[i].rating);
+				} 
+				avg_rating = Number(total_rating)/Number(t_length);
 				if(typeof req.session.user != 'undefined'){
 				console.log("session is active yipppy");
-
-				//for (var i = 0; i < arrayLength; i++) {
-				//console.log("star value"+prod.reviews.rating);
-				//console.log("star value1"+prod.reviews[0].rating);
-				//console.log("In array should run once");
-				//}
-					res.render('product_page', { user: req.session.user, products: prod, session: true });
+					res.render('product_page', { user: req.session.user, products: prod, session: true, avg_rating: avg_rating , value: true ,t_length: t_length});
 				}else{
 					console.log("No session on");
-					res.render('product_page', { products: prod, session: false });
+					res.render('product_page', { products: prod, session: false, avg_rating: avg_rating, t_length:t_length, value: true });
 				}
 			}
 			else
 			{
-				res.send("Sorry the product that you are searching for does not exist.");
+				res.send("The product you are looking for does not exist.");
 			}
 		}
 	});
@@ -314,7 +314,8 @@ exports.f_create_review = function(req,res){
 		"star" : req.param("vue"),
 		"title": req.param("title"),
 		"review": req.param("review"), 
-		"sid":req.session.user.fname
+		"name":req.session.user.fname,
+		"id": req.session.user.c_id
 	};
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
@@ -343,7 +344,8 @@ exports.create_review = function(req,res){
 		"star" : req.param("vue"),
 		"title": req.param("title"),
 		"review": req.param("review"), 
-		"sid": req.session.user.fname
+		"name":req.session.user.fname,
+		"id": req.session.user.c_id
 	};
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
@@ -366,6 +368,47 @@ exports.create_review = function(req,res){
 		}
 	});
 };
+
+exports.myReviews = function(req,res){
+	console.log("In middlewares prod.js");
+	var msg_payload = {
+		"service" : "myReviews",
+		"sid":req.session.user.fname
+	};
+	console.log(msg_payload);
+  	mq.make_request('product_queue', msg_payload, function(err,prod){
+		if(err)
+		{
+		    console.log(err);
+			res.send(resGen.responseGenerator(401, null));
+		}
+		else
+		{
+			if(prod.farmer.code == 200){
+				if(typeof req.session.user != 'undefined'){
+				console.log(req.session.user.fname);
+				console.log("Prod revuews");
+				console.log(prod.product[0].reviews);
+				console.log("Farmer reviews");
+				console.log(prod.farmer.object[0].reviews);
+				
+				res.render('myReviews', { user: req.session.user, products: prod.product, farmer: prod.farmer, session: true });
+				}else{
+					console.log("No session on");
+					//res.send(prod);
+					res.render('myReviews', { user: null, products: prod, session: false });
+				}
+			}
+			else
+			{
+				res.send("Sorry the product that you are searching for does not exist.");
+			}
+		}
+	});
+};
+
+
+
 
 exports.farmer_page = function(req,res){
 	console.log("In middlewares prod.js");

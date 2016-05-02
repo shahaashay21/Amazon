@@ -1,10 +1,9 @@
-var ejs= require('ejs');
 var mysql = require('mysql');
 var Sequelize = require('sequelize');
 
 
 //Put your mysql configuration settings with the help of sequelize - user, password, database and port
-var sequelize = new Sequelize('amazon', 'root', 'neel', {
+var sequelize = new Sequelize('amazon', 'root', 'root', {
 	host : 'localhost',
 	dialect : 'mysql',
 	//collection pooling

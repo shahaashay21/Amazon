@@ -12,7 +12,7 @@ exports.suggest = function(req, callback){
 
 	re = new RegExp('(^|\\s+)'+q,'i');
 	// console.log(re);
-	Product.aggregate([{$match: {name: new RegExp('(^|\\s+)'+q,'i')}}, {$group: {_id:'$name', name: {$first:'$name'}}}, {$limit: 5}]).exec(function(err, name){
+	Product.aggregate([{$match: {name: new RegExp('(^|\\s+)'+q,'i')}}, {$group: {_id:'$name', name: {$first:'$name'}, 'p_id':{$first:'$p_id'}}}, {$limit: 5}]).exec(function(err, name){
 		// Product.find({name: new RegExp('(^|\\s+)'+q,'i')}, 'name').exec(function(err, name){
 		// console.log(name);
 		callback(null, JSON.stringify(name));
@@ -59,68 +59,94 @@ exports.getCategory = function(req,res){
 }
 
 exports.prod_search = function(msg, callback){
-	var res = {};
-	console.log("In servers prod search");
-	console.log(msg);
-	console.log(msg.cat_id);
-	console.log(msg.search);
-	if (msg.search != undefined && msg.cat_id != undefined) {
-	Product.find({name: /.*T.*/,cat_id: msg.cat_id,isActive: true}, function(err, product) {
-		if(product == "")
-				{
-				console.log(err);
-				res.code = "401";
-				res.value = "Failed to fetch Product";
-				}
-			else
-				{
-				console.log(product);
-				res.code = "200";
-				res.value = "Product Fetched";
-				res.object = product;
-				}
-		callback(null, res);
-	});
-	}	
-	if (msg.search != undefined && msg.cat_id == undefined) {
-		console.log("Category is undefined");
-	Product.find({name: /.*T.*/,isActive: true}, function(err, product) {
-		if(product == "")
-				{
-				console.log(err);
-				res.code = "401";
-				res.value = "Failed to fetch Product";
-				}
-			else
-				{
-				console.log(product);
-				res.code = "200";
-				res.value = "Product Fetched";
-				res.object = product;
-				console.log(product);
-				}
 
-		callback(null, res);
-	});
+	searchData = {};
+	if(typeof msg.cat_id != 'undefined'){
+
+		searchData.cat_id = msg.cat_id;
 	}
-	if (msg.search == undefined && msg.cat_id != undefined) {
-	Product.find({cat_id: msg.cat_id,isActive: true}, function(err, product) {
+	if(typeof msg.search != 'undefined'){
+		regexp = new RegExp('(^|\\s+)'+msg.search,'i')
+		searchData.name = regexp;	
+	}
+	
+	console.log(searchData);
+
+	Product.find(searchData, function(err, product){
 		if(product == "")
 				{
-				console.log(err);
-				res.code = "401";
-				res.value = "Failed to fetch Product";
+					console.log(err);
+					res.code = "401";
+					res.value = "Failed to fetch Product";
 				}
 			else
 				{
-				console.log(product);
-				res.code = "200";
-				res.value = "Product Fetched";
-				res.object = product;
+				// console.log(product);
+					res.code = "200";
+					res.value = "Product Fetched";
+					res.object = product;
 				}
 		callback(null, res);
 	});
-	}
+
+	// if (msg.search != undefined && msg.cat_id != undefined) {
+	// // Product.find({name: /.*T.*/, cat_id: msg.cat_id, isActive: true}, function(err, product) {
+	// Product.find({}, function(err, product) {
+	// 	if(product == "")
+	// 			{
+	// 			console.log(err);
+	// 			res.code = "401";
+	// 			res.value = "Failed to fetch Product";
+	// 			}
+	// 		else
+	// 			{
+	// 			// console.log(product);
+	// 			res.code = "200";
+	// 			res.value = "Product Fetched";
+	// 			res.object = product;
+	// 			}
+	// 	callback(null, res);
+	// });
+	// }	
+	// if (msg.search != undefined && msg.cat_id == undefined) {
+	// 	console.log("Category is undefined");
+	// Product.find({name: new RegExp('(^|\\s+)'+msg.search,'i'), isActive: true}, function(err, product) {
+	// 	if(product == "")
+	// 			{
+	// 			console.log(err);
+	// 			res.code = "401";
+	// 			res.value = "Failed to fetch Product";
+	// 			}
+	// 		else
+	// 			{
+	// 			// console.log(product);
+	// 			res.code = "200";
+	// 			res.value = "Product Fetched";
+	// 			res.object = product;
+	// 			// console.log(product);
+	// 			}
+
+	// 	callback(null, res);
+	// });
+	// }
+	// if (msg.search == undefined && msg.cat_id != undefined) {
+	// Product.find({cat_id: msg.cat_id,isActive: true}, function(err, product) {
+	// 	if(product == "")
+	// 			{
+	// 			console.log(err);
+	// 			res.code = "401";
+	// 			res.value = "Failed to fetch Product";
+	// 			}
+	// 		else
+	// 			{
+	// 			// console.log(product);
+	// 			res.code = "200";
+	// 			res.value = "Product Fetched";
+	// 			res.object = product;
+	// 			}
+	// 	callback(null, res);
+	// });
+	// }
 };
 
 
@@ -189,14 +215,57 @@ exports.farmer_page = function(msg, callback){
 	});
 				}
 	});
+};
+	exports.myReviews = function(msg, callback){
+	var p= {};
+	var f= {};
 	
+	//console.log("In servers get farmers");
+	Farmer.find({"reviews.username" : msg.sid}, function(err, farmer) {
+		if(farmer == "")
+				{
+				console.log(err);
+				farmer.code = "401";
+				farmer.value = "Failed to fetch farmer review";
+				console.log("No farmer fetched");
+				}
+			else
+				{
+				//console.log(farmer);
+				f.code = "200";
+				f.value = "Farmers review Fetched";
+				f.object = farmer;
+				}
+				Product.find({"reviews.username": msg.sid}, function(err, product) {
+		if(product == "")
+				{
+				console.log(err);
+				product.code = "401";
+				product.value = "Failed to fetch prod reviews";
+				}
+			else
+				{
+				//console.log(product);
+				p.code = "200";
+				p.value = "Products reviews Fetched";
+				p = product;
+				//console.log(p);
+				
+	console.log(p);
+	console.log(f.object);
+	var res = {"farmer": f,"product": p};
+	callback(null, res);
+				}
+	});
+				
+	});
 };
 
 exports.create_review = function(msg, callback){
 	var res = {};
 	console.log("In servers create review");
 	console.log(msg);
-	Product.update({"p_id": msg.p_id}, {"$push": {"reviews": {"username": msg.sid,"rating": msg.star,"review_title": msg.title,"review_desc": msg.review}}},{upsert:true},function(err){
+	Product.update({"p_id": msg.p_id}, {"$push": {"reviews": {"c_id": msg.c_id, "username": msg.name,"rating": msg.star,"review_title": msg.title,"review_desc": msg.review}}},{upsert:true},function(err){
         console.log("In prod update");
         if(err){
                 console.log(err);res.code = "401";
@@ -214,7 +283,7 @@ exports.f_create_review = function(msg, callback){
 	var res = {};
 	console.log("In servers farmer create review");
 	console.log(msg);
-	Farmer.update({"f_id": msg.f_id}, {"$push": {"reviews": {"username": msg.sid,"rating": msg.star,"review_title": msg.title,"review_desc": msg.review}}},{upsert:true},function(err){
+	Farmer.update({"f_id": msg.f_id}, {"$push": {"reviews": {"c_id": msg.c_id, "username": msg.name,"rating": msg.star,"review_title": msg.title,"review_desc": msg.review}}},{upsert:true},function(err){
         console.log("In f_create update place");
         if(err){
                 console.log(err);res.code = "401";

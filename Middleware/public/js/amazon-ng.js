@@ -40,10 +40,46 @@ app.controller("amazon",function($scope, $http, $location){
 		}
 	};
 
-	//REDIRECT TO USER PROFILE PAGE
+//Get Address
+
+	$scope.getAddress = function(){
+          $http({
+            method: "GET",
+            url: '/user/address'
+          }).success(function(res){
+            if(res.status == 200){
+              console.log(res.data);
+              $scope.user = res.data;
+              $scope.state = res.data[0].state;
+              $scope.address = res.data[0].address;
+              $scope.city = res.data[0].city;
+              $scope.zipcode = res.data[0].zipcode;
+
+              if(res.data[0].card_number){
+        	   		x = (res.data[0].card_number).toString();
+					lastFourDigit = x.substring(x.length - 4);
+
+            		$scope.card_number = lastFourDigit;   	
+              }
+           
+              $scope.name_on_card = res.data[0].name_on_card;
+              
+            }
+          });
+        }
+
+
+
+
+	//REDIRECT TO PRODUCT PAGE
 	$scope.userRedirect= function(id){
-		window.location.assign("/search?q="+id);
+		window.location.assign("/product?id="+id);
 	};
+
+	// REDIRECT USER TO SEARCH PAGE
+	$scope.searchItemRedirect = function(){
+		window.location.assign("search/?search="+$scope.q);
+	}
 
 	$scope.getCartItems = function(){
 		$http({
@@ -57,6 +93,9 @@ app.controller("amazon",function($scope, $http, $location){
 			$scope.cartItemDetails = res.data.cartItemDetails;
 			$scope.cartItems = res.data.items;
 			$scope.totalEachItem = res.data.totalEachitem;
+			$scope.tax = res.data.tax;
+			$scope.delivery_charge = res.data.delivery_charge;
+			$scope.finalTotal = res.data.finalTotal;
 		});
 	}
 
@@ -94,7 +133,7 @@ app.controller("amazon",function($scope, $http, $location){
 		time = angular.element('#time').val();
 		temp = new Date();
 		month = $scope.monthname();
-		drop_time = new Date(month+' '+(temp.getDate() + Number(dayDate))+', '+temp.getFullYear()+' '+time);
+		drop_time = new Date(month+' '+(temp.getDate() + Number(dayDate))+', '+temp.getFullYear()+' '+time+':00:00');
 		console.log(drop_time);
 		data = {'drop_time': drop_time};
 		url = '/order';
@@ -105,6 +144,14 @@ app.controller("amazon",function($scope, $http, $location){
 			dataType: 'json'
 		}).then(function(data){
 			console.log(data);
+			if(data.data.suc == 'false'){
+				alertline('alert-notify-danger','<b>Sorry</b>, We have only <b>'+data.data.availableQuant+'</b> quantity available of <b>'+data.data.itemName+'</b>');
+			}else{
+				alertline('alert-notify-success','<b>Your has been placed successfully.</b>');
+				setTimeout(function(){
+					window.location.assign('/')
+				}, 4000);
+			}
 		});
 
 	}

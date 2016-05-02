@@ -3,34 +3,87 @@
   <head>
     <title>Amazon-Fresh</title>
     <% include lib.ejs %>
+
+
+
+    <script>
+                angular.module('orderModule', []).controller('orderController', function($scope, $http, $location) {
+                  
+                  
+
+                  $scope.orderDetails = function(){
+          $http({
+            method: "GET",
+            url: '/user/orders'
+          }).success(function(res){
+            if(res.status == 200){
+              console.log(res.data);
+              console.log(res.data.length);
+              $scope.o_id = res.data[0].o_id;
+              $scope.total = res.data[0].total;
+              $scope.total = res.data[0].total;
+              $scope.address = res.data[0].address;
+              $scope.city = res.data[0].city;
+              $scope.state = res.data[0].state;
+              $scope.tax = res.data[0].tax;
+              $scope.drop_time = res.data[0].drop_time;
+
+              $scope.zipcode = res.data[0].zipcode;
+              
+            
+
+              
+            }
+          });
+        }
+
+              });
+              </script>
+
   </head>
-  <body>
+  <body ng-app="orderModule" ng-controller="orderController" ng-init="orderDetails();">
     <% include menu1.ejs %>
     <div style="height: 50px; display: block;"></div>
         <div class="container-fluid">
       
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="padding: 15px 50px 50px 200px;">
           <br />
           
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a href="#home" class="nav-link active" role="tab" data-toggle="tab">Current Orders</a>
+              <a href="#orders" class="nav-link active" role="tab" data-toggle="tab">Current Orders</a>
             </li>
 
             <li class="nav-item">
-              <a href="#profile" class="nav-link" role="tab" data-toggle="tab">Canceled Orders</a>
+              <a href="#c_orders" class="nav-link" role="tab" data-toggle="tab">Canceled Orders</a>
             </li>
 
             <li class="nav-item">
-              <a href="#about" class="nav-link" role="tab" data-toggle="tab">Past Orders</a>
+              <a href="#p_orders" class="nav-link" role="tab" data-toggle="tab">Past Orders</a>
             </li>
 
             
           </ul>
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="home">1</div>
-            <div role="tabpanel" class="tab-pane fade" id="profile">2</div>
-            <div role="tabpanel" class="tab-pane fade" id="about">3</div>
+            <div role="tabpanel" class="tab-pane fade" id="orders">
+
+            <h5><a style="color:blue; font-weight: bold; text-decoration: underline;" href="/orderDetails" >{{o_id}}</a>
+            <!-- <span style="padding: 15px 50px 50px 200px; font-weight: bold;">Subtotal : {{order.total}} $
+            
+            
+            
+            <span style="padding: 15px 50px 50px 200px;">Delivery Date: {{order.drop_time}}           </span>
+            </span> -->
+            </h5>
+            </div>
+
+            
+
+
+
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="c_orders">2</div>
+            <div role="tabpanel" class="tab-pane fade" id="p_orders">3</div>
           </div>
           </div>  
       
