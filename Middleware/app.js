@@ -38,9 +38,10 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.bodyParser());
+app.use(express.bodyParser({ keepExtensions: true, uploadDir: __dirname + '/public/img', limit: '3mb'}));
 app.use(express.methodOverride());
-
+//app.use('/uploads', express.static(path.join(__dirname,'uploads')));
+//app.use(multer({dest: './uploads/'}))
 
 //EXPRESS SESSION CONFIG
 app.use(expressSession({
@@ -121,12 +122,13 @@ app.post('/farmer/login', function(req, res, next) {
           return next(err);
         }
         console.log("login success");
-        req.session.user = user;
-        return res.redirect('/farmer/home');
+        req.session.farmer = farmer;
+        res.send({"status": 200, "data": true});
       })
     }
   })(req, res, next);
 });
+
 app.post('/farmer/signup',farmerLogin.signup);
 app.get('/farmer/signup',farmerLogin.userSignUp);
 app.get('/farmer/login',farmerLogin.userSignIn);
@@ -139,6 +141,7 @@ app.get('/farmer/all',farmer.getFarmers);
 app.post('/farmer/create',farmer.createFarmer);
 app.delete('/farmer/delete',farmer.deleteFarmer);
 app.post('/farmer/edit',farmer.editFarmer);
+app.get('/farmer/get', function(req,res){ console.log(req.session.farmer); res.send({"status":200,"data":req.session.farmer}); })
 
 app.post('/user/address/update',user.editAddress);
 app.post('/user/card/update',user.editCard);
@@ -149,6 +152,9 @@ app.get('/user/orders',order.orderDetails);
 
 app.get('/product/all',product.getProducts);
 app.post('/product/create',product.createProduct);
+
+app.post('/fileUpload', product.fileUpload);
+
 app.delete('/product/delete',product.deleteProduct);
 app.post('/product/edit',product.editProduct);
 

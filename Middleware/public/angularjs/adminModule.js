@@ -1,5 +1,5 @@
-var user = angular.module('adminModule',['xeditable']);
-
+var user = angular.module('adminModule',['xeditable','ngFileUpload']);
+//,'ngFileUpload'
 user.directive('addFarmerModal', function() {
    return {
      restrict: 'A',
@@ -22,7 +22,9 @@ user.directive('addProductModal', function() {
    } 
 });
 
-user.controller('adminController',['$scope','$http','$sce','$filter', function($scope,$http,$sce,$filter){
+
+user.controller('adminController',['$scope','$http','$sce','$filter', 'Upload', function($scope,$http,$sce,$filter, Upload){
+	//, 'Upload' //Upload
 	$scope.isBlankEmail = false;
 	$scope.isBlankPassword = false;
 	$scope.isIncorrectDetails = false;
@@ -752,35 +754,84 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
 				$scope.dismiss();
 			}
 		});
-	}
+	};
 
 	//add farmer
 	$scope.addProduct = function(){
 		console.log("addProduct ::");
-
-		$http({
-			method : "POST",
-			url : "/product/create",
-			data: {
-				name: $scope.product_name,
-				f_id: $scope.f_id,
-				//f_name: $scope.f_name,
-				cat_id: $scope.category,
-				price: $scope.price,
-				weight: $scope.weight,
-				unit: $scope.unit,
-				details: $scope.product_info,
-				description: $scope.description,
-				features: $scope.features,
-				quantity: $scope.quantity
+		var file = $scope.picFile;
+		console.log($scope.picFile);
+		console.log($scope.picFile1);
+		console.log($scope.picFile2);
+		console.log($scope.picFile3);
+/*		var $scope.prod_img =null;
+        var $scope.prod_img1=null;
+        var $scope.prod_img2=null;
+        var $scope.prod_img3=null;
+*/
+		Upload.upload({
+			url:"/fileUpload",
+			data:{
+				product_img: $scope.picFile
 			}
-		}).success(function(res) {
-			if(res.status == 200) {
-				console.log("success on add product :" + res.data);
-				$scope.dismiss();
-			}
+		}).success(function(res){
+			$scope.prod_img = "img/"+res.data;
+			Upload.upload({
+				url:"/fileUpload",
+				data:{
+					product_img: $scope.picFile1
+				}
+			}).success(function(res){
+				//$scope.prod_img1 = ;
+				$scope.prod_img1 = "img/"+res.data;
+				Upload.upload({
+					url:"/fileUpload",
+					data:{
+						product_img: $scope.picFile2
+					}
+				}).success(function(res){
+					$scope.prod_img2 = "img/"+res.data;
+						Upload.upload({
+						url:"/fileUpload",
+						data:{
+							product_img: $scope.picFile2
+						}
+					}).success(function(res){
+						$scope.prod_img3 = "img/"+res.data;
+						console.log($scope.prod_img+" "+$scope.prod_img1+""+$scope.prod_img2+" "+$scope.prod_img3);
+						$http({
+							method : "POST",
+							url : "/product/create",
+							data: {
+								name: $scope.product_name,
+								f_id: $scope.f_id,
+								//f_name: $scope.f_name,
+								cat_id: $scope.category,
+								price: $scope.price,
+								weight: $scope.weight,
+								unit: $scope.unit,
+								product_img: $scope.prod_img,
+								image1: $scope.prod_img1,
+								image2: $scope.prod_img2,
+								image3: $scope.prod_img3,
+								details: $scope.product_info,
+								description: $scope.description,
+								features: $scope.features,
+								quantity: $scope.quantity
+								/*product_img1: $scope.prod_img2,
+								product_img1: $scope.prod_img3*/	
+							}
+						}).success(function(res) {
+							if(res.status == 200) {
+								console.log("success on add product :" + res.data);
+								$scope.dismiss();
+							}
+						});
+					});
+				});
+			});
 		});
-	}
+	}	
 
 	$scope.statuses = [
 	    {value: 1, text: 'Aprroved'},
@@ -816,10 +867,10 @@ user.controller('adminController',['$scope','$http','$sce','$filter', function($
   	$scope.showCategory = function(product){
   		var selected = [];
 	    var temp = product.cat_id;
-	   	console.log("temp ::"+temp);
+	   	//console.log("temp ::"+temp);
     	selected = $filter('filter')($scope.categories, {value: temp });
 	    console.log(selected);
-	    return selected.length ? selected[0].text : 'Not set';
+	    return selected.length>0 ? selected[0].text : 'Not set';
   	}
 	//editableOptions.theme = 'bs3';
 }]);

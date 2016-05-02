@@ -3,9 +3,40 @@
 var ejs = require("ejs");
 var mq = require('../rpc/client');
 
+//var multer = require('multer');
 //var mysql = require('./mysql');
 var resGen = require('./commons/responseGenerator');
 
+
+/*uploadFilename = "";
+
+var storage = multer.diskStorage({ //multers disk storage settings
+	destination: function (req, file, cb) {
+        cb(null, '/public/uploads');
+    },
+    filename: function (req, file, cb) {
+        //console.log("File name"+file.fieldname + '-' + Date.now());
+        cb(null, file.fieldname + '-' + Date.now());
+    }
+})
+
+var upload = multer({ //multer settings
+                    storage: storage
+                }).single('file')
+
+exports.fileUpload = function(req,res){
+	upload(req,res,function(err){
+        if(err){
+            console.log("code has some errors");
+            res.send(err);
+            return err;
+        }
+        else{
+         	console.log("upload done")
+        	res.send("done");
+        }
+    });
+};*/
 
 exports.getProducts = function(req, res){
 	var msg_payload = {"service":"getProducts", "sid":req.sessionID};
@@ -53,46 +84,78 @@ exports.suggest = function(req, res){
 }
 
 exports.createProduct = function(req,res){
+	//if(req.product_img){
+	
+	if(true){
+		//var file = req.product_img.path;
+		console.log(req.product_img);
+		//product_img_filename = file.substr((file.indexOf('\\img\\')+5));
+		var msg_payload = {
+			"service" : "createProduct",
+			//"p_id" : req.param("p_id"),
+			"name" : req.param("name"),
+			"f_id" : req.param("f_id"),
+			//"f_name": req.param("f_name"),
+			"cat_id" : req.param("cat_id"),
+			"price" : req.param("price"),
+			"weight" : req.param("weight"),
+			"unit" : req.param("unit"),
+			"quantity": req.param("quantity"),
+			"details" : req.param("details"),
+			"description" : req.param("description"),
+			"features": req.param("features"),
+			"product_img": req.param("product_img"),
+			"image1": req.param("image1"),
+			"sid":req.sessionID
+		};
 
-	var msg_payload = {
-		"service" : "createProduct",
-		//"p_id" : req.param("p_id"),
-		"name" : req.param("name"),
-		"f_id" : req.param("f_id"),
-		//"f_name": req.param("f_name"),
-		"cat_id" : req.param("cat_id"),
-		"price" : req.param("price"),
-		"weight" : req.param("weight"),
-		"unit" : req.param("unit"),
-		"quantity": req.param("quantity"),
-		"details" : req.param("details"),
-		"description" : req.param("description"),
-		"features": req.param("features"),
-		"sid":req.sessionID
-	};
-
-  	mq.make_request('product_queue', msg_payload, function(err,doc){
-		if(err)
-		{
-		    console.log(err);
-			res.send(resGen.responseGenerator(401, null));
-		}
-		else
-		{
-
-			doc = JSON.parse(doc);
-			if(doc.status == 200){
-				console.log("reply from createProduct" + doc);
-
-				res.send(doc);
+	  	mq.make_request('product_queue', msg_payload, function(err,doc){
+			if(err)
+			{
+			    console.log(err);
+				res.send(resGen.responseGenerator(401, null));
 			}
 			else
 			{
-				res.send(resGen.responseGenerator(401, null));
+
+				doc = JSON.parse(doc);
+				if(doc.status == 200){
+					console.log("reply from createProduct" + doc);
+
+					res.send(doc);
+				}
+				else
+				{
+					res.send(resGen.responseGenerator(401, null));
+				}
 			}
-		}
-	});
+		});
+	}
 };
+
+exports.fileUpload = function(req,res){
+	console.log("fileUpload");
+	//console.log(req.files);
+	if(req.files.product_img){
+		var file = req.files.product_img.path;
+		filename = file.substr((file.indexOf('\\img\\')+5));
+		//console.log(file);
+		console.log(filename);
+		//console.log(req.product_img);
+		/*if(!(isEmpty(req.files))){
+			if(!(isEmpty(req.files.myFile.path))){
+				var file = req.files.myFile.path;
+				filename = file.substr((file.indexOf('\\img\\')+5));
+				Users.update({id: req.session.uid}, {dp:filename}, function(err, update){
+					if(!err){
+						res.json('Ok');
+					}
+				});
+			}
+		}*/
+		res.send(resGen.responseGenerator(200,filename));
+	}
+}
 
 exports.deleteProduct = function(req,res){
 	

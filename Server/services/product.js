@@ -337,9 +337,11 @@ exports.createProduct = function(req, res){
 					quantity: req.quantity,
 					details : req.details,
 					description : req.description,
-					features: req.features
+					features: req.features,
+					product_img: req.product_img
 				});
-
+				product.images[0] = req.image1;
+				console.log(req.product_img);
 				product.save(function(err,results){
 					if(err)
 					{
@@ -362,7 +364,7 @@ exports.createProduct = function(req, res){
 			}
 			else{
 				console.log("no result add product");
-				res.send(null,res);
+				res(null,result);
 			}
 		}
 	});
