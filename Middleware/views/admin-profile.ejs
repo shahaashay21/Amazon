@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Orders | Data Tables</title>
+    <title>Drivers | Data Tables</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -33,7 +33,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule" ng-controller="adminController">
+  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule" ng-controller="adminController" ng-init="getDrivers()">
     <div class="wrapper">
       <header class="main-header">
         <% include ./partials/admin-header %>
@@ -71,8 +71,8 @@
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="/admin/home"><i class="fa fa-circle-o"></i> Dashboard</a></li>
                 <li><a href="/admin/home"><i class="fa fa-circle-o"></i> Statistics</a></li>
+                <li class="active"><a href="/admin/profile"><i class="fa fa-circle-o"></i> Profile</a></li>
               </ul>
             </li>
             <li class="active treeview">
@@ -86,7 +86,7 @@
                 <li><a href="/admin/trucks/list"><i class="fa fa-circle-o"></i> Trucks List</a></li>
                 <li><a href="/admin/drivers/list"><i class="fa fa-circle-o"></i> Drivers List</a></li>
                 <li><a href="/admin/customers/list"><i class="fa fa-circle-o"></i> Customers List</a></li>
-                <li class="active"><a href="/admin/orders/list"><i class="fa fa-circle-o"></i> Orders List</a></li>
+                <li><a href="/admin/orders/list"><i class="fa fa-circle-o"></i> Orders List</a></li>
               </ul>
             </li>
           </ul>
@@ -99,70 +99,92 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Orders Data Tables
-            <small>All data</small>
+            <%= fname %> <%= lname %>
+            <small>Profile</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Tables</a></li>
-            <li class="active">Orders table</li>
+            <li><a href="/admin/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li>Dashboard</li>
+            <li class="active">Profile</li>
           </ol>
         </section>
 
         <!-- Main content -->
-        <section class="content" style="overflow: scroll;">
+        <section class="content">
+          <!-- Small boxes (Stat box) -->
           <div class="row">
-            <div class="col-xs-12" style="overflow: scroll; width: auto;">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title">Orders Data Table</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <button class="btn btn-default" id = "pending" ng-click = "getPending()">Pending Orders</button>
-                  <button class="btn btn-default" id = "inprogress" ng-click = "getInProgress()">In Progress Orders</button>
-                  <button class="btn btn-default" id = "complete" ng-click = "getComplete()">Completed Orders</button>
-                  <button class="btn btn-default" id = "cancel" ng-click = "getCancel();">Cancelled Orders</button>
-                  </br>
-                  <table id="example1" class="table table-bordered table-hover table-striped" ng-show = "isButtonClicked">
-                    <thead>
-                      <tr>
-                        <th>Order Id</th>
-                        <th>Customer Id</th>
-                        <th>Driver Id</th>
-                        <th>Contact</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                        <th>Drop Time</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr ng-repeat = "order in orders">
-                        <td>{{order.o_id}}</td>
-                        <td>{{order.c_id}}</td>
-                        <td>{{order.driver_id}}</td>
-                        <td>{{order.contact}}</td>
-                        <td>{{order.createdAt || date : 'medium'}}</td>
-                        <td>{{order.total}}</td>
-                        <td>{{order.drop_time}}</td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>Order Id</th>
-                        <th>Customer Id</th>
-                        <th>Driver Id</th>
-                        <th>Contact</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                        <th>Drop Time</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </br>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-            </div><!-- /.col -->
+            <div class="col-lg-3 col-xs-6">
+                <form editable-form name="adminEditForm" onaftersave="saveAdmin($data,farmer.f_id)">
+                  <div>
+                    
+                    <span class="title">First Name: </span>
+                    <span editable-text="admin.fname" e-name="fname" e-required>{{ admin.fname || 'empty' }}</span>
+                  </div> 
+
+                  <div>
+                    <span class="title">Last Name: </span>
+                    <span editable-text="admin.lname" e-name="lname" e-required>{{ admin.lname || 'empty' }}</span>
+                  </div> 
+
+                  <div>
+                    <span class="title">Email: </span>
+                    <span editable-text="admin.email" e-name="email" e-required>{{ admin.email || 'empty' }}</span>
+                  </div> 
+
+                  <div>
+                    <span class="title">Password: </span>
+                    <span editable-password="admin.pass" e-name="pass" e-required>{{ admin.pass || 'empty' }}</span>
+                  </div> 
+ 
+                  <div>
+                    
+                    <span class="title">Address: </span>
+                    <span editable-text="admin.address" e-name="address" e-required>{{ admin.address || 'empty' }}</span>
+                  </div> 
+                  <div>
+                    
+                    <span class="title">City: </span>
+                    <span editable-text="admin.city" e-name="city" e-required>{{ admin.city || 'empty' }}</span>
+                  </div> 
+                  <div>
+                    
+                    <span class="title">State: </span>
+                    <span editable-text="admin.state" e-name="state" e-required>{{ admin.state || 'empty' }}</span>
+                  </div> 
+                  <div>
+                    
+                    <span class="title">Zipcode: </span>
+                    <span editable-number="admin.zipcode" e-name="zipcode" e-required>{{ admin.zipcode || 'empty' }}</span>
+                  </div> 
+                  
+
+                  <div class="buttons">
+                    <!-- button to show form -->
+                    <button type="button" class="btn btn-default" ng-click="adminEditForm.$show()" ng-show="!adminEditForm.$visible">
+                      Edit
+                    </button>
+                    <!-- buttons to submit / cancel form -->
+                    <span ng-show="adminEditForm.$visible">
+                      <button type="submit" class="btn btn-primary" ng-disabled="adminEditForm.$waiting">
+                        Save
+                      </button>
+                      <button type="button" class="btn btn-default" ng-disabled="adminEditForm.$waiting" ng-click="adminEditForm.$cancel()">
+                        Cancel
+                      </button>
+                    </span>
+                  </div>
+                </form>  
+
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6" >
+
+            </div><!-- ./col -->
           </div><!-- /.row -->
+          <!-- Main row -->
+          <div class="row">
+            <!-- Left col -->
+          </div><!-- /.row (main row) -->
+
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
       <footer class="main-footer">
@@ -171,7 +193,7 @@
       <% include ./partials/admin-aside %> 
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
-      <div class="control-sidebar-bg"></div>
+      <!-- <div class="control-sidebar-bg"></div> -->
     </div><!-- ./wrapper -->
 
     <!-- jQuery 2.1.4 -->

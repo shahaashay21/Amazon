@@ -78,6 +78,7 @@ app.get('/admin/home',admin.home);
 app.get('/admin/login',admin.login);
 app.get('/admin/logout', admin.logout);
 app.post('/admin/checkLogin', admin.checkLogin);
+app.post('/admin/profile', admin.profile);
 app.get('/admin/farmers/list',admin.farmersList);
 app.get('/admin/products/list',admin.productsList);
 app.get('/admin/trucks/list',admin.trucksList);
@@ -118,6 +119,12 @@ app.get('/farmer/products/list', function(req,res){
 });
 app.get('/farmer/product/all',farmerLogin.productlist);
 
+
+//ORDER API
+app.post('/order/pending', order.getPending);
+app.post('/order/inprogress', order.getInProgress);
+app.post('/order/complete', order.getComplete);
+app.post('/order/cancel', order.getCancel);
 
 app.post('/farmer/login', function(req, res, next) {
   passport.authenticate('farmerLogin', function(err, farmer, info) {

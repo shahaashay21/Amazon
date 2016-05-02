@@ -14,6 +14,45 @@ exports.login = function(req, res) {
 		res.render('admin-login');
 }
 
+exports.profile = function(req, res) {
+  if(req.session.email) {
+    res.render('admin-profile', {
+      email : req.session.email, 
+      fname : req.session.fname, 
+      lname : req.session.lname, 
+      createdAt : req.session.createdAt
+    });
+  }
+  else
+  {
+    res.redirect('/admin/login');
+  }
+}
+
+exports.getAdminProfile = function(req, res) {
+  if(res.session.email) {
+
+        //messege payload for sending to server
+        msg_payload = {"service" : "getAdminProfile", "email" : req.sesion.email};
+
+        //making request to the server
+        mq.make_request('admin-queue', msg_payload,function(err, results) {
+          if(err) {
+            console.log("Error occurred while requesting to server for getAdminProfile : " + err);
+            var json_resposes = {"status" : 401, "error" : "Could not connect to server"};
+            res.send(json_resposes);
+          } else {
+              res.send(JSON.parse(results));
+          }
+        });
+
+  } else {
+    res.redirect('/admin/login'); 
+  }
+
+}
+
+
 exports.logout = function(req, res) {
 	req.session.destroy();
 	res.redirect("/admin/login");

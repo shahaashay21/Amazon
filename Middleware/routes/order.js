@@ -95,3 +95,90 @@ exports.home = function(req, res){
 	})
 	
 }
+
+exports.getPending = function(req, res) {
+	console.log("pending orders");
+
+	if(req.session.email) {
+		//messege payload for sending to server
+        msg_payload = {"service" : "getPending"};
+
+        //making request to the server
+        mq.make_request('order_queue', msg_payload,function(err, results) {
+          if(err) {
+            console.log("Error occurred while requesting to server for getPending : " + err);
+            var json_resposes = {"status" : 401, "error" : "Could not connect to server"};
+            res.send(json_resposes);
+          } else {
+              res.send(JSON.parse(results));
+          }
+        });
+	} else {
+		res.redirect('/admin/login'); 		
+	}
+}
+
+exports.getInProgress = function(req, res) {
+	console.log("in progress orders");
+
+	if(req.session.email) {
+		//messege payload for sending to server
+        msg_payload = {"service" : "getInProgress"};
+
+        //making request to the server
+        mq.make_request('order_queue', msg_payload,function(err, results) {
+          if(err) {
+            console.log("Error occurred while requesting to server for getInProgress : " + err);
+            var json_resposes = {"status" : 401, "error" : "Could not connect to server"};
+            res.send(json_resposes);
+          } else {
+              res.send(JSON.parse(results));
+          }
+        });
+	} else {
+		res.redirect('/admin/login'); 		
+	}
+}
+
+exports.getComplete = function(req, res) {
+	console.log("complete orders");
+
+	if(req.session.email) {
+		//messege payload for sending to server
+        msg_payload = {"service" : "getComplete"};
+
+        //making request to the server
+        mq.make_request('order_queue', msg_payload,function(err, results) {
+          if(err) {
+            console.log("Error occurred while requesting to server for getComplete : " + err);
+            var json_resposes = {"status" : 401, "error" : "Could not connect to server"};
+            res.send(json_resposes);
+          } else {
+              res.send(JSON.parse(results));
+          }
+        });
+	} else {
+		res.redirect('/admin/login'); 		
+	}
+}
+
+exports.getCancel = function(req, res) {
+	console.log("cancel orders");
+	if(req.session.email) {
+		//messege payload for sending to server
+        msg_payload = {"service" : "getCancel"};
+
+        //making request to the server
+        mq.make_request('order_queue', msg_payload,function(err, results) {
+          if(err) {
+            console.log("Error occurred while requesting to server for getCancel : " + err);
+            var json_resposes = {"status" : 401, "error" : "Could not connect to server"};
+            res.send(json_resposes);
+          } else {
+              res.send(JSON.parse(results));
+          }
+        });
+	} else {
+		res.redirect('/admin/login'); 		
+	}
+}

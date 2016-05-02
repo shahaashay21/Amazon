@@ -65,7 +65,7 @@ var admin = sequelize.define('admin', {
 		unique : true
 	},
 	pass : {
-		type : Sequelize.STRING,
+		type : Sequelize.TEXT,
 		field : 'pass',
 		allowNull : false
 	},
