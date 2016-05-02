@@ -1,8 +1,10 @@
  var main = angular.module('Product', []);
         main.controller('formCtrl', ['$scope', '$http', function ($scope, $http) {
         	$scope.quantity = false;
-        	$scope.addtocart = true;
+        	$scope.d_addtocart = true;
         	$scope.cart = true;
+            $scope.e_addtocart = false;
+            $scope.disabled_button
         	$scope.review = false;
             $scope.description = true;
             $scope.details = true;
@@ -17,8 +19,9 @@
 
                 	console.log("checksession successful");
                 	$scope.quantity = true;
-                	$scope.addtocart = false;
+                	$scope.d_addtocart = false;
                 	$scope.cart = true;
+                    $scope.e_addtocart = true;
                 	$scope.signin = false;
                 	$scope.review = true;
                 	$scope.disabled_button = false;

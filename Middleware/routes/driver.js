@@ -6,7 +6,7 @@
 //Required Files
 var mq = require('../rpc/client');
 
-//get Trucks
+//get Drivers
 exports.getDrivers = function(req, res) {
 	//messege payload for sending to server
 	msg_payload = {"service" : "getDrivers"};
@@ -23,7 +23,7 @@ exports.getDrivers = function(req, res) {
 
 }
 
-//create Truck
+//create Driver
 exports.createDriver = function(req, res) {
 
 	//truck number as parameter
