@@ -18,16 +18,16 @@ $(window).load(function(){
       <div class="row">
       <div class="col-lg-5">
       <br><br>
-      <h4> Farmer Name: <%= farmer.object[0].fname %> <%= farmer.object[0].lname %></h4>
-      <h4> Email: <%= farmer.object[0].email %> </h4> <br>
-      <h4> Introduction: <%= farmer.object[0].intro %> </h4>    
+      <h5> Farmer Name: <span style="font-weight: bold; color:green;"><%= farmer.object[0].fname %> <%= farmer.object[0].lname %></span></h5>
+      <h5> Email: <span style="font-weight: bold; color:green;"><%= farmer.object[0].email %></span> </h5>
+      <h5> Introduction: <span style="font-weight: bold; color:green;"> <%= farmer.object[0].intro %></span> </h5>    
     </div>
       <div class="col-lg-7">
     <iframe width="550" height="350" src="<%= farmer.object[0].video %>">
 </iframe></div>
       
 </div>
-      <h1>Products by <%= farmer.object[0].fname %></h1>
+      <h3 style="color: green;">Products by <%= farmer.object[0].fname %></h3>
       <% for(var i=0; i < products.length; i++) { %>
         <div class="col-xs-3 no-padding">
       <div class="product-wrapper">
@@ -99,18 +99,18 @@ $(window).load(function(){
         <form name="TheForm1" action="/f_create_review" method="post">
         <input type="hidden" name="p_id" id="p_id" value="<%= farmer.object[0].f_id %>"></input>
             <div class="createReview">
-                How do you rate this item?
+                <h4 style="color:green;">How do you rate this item?</h4>
                 <span id="rating_1" class="rating" ></span>
                 <span><label id="result_1" ng-model="starr"></label></span>
             </div>
             <div class="createReview">
                 <br>What is the title of your review? <span class="titleBox"><input class="textField" ng-model="frm.title" id="Title" type="text" maxlength="100" size="40" name="title"></span>    
-            </div>
+            </div><br>
             <div class="createReview">
-                Write your review <br><br>                   
+                Write your review <br>                 
 <span class="reviewBox"><textarea class="textArea" id="YourReview" cols="100" ng-model="frm.review" rows="10" name="review" style="width:80%"></textarea></span> 
             </div>
-<button type="submit" class="btn btn-primary btn-sm" style="background-color: green;border-color: green">Submit</button>
+<button type="submit" class="btn btn-primary btn-sm">Submit</button>
         </form>
     </div>
 </div>

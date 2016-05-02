@@ -435,9 +435,9 @@ cnn.on('ready', function(){
 					});
 					break;
 
-					case 'getOrders':
+					case 'orderDetails':
 					//util.log("createOrder");
-					order.getOrders(message, function(err, res){
+					order.orderDetails(message, function(err, res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',

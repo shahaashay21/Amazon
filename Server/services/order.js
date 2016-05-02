@@ -3,12 +3,12 @@ var Product = require('./model/product');
 var User = require('./model/user');
 var Cart = require('./model/cart');
 var cart = require('./cart');
+var resGen = require('./commons/responseGenerator');
 
 
 
 
-
-exports.getOrders = function(req, res){
+exports.orderDetails = function(req, res){
 	
 	console.log("cid :: "+ req.c_id);
 	//var cid = req.c_id;
@@ -26,7 +26,10 @@ exports.getOrders = function(req, res){
 			console.log(results);
 			
 			if(results){
-				console.log("Orders found");
+				console.log("order Details found");
+				res.code = "200";
+				res.value = "Found";
+				res.object = results;
 				res(null,resGen.responseGenerator(200, results));
 			}
 			else
@@ -37,6 +40,8 @@ exports.getOrders = function(req, res){
 		}
 	});
 }
+
+
 
 
 

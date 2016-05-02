@@ -137,7 +137,8 @@ app.post('/farmer/edit',farmer.editFarmer);
 app.post('/user/address/update',user.editAddress);
 app.post('/user/card/update',user.editCard);
 app.get('/user/address',user.getAddress);
-// app.get('/user/orders',user.getOrders);
+app.get('/user/orders',order.orderDetails);
+ //app.get('/user/orders',user.getOrders);
 
 
 app.get('/product/all',product.getProducts);
