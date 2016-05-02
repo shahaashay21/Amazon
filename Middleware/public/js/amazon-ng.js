@@ -71,11 +71,15 @@ app.controller("amazon",function($scope, $http, $location){
 
 
 
-	//REDIRECT TO USER PROFILE PAGE
+	//REDIRECT TO PRODUCT PAGE
 	$scope.userRedirect= function(id){
-		console.log(id);
 		window.location.assign("/product?id="+id);
 	};
+
+	// REDIRECT USER TO SEARCH PAGE
+	$scope.searchItemRedirect = function(){
+		window.location.assign("search/?search="+$scope.q);
+	}
 
 	$scope.getCartItems = function(){
 		$http({

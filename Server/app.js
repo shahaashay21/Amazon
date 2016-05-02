@@ -140,7 +140,7 @@ cnn.on('ready', function(){
 
 	cnn.queue('product_queue', function(q){
 		q.subscribe(function(message, headers, deliveryInfo, m){
-			util.log(util.format( deliveryInfo.routingKey, message));
+			// util.log(util.format( deliveryInfo.routingKey, message));
 			//util.log("Message: "+JSON.stringify(message));
 			//util.log("DeliveryInfo: "+JSON.stringify(deliveryInfo));
 
@@ -165,7 +165,7 @@ cnn.on('ready', function(){
 					});
 					break;
 					case "prod_search":
-					util.log("Product Search Page");
+					// util.log("Product Search Page");
 					product.prod_search(message, function(err,res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
