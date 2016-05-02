@@ -24,6 +24,9 @@
 
 		<link href="/dist/css/xeditable.css" rel="stylesheet">
 		<script src="/dist/js/xeditable.js"></script>
+		<script src="/dist/js/ng-file-upload.min.js"></script>
+		<script src="/dist/js/ng-file-upload-shim.min.js"></script>
+		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js"></script>
 
 		<script src="/angularjs/farmerModule.js"></script>
@@ -36,7 +39,7 @@
 				<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body class="hold-transition skin-blue sidebar-mini" ng-app="farmerModule" ng-controller="farmerController">
+	<body class="hold-transition skin-blue sidebar-mini" ng-app="farmerModule" ng-controller="farmerController" ng-init="productlist(); getCategory();">
 		<div class="wrapper">
 			<header class="main-header">
 				<% include ../partials/admin-header %>
@@ -125,8 +128,6 @@
 											<tr>
 												<th>Product Id</th>
 												<th>Product Name</th>
-												<th>Farmer Id</th>
-												<th>Farmer Name</th>
 												<th>Category Id</th>
 												<th>Price</th>
 												<th>Weight</th>
@@ -145,14 +146,6 @@
 													<span editable-text="product.name" e-name="name" e-form="productform" e-required>
 														 {{ product.name || 'empty' }}
 													</span>
-												</td>
-												<td>
-													<span editable-text="product.f_id" e-name="f_id" e-form="productform" e-required>
-														 {{ product.f_id || 'empty' }}
-													</span>
-												</td>
-												<td>
-												 {{ product.farmer_name || 'empty' }}	
 												</td>
 												<td>
 													<span editable-select="product.cat_id" e-name="cat_id" e-form="productform" e-ng-options="s.value as s.text for s in categories" e-required>
@@ -219,8 +212,6 @@
 											<tr>
 												<th>Product Id</th>
 												<th>Product Name</th>
-												<th>Farmer Id</th>
-												<th>Farmer Name</th>
 												<th>Category Id</th>
 												<th>Price</th>
 												<th>Weight</th>
@@ -300,6 +291,23 @@
 								<div class="form-group">
 									<label for="quantity">Quantity</label>
 									<input type="text" class="form-control" placeholder="Enter Quantity Available" ng-model="quantity" required>
+								</div>
+
+								<div class="form-group">
+									<label for="picFile">Product Image</label>
+					                <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="3MB" required ngf-model-invalid="errorFile">
+								</div>
+								<div class="form-group">
+									<label for="picFile1">Product Image 1</label>
+					                <input type="file" ngf-select ng-model="picFile1" name="file" accept="image/*" ngf-max-size="3MB" required ngf-model-invalid="errorFile">
+								</div>
+								<div class="form-group">
+									<label for="picFile2">Product Image 2</label>
+					                <input type="file" ngf-select ng-model="picFile2" name="file" accept="image/*" ngf-max-size="3MB" required ngf-model-invalid="errorFile">
+								</div>
+								<div class="form-group">
+									<label for="picFile3">Product Image 3</label>
+					                <input type="file" ngf-select ng-model="picFile3" name="file" accept="image/*" ngf-max-size="3MB" required ngf-model-invalid="errorFile">
 								</div>
 								<button class="btn btn-default" ng-click="addProduct();">Add Product</button>
 							</div>

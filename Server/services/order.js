@@ -167,3 +167,158 @@ exports.createOrder = function(req, callback) {
 		})
 	});
 };
+
+/*
+-------Created by Darshil Saraiya 5/01/16-------
+-------Order related operations-------
+*/
+
+exports.getPending = function(req, res) {
+	console.log("pending orders");
+
+	Order.find({status : "pending"}, function(err, results) {
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing find query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			console.log(results);
+			if(results != null && results.length > 0) {
+				console.log("All Pending Orders Found!");
+				json_responses = {"status" : 200, "data" : results};
+				res(null, JSON.stringify(json_responses));
+
+			} else {
+				json_responses = {"status" : 401, "error" : "no data found"};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	});
+}
+
+exports.assignDriverId = function(req, res) {
+	console.log("assignDriverId");
+
+	/*Order.update({"o_id" : req.o_id}, {"$set" : {"driver_id" : req.driver_id, "status" : "inprogress"}}, function(err, results) {
+		console.log("err :: " + err);
+		console.log(results);
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing update query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			if(results !=null) {
+				console.log("Pending Order Updated!");
+				json_responses = {"status" : 200};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	});*/
+
+	Order.update({"o_id" : req.o_id}, {"$set" : {"driver_id" : req.driver_id, "status" : "cancel"}}, function(err, results) {
+		console.log("err :: " + err);
+		console.log(results);
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing update query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			if(results !=null) {
+				console.log("Pending Order Updated!");
+				json_responses = {"status" : 200};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	});
+}
+
+exports.getInProgress = function(req, res) {
+	console.log("in progress orders");
+
+	Order.find({status : "inprogress"}, function(err, results) {
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing find query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			console.log(results);
+			if(results != null && results.length > 0) {
+				console.log("All In Progress Orders Found!");
+				json_responses = {"status" : 200, "data" : results};
+				res(null, JSON.stringify(json_responses));
+
+			} else {
+				json_responses = {"status" : 401, "error" : "no data found"};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	});
+}
+
+exports.assignComplete = function(req, res) {
+	console.log("assignComplete");
+
+	Order.update({"o_id" : req.o_id}, {"$set" : {"status" : "complete"}}, function(err, results) {
+		console.log("err :: " + err);
+		console.log(results);
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing update query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			if(results !=null) {
+				console.log("In Progress Order Updated to Complete!");
+				json_responses = {"status" : 200};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	});
+}
+
+exports.getComplete = function(req, res) {
+	console.log("complete orders");
+
+	Order.find({status : "complete"}, function(err, results) {
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing find query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			console.log(results);
+			if(results != null && results.length > 0) {
+				console.log("All Complete Orders Found!");
+				json_responses = {"status" : 200, "data" : results};
+				res(null, JSON.stringify(json_responses));
+
+			} else {
+				json_responses = {"status" : 401, "error" : "no data found"};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	});
+
+}
+
+exports.getCancel = function(req, res) {
+	console.log("cancel orders");
+
+	Order.find({status : "cancel"}, function(err, results) {
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing find query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			console.log(results);
+			if(results != null && results.length > 0) {
+				console.log("All cancel Orders Found!");
+				json_responses = {"status" : 200, "data" : results};
+				res(null, JSON.stringify(json_responses));
+
+			} else {
+				json_responses = {"status" : 401, "error" : "no data found"};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	});
+	
+}

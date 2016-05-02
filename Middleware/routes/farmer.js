@@ -3,11 +3,17 @@
 var ejs = require("ejs");
 var mq = require('../rpc/client');
 var validate = require("validator");
+
+var Product = require('./model/product');
+var Farmer = require('./model/farmer');
+var Category = require('./model/category');
+var resGen = require('./commons/responseGenerator');
+var Farmer = require('./model/farmer');
 	
 //var mysql = require('./mysql');
 var resGen = require('./commons/responseGenerator');
 
-
+var Product = 
 exports.getFarmers = function(req, res){
 	var msg_payload = {"service":"getFarmers", "sid":req.sessionID};
   	mq.make_request('farmer_queue', msg_payload, function(err,doc){
@@ -181,3 +187,4 @@ exports.editFarmer = function(req,res){
 		});
 	}
 };
+

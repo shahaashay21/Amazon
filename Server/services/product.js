@@ -336,6 +336,7 @@ exports.createProduct = function(req, res){
 					price : req.price,
 					weight : req.weight,
 					unit: req.unit,
+					price_unit: Number(req.price)/Number(req.weight),
 					quantity: req.quantity,
 					details : req.details,
 					description : req.description,
@@ -343,6 +344,8 @@ exports.createProduct = function(req, res){
 					product_img: req.product_img
 				});
 				product.images[0] = req.image1;
+				product.images[1] = req.image2;
+				product.images[2] = req.image3;
 				console.log(req.product_img);
 				product.save(function(err,results){
 					if(err)
