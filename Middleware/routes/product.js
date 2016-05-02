@@ -448,8 +448,8 @@ exports.farmer_page = function(req,res){
 				res.render('farmer_page', { user: req.session.user, products: prod.product, farmer: prod.farmer, session: true });
 				}else{
 					console.log("No session on");
-					//res.send(prod);
-					res.render('farmer_page', { user: null, products: prod, session: false });
+					console.log(prod.farmer);
+					res.render('farmer_page', { user: null, products: prod, farmer: prod.farmer, session: false });
 				}
 			}
 			else
