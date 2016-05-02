@@ -24,6 +24,9 @@
 
 		<link href="/dist/css/xeditable.css" rel="stylesheet">
 		<script src="/dist/js/xeditable.js"></script>
+		<script src="/dist/js/ng-file-upload.min.js"></script>
+		<script src="/dist/js/ng-file-upload-shim.min.js"></script>
+		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js"></script>
 
 		<script src="/angularjs/farmerModule.js"></script>
@@ -75,7 +78,7 @@
 								<i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
 							</a>
 							<ul class="treeview-menu">
-								<li><a href="/farmer/home"><i class="fa fa-circle-o"></i> Profile</a></li>
+								<li class="active"><a href="/farmer/home"><i class="fa fa-circle-o"></i> Profile</a></li>
 								<li><a href="/farmer/orders/completed"><i class="fa fa-circle-o"></i> Completed Orders</a></li>
 							</ul>
 						</li>
@@ -85,7 +88,7 @@
 								<i class="fa fa-angle-left pull-right"></i>
 							</a>
 							<ul class="treeview-menu">
-								<li class="active"><a href="/admin/products/list"><i class="fa fa-circle-o"></i> Products List</a></li>
+								<li ><a href="/farmer/products/list"><i class="fa fa-circle-o"></i> Products List</a></li>
 								<li><a href="/farmer/orders/pending"><i class="fa fa-circle-o"></i> Pending Orders</a></li>
 								<li><a href="/farmer/orders/completed"><i class="fa fa-circle-o"></i> Completed Orders</a></li>
 							</ul>
@@ -138,7 +141,6 @@
 										<span editable-text="farmer.intro" e-name="intro" e-required>{{ farmer.intro || 'empty' }}</span>
 									</div> 
 									<div>
-										
 										<span class="title">Video: </span>
 										<span editable-url="farmer.video" e-name="video" e-required>{{ farmer.video || 'empty' }}</span>
 									</div> 

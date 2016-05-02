@@ -103,6 +103,21 @@ app.post('/customer/create', user.createCustomer);
 app.get('/customer/all', user.getCustomers);
 app.post('/customer/edit', user.editCustomer);
 app.delete('/customer/delete',user.deleteCustomer);
+app.get('/farmer/products/list', function(req,res){ 
+  if(req.session.farmer) {
+    res.render('./farmer/productlist', {
+      email : req.session.farmer.email, 
+      fname : req.session.farmer.fname, 
+      lname : req.session.farmer.lname, 
+      createdAt : req.session.farmer.createdAt
+    });
+  }
+  else{
+    res.redirect('/farmer/login');
+  }
+});
+app.get('/farmer/product/all',farmerLogin.productlist);
+
 
 app.post('/farmer/login', function(req, res, next) {
   passport.authenticate('farmerLogin', function(err, farmer, info) {
@@ -142,6 +157,9 @@ app.post('/farmer/create',farmer.createFarmer);
 app.delete('/farmer/delete',farmer.deleteFarmer);
 app.post('/farmer/edit',farmer.editFarmer);
 app.get('/farmer/get', function(req,res){ console.log(req.session.farmer); res.send({"status":200,"data":req.session.farmer}); })
+app.post('/farmer/product/create',farmerLogin.createProduct);
+app.post('/farmer/product/delete',farmerLogin.deleteProduct);
+app.post('/farmer/product/edit',farmerLogin.editProduct);
 
 app.post('/user/address/update',user.editAddress);
 app.post('/user/card/update',user.editCard);
