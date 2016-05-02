@@ -97,6 +97,12 @@ app.get('/driver/all', driver.getDrivers);
 app.post('/driver/edit', driver.editDriver);
 app.delete('/driver/delete',driver.deleteDriver);
 
+//CUSTOMER API
+app.post('/customer/create', user.createCustomer);
+app.get('/customer/all', user.getCustomers);
+app.post('/customer/edit', user.editCustomer);
+app.delete('/customer/delete',user.deleteCustomer);
+
 app.post('/farmer/login', function(req, res, next) {
   passport.authenticate('farmerLogin', function(err, farmer, info) {
     if(err) {

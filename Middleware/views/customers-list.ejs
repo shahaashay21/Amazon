@@ -120,14 +120,14 @@
                     <thead>
                       <tr>
                         <th>Customer Id</th>
-                        <th>Customer Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Address</th>
                         <th>City</th>
                         <th>State</th>
                         <th>ZIP</th>
-                        <th>Contacts</th>
+                        <th>Contact</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -166,33 +166,13 @@
                           </span>
                         </td>
                         <td>
-                          <span editable-text="customer.zipCode" e-name="zipCode" e-form="customerform" e-required>
-                             {{ customer.zipCode || 'empty' }}
+                          <span editable-text="customer.zipcode" e-name="zipcode" e-form="customerform" e-required>
+                             {{ customer.zipcode || 'empty' }}
                           </span>
                         </td>
                         <td>
-                          <span editable-text="customer.card_number" e-name="card_number" e-form="customerform" e-required>
-                             {{ customer.card_number || 'empty' }}
-                          </span>
-                        </td>
-                        <td>
-                          <span editable-text="customer.name_on_card" e-name="name_on_card" e-form="customerform" e-required>
-                             {{ customer.name_on_card || 'empty' }}
-                          </span>
-                        </td>
-                        <td>
-                          <span editable-text="customer.exp_month" e-name="exp_month" e-form="customerform" e-required>
-                             {{ customer.exp_month || 'empty' }}
-                          </span>
-                        </td>
-                        <td>
-                          <span editable-text="customer.exp_year" e-name="exp_year" e-form="customerform" e-required>
-                             {{ customer.exp_year || 'empty' }}
-                          </span>
-                        </td>
-                        <td>
-                          <span editable-text="customer.contacts" e-name="contacts" e-form="customerform" e-required>
-                             {{ customer.contacts || 'empty' }}
+                          <span editable-text="customer.contact" e-name="contact" e-form="customerform" e-required>
+                             {{ customer.contact || 'empty' }}
                           </span>
                         </td>
                         <td>
@@ -215,14 +195,14 @@
                     <tfoot>
                       <tr>
                         <th>Customer Id</th>
-                        <th>Customer Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Address</th>
                         <th>City</th>
                         <th>State</th>
                         <th>ZIP</th>
-                        <th>Contacts</th>
+                        <th>Contact</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -261,6 +241,16 @@
                     <div class="form-group">
                       <label for="email">Email</label>
                       <input type="email" class="form-control" placeholder="Enter Email" name="email" ng-model="email" required>
+                      <div role="alert">
+                        <span class="error" ng-show="adddcustomerform.email.$error.required">Invalid Email!</span>
+                      </div>
+                      <div role="alert">
+                        <span class="error" ng-show="customer_exist">Customer Email already exist!</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" class="form-control" placeholder="Enter Password" name="pass" ng-model="pass" required>
                       <!-- <div role="alert">
                         <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
                       </div> -->
@@ -287,8 +277,8 @@
                       </div> -->
                     </div>
                     <div class="form-group">
-                      <label for="zipCode">Zip Code</label>
-                      <input type="text" class="form-control" placeholder="Enter Zip Code" name="zipCode" ng-model="zipCode" required>
+                      <label for="zipcode">Zip Code</label>
+                      <input type="text" class="form-control" placeholder="Enter Zip Code" name="zipcode" ng-model="zipcode" required>
                       <!-- <div role="alert">
                         <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
                       </div> -->
@@ -329,8 +319,8 @@
                       </div> -->
                     </div>
                     <div class="form-group">
-                      <label for="contacts">Contacts</label>
-                      <input type="text" class="form-control" placeholder="Enter Contacts" name="contacts" ng-model="contacts" required>
+                      <label for="contact">Contact</label>
+                      <input type="text" class="form-control" placeholder="Enter Contact" name="contact" ng-model="contact" required>
                       <!-- <div role="alert">
                         <span class="error" ng-show="adddriverform.email.$error.required">Invalid First Name!</span>
                       </div> -->

@@ -373,10 +373,51 @@ cnn.on('ready', function(){
 				});
 				break;
 
+				//Admin related oprations
+				case 'getCustomers' :
+					util.log("getCustomers");
+					user.getCustomers(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;	
 
-			
+				case 'createCustomer' :
+					util.log("createCustomer");
+					user.createCustomer(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
 
-			
+				case 'editCustomer':
+					util.log("editCustomer");
+					user.editCustomer(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case 'deleteCustomer':
+					util.log("deleteCustomer");
+					user.deleteCustomer(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+				//Admin realated oprations end
 		}
 	});
 });
