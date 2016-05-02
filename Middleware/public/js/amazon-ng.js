@@ -78,13 +78,13 @@ app.controller("amazon",function($scope, $http, $location){
 
 	// REDIRECT USER TO SEARCH PAGE
 	$scope.searchItemRedirect = function(){
-		window.location.assign("search/?search="+$scope.q);
+		window.location.assign("/search/?search="+$scope.q);
 	}
 
 	$scope.getCartItems = function(){
 		$http({
 			method: 'POST',
-			url: 'cart',
+			url: '/cart',
 			dataType: 'json'
 		}).then(function(res){
 			// console.log(res.data);
