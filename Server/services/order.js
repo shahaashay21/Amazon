@@ -25,6 +25,7 @@ exports.orderDetails = function(req, res){
 		{
 			console.log(results);
 			
+			
 			if(results){
 				console.log("order Details found");
 				res.code = "200";
@@ -199,22 +200,6 @@ exports.getPending = function(req, res) {
 exports.assignDriverId = function(req, res) {
 	console.log("assignDriverId");
 
-	/*Order.update({"o_id" : req.o_id}, {"$set" : {"driver_id" : req.driver_id, "status" : "inprogress"}}, function(err, results) {
-		console.log("err :: " + err);
-		console.log(results);
-		if(err) {
-			console.log("err :: " + err);
-			json_responses = {"status" : 401, "error" : "error occurred while executing update query"};
-			res(null, JSON.stringify(json_responses));
-		} else {
-			if(results !=null) {
-				console.log("Pending Order Updated!");
-				json_responses = {"status" : 200};
-				res(null, JSON.stringify(json_responses));
-			}
-		}
-	});*/
-
 	Order.update({"o_id" : req.o_id}, {"$set" : {"driver_id" : req.driver_id, "status" : "inprogress"}}, function(err, results) {
 		console.log("err :: " + err);
 		console.log(results);
@@ -229,7 +214,28 @@ exports.assignDriverId = function(req, res) {
 				res(null, JSON.stringify(json_responses));
 			}
 		}
+<<<<<<< HEAD
+	});*/
+
+	Order.update({"o_id" : req.o_id}, {"$set" : {"driver_id" : req.driver_id, "status" : "inprogress"}}, function(err, results) {
+=======
 	});
+/*	Order.update({"o_id" : req.o_id}, {"$set" : {"driver_id" : req.driver_id, "status" : "cancel"}}, function(err, results) {
+>>>>>>> d54dc5e0163fd07fc526c267793f5b7a050f38b5
+		console.log("err :: " + err);
+		console.log(results);
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing update query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			if(results !=null) {
+				console.log("Pending Order Updated!");
+				json_responses = {"status" : 200};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	});*/
 }
 
 exports.getInProgress = function(req, res) {
