@@ -197,7 +197,7 @@ var avg_rating=0;var total_rating=0;var t_length=0;
 					res.render('product_page', { user: req.session.user, products: prod, session: true, avg_rating: avg_rating , t_length: t_length});
 				}else{
 					console.log("No session on");
-					res.render('product_page', { products: prod, session: false, avg_rating: avg_rating, t_length: t_length });
+					res.render('product_page', { products: prod, session: false, avg_rating: avg_rating, t_length:t_length });
 				}
 			}
 			else
@@ -305,6 +305,47 @@ exports.create_review = function(req,res){
 		}
 	});
 };
+
+exports.myReviews = function(req,res){
+	console.log("In middlewares prod.js");
+	var msg_payload = {
+		"service" : "myReviews",
+		"sid":req.session.user.fname
+	};
+	console.log(msg_payload);
+  	mq.make_request('product_queue', msg_payload, function(err,prod){
+		if(err)
+		{
+		    console.log(err);
+			res.send(resGen.responseGenerator(401, null));
+		}
+		else
+		{
+			if(prod.farmer.code == 200){
+				if(typeof req.session.user != 'undefined'){
+				console.log(req.session.user.fname);
+				console.log("Prod revuews");
+				console.log(prod.product[0].reviews);
+				console.log("Farmer reviews");
+				console.log(prod.farmer.object[0].reviews);
+				
+				res.render('myReviews', { user: req.session.user, products: prod.product, farmer: prod.farmer, session: true });
+				}else{
+					console.log("No session on");
+					//res.send(prod);
+					res.render('myReviews', { user: null, products: prod, session: false });
+				}
+			}
+			else
+			{
+				res.send("Sorry the product that you are searching for does not exist.");
+			}
+		}
+	});
+};
+
+
+
 
 exports.farmer_page = function(req,res){
 	console.log("In middlewares prod.js");
