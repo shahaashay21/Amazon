@@ -185,6 +185,7 @@ exports.farmer_page = function(msg, callback){
 				console.log(err);
 				farmer.code = "401";
 				farmer.value = "Failed to fetch farmer_page";
+
 				}
 			else
 				{
@@ -192,6 +193,7 @@ exports.farmer_page = function(msg, callback){
 				f.code = "200";
 				f.value = "Farmer Fetched";
 				f.object = farmer;
+				console.log(farmer);
 				Product.find({f_id: msg.f_id}, function(err, product) {
 		if(product == "")
 				{
@@ -201,7 +203,7 @@ exports.farmer_page = function(msg, callback){
 				}
 			else
 				{
-				//console.log(product);
+				console.log(product);
 				p.code = "200";
 				p.value = "Farmer products Fetched";
 				p = product;

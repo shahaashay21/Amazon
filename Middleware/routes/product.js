@@ -449,7 +449,8 @@ exports.farmer_page = function(req,res){
 				}else{
 					console.log("No session on");
 					//res.send(prod);
-					res.render('farmer_page', { user: null, products: prod, session: false });
+					console.log(prod.farmer.object[0].fname);
+					res.render('farmer_page', { user: null, products: prod.product, farmer: prod.farmer, session: false });
 				}
 			}
 			else
