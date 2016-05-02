@@ -147,7 +147,7 @@ app.controller("amazon",function($scope, $http, $location){
 			if(data.data.suc == 'false'){
 				alertline('alert-notify-danger','<b>Sorry</b>, We have only <b>'+data.data.availableQuant+'</b> quantity available of <b>'+data.data.itemName+'</b>');
 			}else{
-				alertline('alert-notify-success','<b>Your has been placed successfully.</b>');
+				alertline('alert-notify-success','<b>Order has been placed successfully.</b>');
 				setTimeout(function(){
 					window.location.assign('/')
 				}, 4000);
