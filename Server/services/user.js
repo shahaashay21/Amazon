@@ -31,7 +31,7 @@ exports.getAddress = function(req, res){
 			}
 			else
 			{
-				console.log("no data");
+				//console.log("no data");
 				resGen.error(null,res);
 			}
 		}
