@@ -215,7 +215,7 @@ exports.assignDriverId = function(req, res) {
 		}
 	});*/
 
-	Order.update({"o_id" : req.o_id}, {"$set" : {"driver_id" : req.driver_id, "status" : "cancel"}}, function(err, results) {
+	Order.update({"o_id" : req.o_id}, {"$set" : {"driver_id" : req.driver_id, "status" : "inprogress"}}, function(err, results) {
 		console.log("err :: " + err);
 		console.log(results);
 		if(err) {

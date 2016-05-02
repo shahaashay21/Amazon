@@ -144,7 +144,7 @@
                         <td>{{order.c_id}}</td>
                         <td>{{order.createdAt | date : 'short'}}</td>
                         <td>{{order.total}}</td>
-                        <td>{{order.drop_time}}</td>
+                        <td>{{order.drop_time | date : 'short'}}</td>
                         <td ng-show = "!isPendingClicked && isCompleteClicked">{{order.driver_id}}</td>
                         <td ng-show = "!isPendingClicked && !isInProgressClicked && !isCompleteClicked && isCancelClicked">{{order.driver_id}}</td>
                         <td ng-show = "isPendingClicked && !isInProgressClicked">
