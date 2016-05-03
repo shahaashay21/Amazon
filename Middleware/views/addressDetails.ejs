@@ -16,6 +16,8 @@
                         state: $scope.state,
                         contact: $scope.contact
                       };
+                      
+
 
                     $http({
                       method: "POST",
@@ -57,7 +59,9 @@
   <body ng-app="addressModule" ng-controller="addressController" ng-init="getAddress();">
     <% include menu1.ejs %>
     <div style="height: 50px; display: block;"></div>
+    
         <div class="container-fluid">
+        <form name="myAddress">
 
 
                   <h3>
@@ -76,7 +80,8 @@
                       <label for="address">
                         Address
                       </label>
-                      <textarea class="form-control textbox-address"  placeholder="Address" ng-model="address" ></textarea>
+                      <textarea class="form-control textbox-address"  placeholder="Address" ng-model="address" name="address" required ></textarea>
+                      <span class="error" ng-show="myAddress.address.$error.required" style="color:red;">Address is Required!</span>
                     </div>
                   </div>
                 </div>
@@ -87,7 +92,8 @@
                       <label for="city">
                         City
                       </label>
-                      <input type="text" class="form-control" placeholder="City" ng-model="city" />
+                      <input type="text" class="form-control" placeholder="City" ng-model="city" name="city" required>
+                      <span class="error" ng-show="myAddress.city.$error.required" style="color:red;">City Details is Required!</span>
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -95,7 +101,9 @@
                       <label for="state">
                         State
                       </label>
-                      <input type="text" class="form-control" placeholder="State" ng-model="state" />
+                      <input type="text" class="form-control" placeholder="State" ng-model="state" name="state" required>
+                      <span class="error" ng-show="myAddress.state.$error.required" style="color:red;">State Details is Required!</span>
+
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -103,7 +111,11 @@
                       <label for="zip">
                         Zip
                       </label>
-                      <input type="text" class="form-control" placeholder="Zip" ng-model="zipcode" />
+                      <input type="text" class="form-control" placeholder="Zip" ng-model="zipcode" name="zipcode" ng-pattern="/(^\d{5}$)|(^\d{5}-\d{4}$)/" required>
+                      <span style="color:red" ng-show="myAddress.zipcode.$dirty && myAddress.zipcode.$invalid">
+            <span ng-show="myAddress.zipcode.$error.required">Zipcode is required.</span>
+          <span ng-show="myAddress.zipcode.$error.pattern">Zipcode is incorrect.</span>
+      </span> 
                     </div>
                   </div>
                 </div>
@@ -122,19 +134,20 @@
                 <div class="row">
                   <div class="col-md-3"></div>
                   <div class="col-md-6">
-                      <button type="button" class="btn btn-primary btn-block" ng-click="updateAddress();">Update Details</button>
+                      <button type="button" class="btn btn-primary btn-block" ng-click="updateAddress();" ng-disabled="myAddress.$invalid">Update Details</button>
 
                   </div>
                   <div class="col-md-2"></div>
                 </div>
-              </form>
+              
             </div>
           </div>
         </div>
     </div>
     <div class="col-md-1"></div>
+    
   </div>
-
+</form>
          </div>
  
 

@@ -1,6 +1,8 @@
 var User = require('./model/user');
 var resGen = require('./commons/responseGenerator');
 var bcrypt = require('bcrypt-nodejs');
+var isValidZip = require('is-valid-zip');
+var creditcard = require('creditcard');
 
 exports.list = function(req, res){
   res.send("respond with a resource");
@@ -57,7 +59,15 @@ exports.editAddress = function(req, res){
 				result.address = req.address;
 				result.city = req.city;
 				result.state = req.state;
+				
+				if(isValidZip(req.zipcode))
+				{
+					console.log("True zipcode");
 				result.zipcode = req.zipcode;
+			}
+			else{
+				console.log("Wrong Zip");
+			}
 
 				// var user = req.session.user.c_id;
 				// console.log(users);
@@ -75,14 +85,15 @@ exports.editAddress = function(req, res){
 				// }
 				// req.session.user.c_id = newUser;
 				//result.description = req.description;
-				console.log(result);
+				//console.log(isValidZip(req.zipcode));
+				
 				result.save(function(err,doc){
 					if(err){
 						//console.log(err);
 					} else {
 						//console.log("Address edited");
 
-						console.log(doc);
+						//console.log(doc);
 						res(null,JSON.stringify(doc));
 					}
 				});
@@ -111,8 +122,14 @@ exports.editCard = function(req, res){
 		{
 			if(result){
 				console.log(result);
-				
+				if(creditcard.validate(req.card_number))
+				{
+				console.log("Correct Credit Card Number");
 				result.card_number = req.card_number;
+			}
+			else {
+				console.log("Invalid Credit Card Number");
+			}
 				result.name_on_card = req.name_on_card;
 				result.exp_month = req.exp_month;
 				result.exp_year = req.exp_year;

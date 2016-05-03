@@ -1,6 +1,7 @@
 var mq = require('../rpc/client');
 var resGen = require('./commons/responseGenerator');
 var ejs = require("ejs");
+var isValidZip = require('is-valid-zip');
 
 
 exports.list = function(req, res){
@@ -83,18 +84,21 @@ console.log(msg_payload);
 
 
 exports.editAddress = function(req,res){
-
+	
 	var msg_payload = {
 		"service" : "editAddress",
 		//"p_id" : req.param("p_id"),
 		"address" : req.param("address"),
 		"city" : req.param("city"),
 		"state" : req.param("state"),
+		
+		
 		"zipcode" : req.param("zipcode"),
 		"c_id": req.session.user.c_id
 	};
-	
+
 console.log(msg_payload);
+
   	mq.make_request('user_queue', msg_payload, function(err,doc){
   		console.log(doc);
 		
@@ -110,9 +114,9 @@ console.log(msg_payload);
 			if(doc.status == 200){
 				console.log("Edited address");
 				req.session.user.address = req.param("address");
-				console.log(doc);
+				//sconsole.log(doc);
        			res.send(doc);
-       			res.redirect("/help");
+       			//res.redirect("/help");
 			}
 			else
 			{
@@ -120,6 +124,7 @@ console.log(msg_payload);
 			}
 		}
 	});
+  
 }
 
 
