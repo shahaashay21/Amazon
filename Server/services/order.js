@@ -214,14 +214,9 @@ exports.assignDriverId = function(req, res) {
 				res(null, JSON.stringify(json_responses));
 			}
 		}
-<<<<<<< HEAD
-	});*/
-
-	Order.update({"o_id" : req.o_id}, {"$set" : {"driver_id" : req.driver_id, "status" : "inprogress"}}, function(err, results) {
-=======
 	});
 /*	Order.update({"o_id" : req.o_id}, {"$set" : {"driver_id" : req.driver_id, "status" : "cancel"}}, function(err, results) {
->>>>>>> d54dc5e0163fd07fc526c267793f5b7a050f38b5
+
 		console.log("err :: " + err);
 		console.log(results);
 		if(err) {
@@ -317,6 +312,50 @@ exports.getCancel = function(req, res) {
 			console.log(results);
 			if(results != null && results.length > 0) {
 				console.log("All cancel Orders Found!");
+				json_responses = {"status" : 200, "data" : results};
+				res(null, JSON.stringify(json_responses));
+
+			} else {
+				json_responses = {"status" : 401, "error" : "no data found"};
+				res(null, JSON.stringify(json_responses));
+			}
+		}
+	});
+	
+}
+
+exports.getRevenue = function(req, res) {
+	console.log("getRevenue ::");
+
+	var revenuedate = req.revenuedate;
+	console.log(revenuedate);
+	temp = revenuedate.split("-");
+	console.log("temp :: " + temp);
+	year = temp[0];
+	m = temp[1];
+	d = temp[2];
+	console.log("year : " + Number(year) + " : month : " + Number(m) + " : day : " + Number(d));
+	
+	var date_modified1 = new Date(Number(year),Number(m),Number(d),0,0,0,0);
+	console.log(date_modified1);
+
+	//var data = date_modified.setFullYear(Number(year),Number(m),Number(d));
+	//date_modified = new Date(m + ' ' + d + ' ' + year);
+	//date_modified = new Date('10 06 2014');
+	//console.log(data);
+
+	var date_modified2 = new Date(Number(year),Number(m),Number(d),23,59,59,0);
+	console.log(date_modified2);
+
+	Order.find({status : "complete", drop_time : {"$gte": new Date(Number(year),Number(m),Number(d),0,0,0,0), "$lt": new Date(Number(year),Number(m),Number(d),23,59,59,0)}}, function(err, results) {
+		if(err) {
+			console.log("err :: " + err);
+			json_responses = {"status" : 401, "error" : "error occurred while executing find query"};
+			res(null, JSON.stringify(json_responses));
+		} else {
+			console.log(results);
+			if(results != null && results.length > 0) {
+				console.log("All complete Orders Found!");
 				json_responses = {"status" : 200, "data" : results};
 				res(null, JSON.stringify(json_responses));
 

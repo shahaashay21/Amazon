@@ -217,3 +217,28 @@ exports.getCancel = function(req, res) {
 		res.redirect('/admin/login'); 		
 	}
 }
+
+//getting revenue fror chart
+exports.getRevenue = function(req, res) {
+	console.log("getRevenue");
+
+	if(req.session.email) {
+
+		var revenuedate = req.param("revenuedate");
+		//messege payload for sending to server
+        msg_payload = {"service" : "getRevenue", "revenuedate" : revenuedate};
+
+        //making request to the server
+        mq.make_request('order_queue', msg_payload,function(err, results) {
+          if(err) {
+            console.log("Error occurred while requesting to server for getRevenue : " + err);
+            var json_resposes = {"status" : 401, "error" : "Could not connect to server"};
+            res.send(json_resposes);
+          } else {
+              res.send(JSON.parse(results));
+          }
+        });
+	} else {
+		res.redirect('/admin/login'); 		
+	}
+}

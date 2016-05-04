@@ -30,6 +30,20 @@
     <!-- Morris chart -->
     <link rel="stylesheet" href="/plugins/morris/morris.css">
 
+
+    <!-- Morris Chart -->
+
+    <script src="/angularjs/angular.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/angular-morris-chart/1.2.0/angular-morris-chart.min.js"></script> -->
+    <script src="/dist/js/angular-morris-chart.js"></script>
+    <script src="/dist/js/angular-morris-chart.min.js"></script>
+
+    <!-- Morris Chart End -->
+
     <% include lib.ejs %>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -39,14 +53,27 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <script src="/angularjs/angular.min.js"></script>
+    <style>
+      .full button span {
+        background-color: limegreen;
+        border-radius: 32px;
+        color: black;
+      }
+      .partially button span {
+        background-color: orange;
+        border-radius: 32px;
+        color: black;
+      }
+    </style>
 
     <link href="/dist/css/xeditable.css" rel="stylesheet">
     <script src="/dist/js/xeditable.js"></script>
+    <script src="/dist/js/ng-file-upload.min.js"></script>
+    <script src="/dist/js/ng-file-upload-shim.min.js"></script>
     <script src="/angularjs/adminModule.js"></script>
 
   </head>
-  <body class="hold-transition skin-blue sidebar-mini" ng-app= "adminModule" ng-controller="adminController">
+  <body class="hold-transition skin-blue sidebar-mini" ng-app= "adminModule" ng-controller="adminController" ng-init="getRevenue();">
     <div class="wrapper">
       <header class="main-header">
         <% include ./partials/admin-header %>
@@ -58,23 +85,13 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="/dist/img/user3-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
               <p><%= fname %> <%= lname %></p>
-              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+              <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
           </div>
-          <!-- search form -->
-          <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-              <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span>
-            </div>
-          </form>
-          <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
@@ -117,7 +134,7 @@
             <small>Control panel</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><i class="fa fa-dashboard"></i> Home</li>
             <li class="active">Dashboard</li>
           </ol>
         </section>
@@ -125,57 +142,21 @@
         <!-- Main content -->
         <section class="content">
           <!-- Small boxes (Stat box) -->
-          <div class="row">
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-aqua">
-                <div class="inner">
-                  <h3>150</h3>
-                  <p>New Orders</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-bag"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-yellow">
-                <div class="inner">
-                  <h3>44</h3>
-                  <p>User Registrations</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-          </div><!-- /.row -->
+          <!-- /.row -->
           <!-- Main row -->
           <div class="row">
             <!-- Left col -->
             <section class="col-lg-7 connectedSortable">
               <!-- Custom tabs (Charts with tabs)-->
-              <div class="nav-tabs-custom">
-                <!-- Tabs within a box -->
-                <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-                  <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
-                </ul>
-                <div class="tab-content no-padding">
-                  <!-- Morris chart - Sales -->
-                  <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-                  <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
-                </div>
-              </div><!-- /.nav-tabs-custom -->
+              <!-- /.nav-tabs-custom -->
  <!-- solid sales graph -->
+              
+
+              <!--
               <div class="box box-solid bg-teal-gradient">
                 <div class="box-header">
                   <i class="fa fa-th"></i>
-                  <h3 class="box-title">Sales Graph</h3>
+                  <h3 class="box-title">Kaamno Graph</h3>
                   <div class="box-tools pull-right">
                     <button class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     <button class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -183,25 +164,64 @@
                 </div>
                 <div class="box-body border-radius-none">
                   <div class="chart" id="line-chart" style="height: 250px;"></div>
+                </div>
+                <div class="box-footer no-border">
+                  
+                </div>-->
+
+              <div class="datePicker">  
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="input-group">
+                            <script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
+                            <script>
+                                webshims.setOptions('forms-ext', {types: 'date'});
+                                webshims.polyfill('forms forms-ext');
+                            </script>
+                      <input type="date" class="form-control" ng-model="revenuedate"></input>
+                      <button class="btn btn-default" id = "getRevenue" ng-click = "getRevenue()">Get Revenue</button>
+                      
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="box box-solid bg-teal-gradient">
+                <div class="box-header">
+                  <i class="fa fa-th"></i>
+                  <h3 class="box-title">Revenue Graph</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body border-radius-none">
+                  <!-- <div class="chart" id="line-chart" style="height: 250px;"></div> -->
+                
+
+                  <div class = 'chart' id="line-chart" style = "height : 250px;" line-chart
+                        
+
+                        line-data='[
+                                { y: "2006", a: 100, b: 90 },
+                                { y: "2007", a: 75,  b: 65 },
+                                { y: "2008", a: 50,  b: 40 },
+                                { y: "2009", a: 75,  b: 65 },
+                                { y: "2010", a: 50,  b: 40 },
+                                { y: "2011", a: 75,  b: 65 },
+                                { y: "2012", a: 100, b: 90 }
+                        ]'
+                        line-xkey='y'
+                        line-ykeys='["a", "b"]'
+                        line-labels='["Serie A", "Serie B"]'
+                        line-colors='["#31C0BE", "#c7254e"]'>
+                  </div>
+
+
                 </div><!-- /.box-body -->
                 <div class="box-footer no-border">
-                  <div class="row">
-                    <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                      <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39CCCC">
-                      <div class="knob-label">Web</div>
-                    </div><!-- ./col -->
-                    <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                      <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgColor="#39CCCC">
-                      <div class="knob-label">Mobile</div>
-                    </div><!-- ./col -->
-                    <div class="col-xs-4 text-center">
-                      <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgColor="#39CCCC">
-                      <div class="knob-label">App</div>
-                    </div><!-- ./col -->
-                  </div><!-- /.row -->
                 </div><!-- /.box-footer -->
-              </div><!-- /.box -->
-
               
             </section><!-- /.Left col -->
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
@@ -290,5 +310,39 @@
     <script src="/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="/dist/js/demo.js"></script>
+
+    <script type="text/javascript">
+    //Chart Script
+      /*var line = new Morris.Line({
+    element: 'line-chart',
+    resize: true,
+    data: [
+      {y: '2011 Q1', item1: 100000},
+      {y: '2011 Q2', item1: 2778},
+      {y: '2011 Q3', item1: 4912},
+      {y: '2011 Q4', item1: 3767},
+      {y: '2012 Q1', item1: 6810},
+      {y: '2012 Q2', item1: 5670},
+      {y: '2012 Q3', item1: 4820},
+      {y: '2012 Q4', item1: 15073},
+      {y: '2013 Q1', item1: 10687},
+      {y: '2013 Q2', item1: 80000}
+    ],
+    xkey: 'y',
+    ykeys: ['item1'],
+    labels: ['Item 1'],
+    lineColors: ['#efefef'],
+    lineWidth: 2,
+    hideHover: 'auto',
+    gridTextColor: "#fff",
+    gridStrokeWidth: 0.4,
+    pointSize: 4,
+    pointStrokeColors: ["#efefef"],
+    gridLineColor: "#efefef",
+    gridTextFamily: "Open Sans",
+    gridTextSize: 10
+  });*/
+
+    </script>
   </body>
 </html>

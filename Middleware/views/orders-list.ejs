@@ -28,6 +28,16 @@
     <script src="/dist/js/ng-file-upload-shim.min.js"></script>
     <script src="/angularjs/adminModule.js"></script>
 
+
+    <!-- Morris Chart -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-morris-chart/1.2.0/angular-morris-chart.min.js"></script>
+    
+    <!-- Morris Chart End -->
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -75,6 +85,7 @@
               <ul class="treeview-menu">
                 <li><a href="/admin/home"><i class="fa fa-circle-o"></i> Dashboard</a></li>
                 <li><a href="/admin/home"><i class="fa fa-circle-o"></i> Statistics</a></li>
+                <li><a href="/admin/profile"><i class="fa fa-circle-o"></i> Profile</a></li>
               </ul>
             </li>
             <li class="active treeview">
@@ -105,8 +116,8 @@
             <small>All data</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Tables</a></li>
+            <li><a href="/admin/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li>Tables</li>
             <li class="active">Orders table</li>
           </ol>
         </section>

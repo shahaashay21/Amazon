@@ -1,4 +1,4 @@
-var user = angular.module('adminModule',['xeditable','ngFileUpload']);
+var user = angular.module('adminModule',['xeditable','ngFileUpload', 'angular.morris-chart']);
 //,'ngFileUpload'
 user.directive('addFarmerModal', function() {
    return {
@@ -25,6 +25,8 @@ user.directive('addProductModal', function() {
 
 user.controller('adminController',['$scope','$http','$sce','$filter', 'Upload', function($scope,$http,$sce,$filter, Upload){
 	//, 'Upload' //Upload
+
+	//Admin Login Submit
 	$scope.isBlankEmail = false;
 	$scope.isBlankPassword = false;
 	$scope.isIncorrectDetails = false;
@@ -76,6 +78,106 @@ user.controller('adminController',['$scope','$http','$sce','$filter', 'Upload', 
 		}
 	}
 	//Admin login-page End
+	
+
+	//Admin Graph Get
+		$scope.getRevenue = function() {
+			console.log($scope.revenuedate);
+			console.log("getRevenue");
+			revenuedate = $filter('date')($scope.revenuedate, 'yyyy-MM-dd');
+			console.log("revenuedate : " + revenuedate);
+			console.log("revenuedate : " + typeof revenuedate);
+			if(typeof revenuedate != 'undefined'){
+				if(revenuedate) {
+					$http({
+						method : 'POST',
+						url : '/order/getRevenue',
+						data :  {
+							"revenuedate" : revenuedate
+						}
+					}).success(function(res) {
+						if(res) {
+							if(res.status == 200) {
+								console.log("successfully got revenue");
+								console.log(res.data);
+								var total = 0;
+								for(var index = 0; index < res.data.length; index++) {
+									total = total + Number(res.data[index].total);
+								}
+								console.log("total : " + total);
+							} else if(res.status == 401) {
+								console.log("error :: " + res.error);
+							}
+						}
+					}).error(function(err) {
+						console.log("erro while requesting for getRevenue :: " + err);
+					});
+				}
+			}
+		}
+	//Admin Graph End
+	
+
+	//Admin Profile Page Start
+	$scope.isProfileNotFound = false;
+	$scope.getAdminProfile = function(){
+		$scope.isProfileNotFound = false;
+		$http({
+			method : 'POST',
+			url : '/admin/getAdminProfile'
+		}).success(function(res) {
+			console.log(res);
+			if(res.status == 200) {
+				$scope.isProfileNotFound = false;
+				//res.data.zipCode = Number(res.data.zipCode);
+				$scope.admin = res.data;
+			} else {
+				$scope.isProfileNotFound = true;
+			}
+		}).error(function(error) {
+			console.log("error : " + error);
+		});
+	}
+
+	$scope.saveAdminProfile = function(data, id) {
+		angular.extend(data, {id: id});
+		console.log("saveAdminProfile data::");
+		console.log(data);
+		console.log("a_id :: " + id);
+		//if(data && id) {
+			//if(data.number.length == 7 && id.length == 9){
+				$http({
+					method : "POST",
+					url : '/admin/saveProfile',
+					data: {
+						a_id : id,
+						fname : data.fname,
+						lname : data.lname,
+						email : data.email,
+						pass : data.pass,
+						address : data.address,
+						city : data.city,
+						state : data.state,
+						zipCode : data.zipCode
+					}
+				}).success(function(res){
+					if (res.status === 200) {
+						console.log("success on save admin" + res.data);
+						$scope.driverformValidate = false;
+						//res.data.zipCode = Number(res.data.zipCode);
+						$scope.admin = res.data;
+						return;
+					} else if(res.status == 401) {
+						console.log("error :: " + res.error);
+						window.alert("Error : " + res.error);
+					}
+				}).error(function(error) {
+					console.log("error : " + error);
+				});
+
+
+	}
+	//Admin Profile Page End
 
 	//add order
 	$scope.addOrder = function(){

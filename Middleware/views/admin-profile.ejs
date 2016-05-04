@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Drivers | Data Tables</title>
+    <title>Admin | Profile</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -24,6 +24,8 @@
 
     <link href="/dist/css/xeditable.css" rel="stylesheet">
     <script src="/dist/js/xeditable.js"></script>
+    <script src="/dist/js/ng-file-upload.min.js"></script>
+    <script src="/dist/js/ng-file-upload-shim.min.js"></script>
     <script src="/angularjs/adminModule.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -33,7 +35,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule" ng-controller="adminController" ng-init="getDrivers()">
+  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule" ng-controller="adminController" ng-init="getAdminProfile()">
     <div class="wrapper">
       <header class="main-header">
         <% include ./partials/admin-header %>
@@ -46,23 +48,13 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="/dist/img/user3-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
               <p><%= fname %> <%= lname %></p>
-              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
-          <!-- search form -->
-          <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-              <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span>
-            </div>
-          </form>
-          <!-- /.search form -->
+         
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
@@ -71,6 +63,7 @@
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
+                <li><a href="/admin/home"><i class="fa fa-circle-o"></i> Dashboard</a></li>
                 <li><a href="/admin/home"><i class="fa fa-circle-o"></i> Statistics</a></li>
                 <li class="active"><a href="/admin/profile"><i class="fa fa-circle-o"></i> Profile</a></li>
               </ul>
@@ -114,49 +107,66 @@
           <!-- Small boxes (Stat box) -->
           <div class="row">
             <div class="col-lg-3 col-xs-6">
-                <form editable-form name="adminEditForm" onaftersave="saveAdmin($data,farmer.f_id)">
+                <div ng-show="isProfileNotFound" style="color:#db2e2e">Can not Get Profile. Please try again!</div>
+                <form editable-form name="adminEditForm" onaftersave="saveAdminProfile($data,admin.a_id)">
+                  
+                  </br>
+
                   <div>
-                    
-                    <span class="title">First Name: </span>
+                    <span class="title">First Name : </span>
                     <span editable-text="admin.fname" e-name="fname" e-required>{{ admin.fname || 'empty' }}</span>
                   </div> 
 
+                  </br>
+                  
                   <div>
-                    <span class="title">Last Name: </span>
+                    <span class="title">Last Name : </span>
                     <span editable-text="admin.lname" e-name="lname" e-required>{{ admin.lname || 'empty' }}</span>
-                  </div> 
+                  </div>
 
+                  </br>
+                  
                   <div>
-                    <span class="title">Email: </span>
-                    <span editable-text="admin.email" e-name="email" e-required>{{ admin.email || 'empty' }}</span>
-                  </div> 
-
-                  <div>
-                    <span class="title">Password: </span>
-                    <span editable-password="admin.pass" e-name="pass" e-required>{{ admin.pass || 'empty' }}</span>
-                  </div> 
- 
-                  <div>
-                    
-                    <span class="title">Address: </span>
-                    <span editable-text="admin.address" e-name="address" e-required>{{ admin.address || 'empty' }}</span>
-                  </div> 
-                  <div>
-                    
-                    <span class="title">City: </span>
-                    <span editable-text="admin.city" e-name="city" e-required>{{ admin.city || 'empty' }}</span>
-                  </div> 
-                  <div>
-                    
-                    <span class="title">State: </span>
-                    <span editable-text="admin.state" e-name="state" e-required>{{ admin.state || 'empty' }}</span>
-                  </div> 
-                  <div>
-                    
-                    <span class="title">Zipcode: </span>
-                    <span editable-number="admin.zipcode" e-name="zipcode" e-required>{{ admin.zipcode || 'empty' }}</span>
+                    <span class="title">Email : </span>
+                    <span editable-text="admin.email" e-name="email" data-type="email" e-required>{{ admin.email || 'empty' }}</span>
                   </div> 
                   
+                  </br>
+                  
+                  <div>
+                    <span class="title">Password : </span>
+                    <span editable-password="admin.pass" e-name="pass" e-required>{{ admin.pass || 'empty' }}</span>
+                  </div> 
+                  
+                  </br>
+                  
+                  <div>
+                    <span class="title">Address : </span>
+                    <span editable-text="admin.address" e-name="address" e-required>{{ admin.address || 'empty' }}</span>
+                  </div>
+                  
+                  </br> 
+                  
+                  <div>
+                    <span class="title">City : </span>
+                    <span editable-text="admin.city" e-name="city" e-required>{{ admin.city || 'empty' }}</span>
+                  </div>
+
+                  </br>
+
+                  <div>  
+                    <span class="title">State : </span>
+                    <span editable-text="admin.state" e-name="state" e-required>{{ admin.state || 'empty' }}</span>
+                  </div>
+
+                  </br>
+
+                  <div>
+                    <span class="title">Zipcode : </span>
+                    <span editable-number="admin.zipCode" e-name="zipCode" e-required>{{ admin.zipCode || 'empty' }}</span>
+                  </div> 
+                  
+                  </br>
 
                   <div class="buttons">
                     <!-- button to show form -->
