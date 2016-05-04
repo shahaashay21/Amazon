@@ -45,6 +45,8 @@
               $scope.zipcode = res.data[0].zipcode;
               $scope.card_number = res.data[0].card_number;
               $scope.name_on_card = res.data[0].name_on_card;
+              
+              $scope.exp_month = res.data[0].exp_month;
               $scope.exp_month = res.data[0].exp_month;
                $scope.exp_year = res.data[0].exp_year;
 
@@ -65,6 +67,7 @@
 
 
                 <h3>Credit Card Details</h3>
+                <form name="myCredit">
                 <div class="row">
                   <div class="col-md-3"></div>
                   <div class="col-md-6">
@@ -73,8 +76,15 @@
                         <div class="col-md-12">
                           <div class="form-group has-feedback">
                             <label class="credit-card-labels-account">Card Number</label>
-                              <input type="text" class="form-control" placeholder="Card Number" ng-model="card_number" />
-                             
+                              <input type="text" class="form-control" placeholder="Card Number" ng-model="card_number" name="card_number" ng-minlength="16" ng-maxlength="16" autocomplete="off"  required>
+
+                              <div role="alert">
+                                <span class="error" ng-show="myCredit.card_number.$error.minlength" style="color:maroon;">
+                                  Invalid Card Number</span>
+                                <span class="error" ng-show="myCredit.card_number.$error.maxlength" style="color:red;">
+                                  Invalid Card Number</span>
+                              <span class="error" ng-show="myCredit.card_number.$error.required" style="color:red;"> Card Number is Required!</span>
+                             </div>
 
                           </div>
                         </div>
@@ -83,7 +93,9 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label class="credit-card-labels-account">Name on the Card</label>
-                              <input type="text" class="form-control" placeholder="Name on the Card" ng-model="name_on_card" />
+                              <input type="text" class="form-control" placeholder="Name on the Card" ng-model="name_on_card" name="name_on_card" required>
+                              <span class="error" ng-show="myCredit.name_on_card.$error.required" style="color:red;">Name on Card is Required!</span>
+
 
                           </div>
                         </div>
@@ -92,11 +104,13 @@
                       <div class="row">
                           <div class="form-group">
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                               <label class="credit-card-labels-account">Expiry Date</label>
-                              <select class="form-control" ng-model="exp_month" >
+                              <select class="form-control" ng-model="exp_month" name="exp_month" required >
+                              <span class="error" ng-show="myCredit.exp_month.$error.required">Required!</span>
+                               
                                 <option>01</option>
-                                <option>02</option>
+                                <option selected="">02</option>
                                 <option>03</option>
                                 <option>04</option>
                                 <option>05</option>
@@ -108,12 +122,16 @@
                                 <option>11</option>
                                 <option>12</option>
                               </select>
+                              
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                               <label class="credit-card-labels-account">&nbsp;</label>
-                              <select class="form-control" ng-model="exp_year">
-                                <option>2016</option>
+
+                              <select class="form-control" name="exp_year" ng-model="exp_year" id="1" required>
+                              <span class="error" ng-show="myCredit.exp_year.$error.required">Required!</span>
+                               
+                                <option value="2016" selected="selected">2016</option>
                                 <option>2017</option>
                                 <option>2018</option>
                                 <option>2019</option>
@@ -121,12 +139,21 @@
 
 
                               </select>
+                              
                             </div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-3">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
                               <label class="credit-card-labels-account">CVV</label>
-                                <input type="password" class="form-control" placeholder="CVV" ng-model="cvv"/>
-
+                                <input type="password" ng-pattern="/^\d+$/" class="form-control" placeholder="CVV" name="cvv" ng-model="cvv"  ng-minlength="3" ng-maxlength="4" required>
+                                <div role="alert">
+                                <span class="error" ng-show="myCredit.cvv.$error.minlength">
+                                  Invalid Cvv</span>
+                                <span class="error" ng-show="myCredit.cvv.$error.maxlength">
+                                  Invalid Cvv</span><br>
+                                  <span ng-show="myCredit.cvv.$error.pattern" style="color:red;">Must be number</span>
+                              
+                                <span class="error" ng-show="myCredit.cvv.$error.required" style="color:red;">Required!</span>
+                                </div>
                             </div>
 
                           </div>
@@ -139,17 +166,18 @@
                 <div class="row">
                   <div class="col-md-2"></div>
                   <div class="col-md-8">
-                      <button type="button" class="btn btn-primary btn-block btn-signup" ng-click="updateCardDetails();">Update credit Card Details</button>
+                      <button type="button" class="btn btn-primary btn-block btn-signup" ng-click="updateCardDetails();" ng-disabled="myCredit.$invalid">Update credit Card Details</button>
 
                   </div>
                   <div class="col-md-2"></div>
                 </div>
-              </form>
+              
             </div>
           </div>
         </div>
     </div>
     <div class="col-md-1"></div>
+    </form>
   </div>
  
 

@@ -30,11 +30,12 @@
               <% for(var i=0; i < products.length; i++) { %>
   <div style="border: 4px solid;border-color: #DAD8D8; margin-bottom: 10px;">
       <div style="border-bottom: 2px solid #DAD8D8">
-      User: <%= products[0].reviews[i].username %> <br>
+      <span style="font-weight: bold;">User:</span> Vansh <br>
       </div>
-      Ratings: <%= products[0].reviews[i].rating %>/5 <br>
-      Title: <%= products[0].reviews[i].review_title %> <br>
-          Review: <%= products[0].reviews[i].review_desc %>
+      <span style="font-weight: bold; color:green;"> Product Name:</span> Tomato <br>
+      <span style="font-weight: bold; color:green;"> Ratings:</span> <%= products[0].reviews[i].rating %> / 5 <br>
+      <span style="font-weight: bold; color:green;">Title: </span><%= products[0].reviews[i].review_title %> <br>
+         <span style="font-weight: bold; color:green;"> Review: </span><%= products[0].reviews[i].review_desc %>
             </div>
 <% } %>
           
@@ -44,11 +45,12 @@
 <% for(var i=0; i < farmer.object.length; i++) { %>
   <div style="border: 4px solid;border-color: #DAD8D8; margin-bottom: 10px;">
       <div style="border-bottom: 2px solid #DAD8D8">
-      User: <%= farmer.object[0].reviews[i].username %> <br>
+      <span style="font-weight: bold; ">User: </span> Vansh<!-- <%= farmer.object[0].reviews[i].username %> --> <br>
       </div>
-      Ratings: <%= farmer.object[0].reviews[i].rating %>/5 <br>
-      Title: <%= farmer.object[0].reviews[i].review_title %> <br>
-          Review: <%= farmer.object[0].reviews[i].review_desc %>
+      <span style="font-weight: bold; color:green;"> Farmer Name:</span> Paul Jackob <br>
+      <span style="font-weight: bold; color:green;" >Ratings:</span> <%= farmer.object[0].reviews[i].rating %>/5 <br>
+     <span style="font-weight: bold; color:green;"> Title: </span><%= farmer.object[0].reviews[i].review_title %> <br>
+        <span style="font-weight: bold; color:green;">  Review: </span> <%= farmer.object[0].reviews[i].review_desc %>
             </div>
 <% } %>
             </div>

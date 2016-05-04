@@ -45,14 +45,14 @@ exports.getProducts = function(req, res){
   	mq.make_request('product_queue', msg_payload, function(err,doc){
 		if(err)
 		{
-		    console.log(err);
+		    //console.log(err);
 			res.send(resGen.responseGenerator(401, null));
 		}
 		else
 		{
 			doc = JSON.parse(doc);
 			if(doc.status == 200){
-				console.log("reply from getProducts");
+				//console.log("reply from getProducts");
 				res.send(doc);
 			}
 			else
@@ -80,7 +80,7 @@ exports.suggest = function(req, res){
 	//Without REDIS
 	q = req.param('q');
 	var msg_payload = {'service': 'suggest', 'q': q};
-	console.log(q);
+	//console.log(q);
 	mq.make_request('product_queue', msg_payload, function(err, done){
 		res.send(done);
 	})
@@ -114,7 +114,7 @@ exports.createProduct = function(req,res){
 	
 	if(true){
 		//var file = req.product_img.path;
-		console.log(req.product_img);
+		//console.log(req.product_img);
 		//product_img_filename = file.substr((file.indexOf('\\img\\')+5));
 		var msg_payload = {
 			"service" : "createProduct",
@@ -138,7 +138,7 @@ exports.createProduct = function(req,res){
 	  	mq.make_request('product_queue', msg_payload, function(err,doc){
 			if(err)
 			{
-			    console.log(err);
+			   // console.log(err);
 				res.send(resGen.responseGenerator(401, null));
 			}
 			else
@@ -146,7 +146,7 @@ exports.createProduct = function(req,res){
 
 				doc = JSON.parse(doc);
 				if(doc.status == 200){
-					console.log("reply from createProduct" + doc);
+					//console.log("reply from createProduct" + doc);
 
 					res.send(doc);
 				}
@@ -166,7 +166,7 @@ exports.fileUpload = function(req,res){
 		var file = req.files.product_img.path;
 		filename = file.substr((file.indexOf('\\img\\')+5));
 		//console.log(file);
-		console.log(filename);
+		//console.log(filename);
 		//console.log(req.product_img);
 		/*if(!(isEmpty(req.files))){
 			if(!(isEmpty(req.files.myFile.path))){
@@ -198,7 +198,7 @@ exports.deleteProduct = function(req,res){
   	mq.make_request('product_queue', msg_payload, function(err,doc){
 		if(err)
 		{
-		    console.log(err);
+		    //console.log(err);
 			res.send(resGen.responseGenerator(401, null));
 		}
 		else
@@ -238,7 +238,7 @@ exports.editProduct = function(req,res){
   	mq.make_request('product_queue', msg_payload, function(err,doc){
 		if(err)
 		{
-		    console.log(err);
+		    //console.log(err);
 			res.send(resGen.responseGenerator(401, null));
 		}
 		else
@@ -246,7 +246,7 @@ exports.editProduct = function(req,res){
 
 			doc = JSON.parse(doc);
 			if(doc.status == 200){
-				console.log("reply from editProduct" + doc);
+			//	console.log("reply from editProduct" + doc);
        			res.send(doc);
 			}
 			else
@@ -269,7 +269,7 @@ var avg_rating=0;var total_rating=0;var t_length=0;
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
 		{
-		    console.log(err);
+		   // console.log(err);
 			res.send(resGen.responseGenerator(401, null));
 		}
 		else
@@ -320,15 +320,15 @@ exports.prod_search = function(req,res){
 		searchData.name = regexp;	
 	}
 	
-	console.log(searchData);
+	//console.log(searchData);
 
 	Product.find(searchData, function(err, product){
 
 		if(typeof req.session.user != 'undefined'){
 			res.render('ProductSearch', { user: req.session.user, products: product, session: true });
 		}else{
-			console.log("No session on");
-			console.log(product);
+			//console.log("No session on");
+			//console.log(product);
 			res.render('ProductSearch', { products: product, session: false });
 		}
 		// callback(null, res);
@@ -350,7 +350,7 @@ exports.f_create_review = function(req,res){
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
 		{
-		    console.log(err);
+		    //console.log(err);
 			res.send(resGen.responseGenerator(401, null));
 		}
 		else
@@ -380,7 +380,7 @@ exports.create_review = function(req,res){
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
 		{
-		    console.log(err);
+		    //console.log(err);
 			res.send(resGen.responseGenerator(401, null));
 		}
 		else
@@ -388,8 +388,8 @@ exports.create_review = function(req,res){
 			if(prod.code == 200){
 				res.redirect("/product?id="+req.param("p_id"));
 				
-				console.log(prod);
-					console.log(req.session.user);	
+			//	console.log(prod);
+			//		console.log(req.session.user);	
 		}
 			else
 			{
@@ -409,7 +409,7 @@ exports.myReviews = function(req,res){
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
 		{
-		    console.log(err);
+		    //console.log(err);
 			res.send(resGen.responseGenerator(401, null));
 		}
 		else
@@ -424,7 +424,7 @@ exports.myReviews = function(req,res){
 				
 				res.render('myReviews', { user: req.session.user, products: prod.product, farmer: prod.farmer, session: true });
 				}else{
-					console.log("No session on");
+					//console.log("No session on");
 					//res.send(prod);
 					res.render('myReviews', { user: null, products: prod, session: false });
 				}
@@ -451,7 +451,7 @@ exports.farmer_page = function(req,res){
   	mq.make_request('product_queue', msg_payload, function(err,prod){
 		if(err)
 		{
-		    console.log(err);
+		    //console.log(err);
 			res.send(resGen.responseGenerator(401, null));
 		}
 		else
@@ -468,10 +468,10 @@ exports.farmer_page = function(req,res){
 				//console.log("star value1"+prod.reviews[0].rating);
 				//console.log("In array should run once");
 				//}
-				console.log(req.session.user);
+				//console.log(req.session.user);
 				res.render('farmer_page', { user: req.session.user, products: prod.product, farmer: prod.farmer, session: true });
 				}else{
-					console.log("No session on");
+					//console.log("No session on");
 					//res.send(prod);
 					console.log(prod.farmer.object[0].fname);
 					res.render('farmer_page', { user: null, products: prod.product, farmer: prod.farmer, session: false });

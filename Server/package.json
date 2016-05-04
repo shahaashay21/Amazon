@@ -10,6 +10,7 @@
     "amqplib": "^0.4.1",
     "bcrypt-nodejs": "^0.0.3",
     "connect-mongo": "^1.1.0",
+    "creditcard": "^0.1.2",
     "ejs": "*",
     "express": "3.2.6",
     "express-session": "^1.13.0",
