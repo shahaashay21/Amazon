@@ -14,6 +14,8 @@ a:hover, a:focus{
 .no-padding{
 	padding: 0px;
 }
+
+
 .no-margin{
 	margin: 0px;
 }
@@ -33,6 +35,19 @@ a:hover, a:focus{
 	width: 100%;
 	z-index: 990;
 }
+
+
+.icon-bar {
+	background-color:#fff;
+}
+
+#main .panel-body {
+	overflow:hidden;
+  	padding:0;
+}
+
+
+
 #ul-menu{
 	display: inline-block;
 	padding: 0px;
@@ -367,6 +382,26 @@ a:hover, a:focus{
 	background: rgba(0, 0, 0, 0) -o-linear-gradient(to bottom, #b1d961 0%, #84b228 100%) repeat scroll 0 0;
 	background: rgba(0, 0, 0, 0) linear-gradient(to bottom, #b1d961 0%, #84b228 100%) repeat scroll 0 0;
 }
+
+
+
+.checkout-btn1{
+	border-radius: 4px;
+    color: #eee;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 0px;
+    margin: 10px auto;
+    width: 100%;
+    text-align: center;
+    display: table;
+    background: rgba(0, 0, 0, 0) -webkit-linear-gradient(to bottom, #FF0000 0%, #FF0000 100%) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) -moz-linear-gradient(to bottom, #FF0000 0%, #FF0000 100%) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) -o-linear-gradient(to bottom,#FF0000 0%, #FF0000 100%) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) linear-gradient(to bottom, #b1d961 0%, #84b228 100%) repeat scroll 0 0;
+}
+
+
 .cart-total{
 	margin-bottom: 10px;
 	padding-bottom: 10px;

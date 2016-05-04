@@ -144,12 +144,13 @@
                             <div class="col-md-1"></div>
                             <div class="col-md-2">
                               <label class="credit-card-labels-account">CVV</label>
-                                <input type="password" class="form-control" placeholder="CVV" name="cvv" ng-model="cvv"  ng-minlength="3" ng-maxlength="4" required>
+                                <input type="password" ng-pattern="/^\d+$/" class="form-control" placeholder="CVV" name="cvv" ng-model="cvv"  ng-minlength="3" ng-maxlength="4" required>
                                 <div role="alert">
                                 <span class="error" ng-show="myCredit.cvv.$error.minlength">
                                   Invalid Cvv</span>
                                 <span class="error" ng-show="myCredit.cvv.$error.maxlength">
-                                  Invalid Cvv</span>
+                                  Invalid Cvv</span><br>
+                                  <span ng-show="myCredit.cvv.$error.pattern" style="color:red;">Must be number</span>
                               
                                 <span class="error" ng-show="myCredit.cvv.$error.required" style="color:red;">Required!</span>
                                 </div>

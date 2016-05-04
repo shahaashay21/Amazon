@@ -8,6 +8,14 @@ $(document).ready(function(e){
 	//INITIALIZE TOOLTIP
 	$('[data-toggle="tooltip"]').tooltip();
 
+$.getScript('//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js',function(){
+
+$('#main .img-responsive').lazyload({
+
+});
+  
+  
+});
 
 	// REGISTER VALIDATION
 	$('#fname').on('keyup click focus blur change', function(){
