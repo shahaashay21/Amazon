@@ -30,30 +30,78 @@ exports.profile = function(req, res) {
 }
 
 exports.getAdminProfile = function(req, res) {
-  if(res.session.email) {
 
-        //messege payload for sending to server
-        msg_payload = {"service" : "getAdminProfile", "email" : req.sesion.email};
+    if(req.session.email) {
+      //messege payload for sending to server
+      msg_payload = {"service" : "getAdminProfile", "email" : req.session.email};
 
-        //making request to the server
-        mq.make_request('admin-queue', msg_payload,function(err, results) {
-          if(err) {
-            console.log("Error occurred while requesting to server for getAdminProfile : " + err);
-            var json_resposes = {"status" : 401, "error" : "Could not connect to server"};
-            res.send(json_resposes);
-          } else {
-              res.send(JSON.parse(results));
+      //making request to the server
+      mq.make_request('admin-queue', msg_payload,function(err, results) {
+        if(err) {
+          console.log("Error occurred while requesting to server for getAdminProfile : " + err);
+          var json_resposes = {"status" : 401, "error" : "Could not connect to server"};
+          res.send(json_resposes);
+        } else {
+            res.send(JSON.parse(results));
+        }
+      });
+    } else
+      res.redirect('/admin/login');
+}
+
+exports.saveAdminProfile = function(req, res) {
+
+  var a_id = req.param("a_id");
+  var fname = req.param("fname");
+  var lname = req.param("lname");
+  var email = req.param("email");
+  var pass = req.param("pass");
+  var address = req.param("address");
+  var city = req.param("city");
+  var state = req.param("state");
+  var zipCode = req.param("zipCode");
+
+  if(req.session.email) {
+    //messege payload for sending to server
+      msg_payload = {
+        "service" : "saveAdminProfile", 
+        "a_id" : a_id,
+        "fname" : fname,
+        "lname" : lname,
+        "email" : email,
+        "pass" : pass,
+        "address" : address,
+        "city" : city,
+        "state" : state,
+        "zipCode" : zipCode
+      };
+
+      //making request to the server
+      mq.make_request('admin-queue', msg_payload,function(err, results) {
+        if(err) {
+          console.log("Error occurred while requesting to server for saveAdminProfile : " + err);
+          var json_resposes = {"status" : 401, "error" : "Could not connect to server"};
+          res.send(json_resposes);
+        } else {
+          
+          var dataParsed = JSON.parse(results);
+          if(dataParsed.status == 200) {
+            req.session.email = email;
+            req.session.fname = fname;
+            req.session.lname = lname;
+            res.send(JSON.parse(results));
+          } else if(dataParsed.status == 401) {
+            res.send(JSON.parse(results));
           }
-        });
-
-  } else {
-    res.redirect('/admin/login'); 
-  }
-
+        }
+      });
+  } else 
+    res.redirect('/admin/login');
 }
 
 exports.logout = function(req, res) {
-	req.session.destroy();
+	console.log("admin logout");
+  req.session.destroy();
 	res.redirect("/admin/login");
 }
 

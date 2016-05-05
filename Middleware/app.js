@@ -78,7 +78,9 @@ app.get('/admin/home',admin.home);
 app.get('/admin/login',admin.login);
 app.get('/admin/logout', admin.logout);
 app.post('/admin/checkLogin', admin.checkLogin);
-app.post('/admin/profile', admin.profile);
+app.get('/admin/profile', admin.profile);//get admin profile page
+app.post('/admin/getAdminProfile', admin.getAdminProfile);//get admin profile details
+app.post('/admin/saveProfile', admin.saveAdminProfile);//save admin profile
 app.get('/admin/farmers/list',admin.farmersList);
 app.get('/admin/products/list',admin.productsList);
 app.get('/admin/trucks/list',admin.trucksList);
@@ -127,6 +129,7 @@ app.post('/order/complete', order.getComplete);
 app.post('/order/cancel', order.getCancel);
 app.post('/order/assignDriverId', order.assignDriverId);
 app.post('/order/assignComplete', order.assignComplete);
+app.post('/order/getRevenue', order.getRevenue);//getting revenue fror chart
 
 app.post('/farmer/login', function(req, res, next) {
   passport.authenticate('farmerLogin', function(err, farmer, info) {

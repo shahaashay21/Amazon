@@ -302,6 +302,29 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+
+				case "getAdminProfile":
+					util.log("getAdminProfile");
+					admin.getAdminProfile(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case "saveAdminProfile":
+					util.log("saveAdminProfile");
+					admin.saveAdminProfile(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
 			}
 		});
 	});
@@ -550,6 +573,17 @@ cnn.on('ready', function(){
 				case 'getCancel':
 					util.log("getCancel");
 					order.getCancel(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
+				case 'getRevenue':
+					util.log("getRevenue");
+					order.getRevenue(message, function(err, res){
 						cnn.publish(m.replyTo, JSON.stringify(res), {
 							contentType: 'application/json',
 							contentEncoding: 'utf-8',

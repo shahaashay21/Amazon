@@ -4,8 +4,23 @@
     <title>Amazon-Fresh</title>
 
     <% include lib.ejs %>
-  <script src="/angularjs/adminModule.js"></script>
+    <script src="/angularjs/angular.min.js"></script>
 
+    <link href="/dist/css/xeditable.css" rel="stylesheet">
+    <script src="/dist/js/xeditable.js"></script>
+    <script src="/dist/js/ng-file-upload.min.js"></script>
+    <script src="/dist/js/ng-file-upload-shim.min.js"></script>
+    <script src="/angularjs/adminModule.js"></script>
+
+
+    <!-- Morris Chart -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-morris-chart/1.2.0/angular-morris-chart.min.js"></script>
+    
+    <!-- Morris Chart End -->
 
   </head>
   <body ng-app="adminModule" ng-controller = "adminController">
