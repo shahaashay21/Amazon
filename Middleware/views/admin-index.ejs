@@ -204,18 +204,18 @@
                         
 
                         line-data='[
-                                { y: "2006", a: 100, b: 90 },
-                                { y: "2007", a: 75,  b: 65 },
-                                { y: "2008", a: 50,  b: 40 },
-                                { y: "2009", a: 75,  b: 65 },
-                                { y: "2010", a: 50,  b: 40 },
-                                { y: "2011", a: 75,  b: 65 },
-                                { y: "2012", a: 100, b: 90 }
+                                { y: "2016-05-02", a: 1000},
+                                { y: "2016-05-03", a: 7500},
+                                { y: "2016-05-04", a: 5000},
+                                { y: "2016-05-05", a: 7500.85},
+                                { y: "2016-05-06", a: 500},
+                                { y: "2016-05-07", a: 75},
+                                { y: "2016-05-08", a: 9000}
                         ]'
                         line-xkey='y'
-                        line-ykeys='["a", "b"]'
-                        line-labels='["Serie A", "Serie B"]'
-                        line-colors='["#31C0BE", "#c7254e"]'>
+                        line-ykeys='["a"]'
+                        line-labels='["Serie A"]'
+                        line-colors='["#31C0BE"]'>
                   </div>
 
 
@@ -228,39 +228,7 @@
             <section class="col-lg-5 connectedSortable">
 
               <!-- Map box -->
-              <div class="box box-solid bg-light-blue-gradient">
-                <div class="box-header">
-                  <!-- tools box -->
-                  <div class="pull-right box-tools">
-                    <button class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip" title="Date range"><i class="fa fa-calendar"></i></button>
-                    <button class="btn btn-primary btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" title="Collapse" style="margin-right: 5px;"><i class="fa fa-minus"></i></button>
-                  </div><!-- /. tools -->
-
-                  <i class="fa fa-map-marker"></i>
-                  <h3 class="box-title">
-                    Trucks
-                  </h3>
-                </div>
-                <div class="box-body">
-                  <div id="world-map" style="height: 250px; width: 100%;"></div>
-                </div><!-- /.box-body-->
-                <div class="box-footer no-border">
-                  <div class="row">
-                    <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                      <div id="sparkline-1"></div>
-                      <div class="knob-label">Orders</div>
-                    </div><!-- ./col -->
-                    <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                      <div id="sparkline-2"></div>
-                      <div class="knob-label">New Products</div>
-                    </div><!-- ./col -->
-                    <div class="col-xs-4 text-center">
-                      <div id="sparkline-3"></div>
-                      <div class="knob-label">Delivered</div>
-                    </div><!-- ./col -->
-                  </div><!-- /.row -->
-                </div>
-              </div>
+              
               <!-- /.box -->
             </section><!-- right col -->
           </div><!-- /.row (main row) -->
