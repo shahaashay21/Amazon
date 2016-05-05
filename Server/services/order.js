@@ -279,13 +279,7 @@ exports.assignComplete = function(req, res) {
 			}
 		}
 	});
-
 }
-
-
-
-
-
 
 exports.getComplete = function(req, res) {
 	console.log("complete orders");

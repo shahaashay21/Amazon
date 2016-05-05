@@ -36,41 +36,6 @@
           });
         }
 
-
-$scope.assignCancelled = function(o_id) {
-    
-    console.log("o_id :: " + o_id);
-    //if(driver_id && driver_id.length != 9) {
-      $http({
-        method : 'POST',
-        url : '/user/assignCancelled',
-        data : {
-          o_id : o_id,
-        }
-      }).success(function(res) {
-        if(res.status == 200) {
-          console.log(res);
-          $scope.orderDetails();
-          //$scope.orders = res.data ;
-          // $scope.getInProgress();
-        } else if(res.status == 401){
-          console.log("err : " + res.error);
-          return;
-        }
-        
-      }).error(function(err) {
-        console.log("error ::" + err);
-      });
-    /*} else {
-      $scope.isDriverIDValid = true;
-      $scope.invalidDriverId = o_id;
-    }*/
-  }
-
-
-
-
-
               });
               </script>
 
@@ -85,10 +50,16 @@ $scope.assignCancelled = function(o_id) {
           
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a href="#orders" class="nav-link active" role="tab" data-toggle="tab">Your Order History</a>
+              <a href="#orders" class="nav-link active" role="tab" data-toggle="tab">Current Orders</a>
             </li>
 
-            
+            <li class="nav-item">
+              <a href="#c_orders" class="nav-link" role="tab" data-toggle="tab">Canceled Orders</a>
+            </li>
+
+            <li class="nav-item">
+              <a href="#p_orders" class="nav-link" role="tab" data-toggle="tab">Past Orders</a>
+            </li>
 
             
           </ul>
@@ -96,23 +67,19 @@ $scope.assignCancelled = function(o_id) {
             <div role="tabpanel" class="tab-pane fade" id="orders" >
 
               <div ng-repeat="order in orders" style="border-style: dotted;">
-                <div>
+                <div ng-show="order.status == 'pending'">
                   <h4><a style="color:blue; font-weight: bold; " href="/orderDetails" >{{order.o_id}}</a> </h4>
                   <!-- <span style="padding: 15px 50px 50px 200px; font-weight: bold;">Subtotal : {{order.total}} $
                   <span style="padding: 15px 50px 50px 200px;">Delivery Date: {{order.drop_time}}           </span>
                   </span> -->
                   <p>Subtotal : ${{order.sub_total}}</p>
                   <p>Shipping Cost :$ {{order.ship_cost}} </p>
-                  <p>Total Tax : ${{order.order_detail.p_id}}</p>
-                 <p>Customer {{order.c_id}}</p> 
-                    
-                  
+                  <p>Total Tax : ${{order.tax}}</p>
+                  <p>Total Cost: ${{total}}</p> 
 
                   Delivery Address : {{order.address}}, {{order.city}}, {{order.state}} - {{order.zipcode}}
-                  <p><h4>Order Placed At :</h4> {{order.createdAt}}</p>
-                  <p style="font-weight: bold;">Your order status is : {{order.status}}</p>
-                  </h5>
-                 
+                  <p><h4>Order Placed At :</h4> {{order.createdAt}}</p></h5>
+                  
 
 
                 </div>
@@ -123,8 +90,10 @@ $scope.assignCancelled = function(o_id) {
 
             </div>
             <div role="tabpanel" class="tab-pane fade" id="c_orders">
-                              <div ng-repeat="order in orders" style="border-style: dotted;">
-                <div ng-show="order.status == 'cancelled'">
+                
+
+              <div ng-repeat="order in orders" style="border-style: dotted;">
+                <div ng-show="order.status == 'complete'">
                   <h4><a style="color:blue; font-weight: bold; " href="/orderDetails" >{{order.o_id}}</a> </h4>
                   <!-- <span style="padding: 15px 50px 50px 200px; font-weight: bold;">Subtotal : {{order.total}} $
                   <span style="padding: 15px 50px 50px 200px;">Delivery Date: {{order.drop_time}}           </span>
@@ -133,8 +102,6 @@ $scope.assignCancelled = function(o_id) {
                   <p>Shipping Cost :$ {{order.ship_cost}} </p>
                   <p>Total Tax : ${{order.tax}}</p>
                   <p>Total Cost: ${{total}}</p> 
-                  <p style="font-weight: bold; ">Your order Status is : {{order.status}}</p> 
-
 
                   Delivery Address : {{order.address}}, {{order.city}}, {{order.state}} - {{order.zipcode}}
                   <p><h4>Order Placed At :</h4> {{order.createdAt}}</p></h5>
@@ -148,7 +115,7 @@ $scope.assignCancelled = function(o_id) {
             <div role="tabpanel" class="tab-pane fade" id="p_orders">
               <div ng-repeat="order in orders" style="border-style: dotted;">
               
-              <div ng-show="order.status == 'complete'">
+              <div ng-show="order.status == 'cancel'">
                   <h4><a style="color:blue; font-weight: bold; " href="/orderDetails" >{{order.o_id}}</a> </h4>
                   <!-- <span style="padding: 15px 50px 50px 200px; font-weight: bold;">Subtotal : {{order.total}} $
                   <span style="padding: 15px 50px 50px 200px;">Delivery Date: {{order.drop_time}}           </span>

@@ -41,24 +41,6 @@ exports.orderDetails = function(req,res){
 
 
 
-exports.assignCancelled = function(req, res) {
- 
-      //messege payload for sending to server
-        msg_payload = {"service" : "assignCancelled", "o_id" : req.param("o_id")};
-
-        //making request to the server
-        mq.make_request('user_queue', msg_payload,function(err, results) {
-          if(err) {
-            console.log("Error occurred while requesting to server for assignDriverId : " + err);
-            var json_resposes = {"status" : 401, "error" : "Could not connect to server"};
-            res.send(json_resposes);
-          } else {
-              res.send(JSON.parse(results));
-          }
-        });
-}
-
-
 //create and order
 exports.createOrder = function(req, res) {
 

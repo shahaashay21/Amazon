@@ -108,28 +108,6 @@ exports.editAddress = function(req, res){
 
 
 
-exports.assignCancelled = function(req, res) {
-	console.log("assignCancelled");
-
-	Order.update({"o_id" : req.o_id}, {"$set" : {"status" : "cancelled"}}, function(err, results) {
-		console.log("err :: " + err);
-		console.log(results);
-		if(err) {
-			console.log("err :: " + err);
-			json_responses = {"status" : 401, "error" : "error occurred while executing update query"};
-			res(null, JSON.stringify(json_responses));
-		} else {
-			if(results !=null) {
-				console.log("In Progress Order Updated to Complete!");
-				json_responses = {"status" : 200};
-				res(null, JSON.stringify(json_responses));
-			}
-		}
-	});
-}
-
-
-
 
 
 exports.editCard = function(req, res){
@@ -148,6 +126,10 @@ exports.editCard = function(req, res){
 				{
 				console.log("Correct Credit Card Number");
 				result.card_number = req.card_number;
+			}
+			else {
+				console.log("Invalid Credit Card Number");
+			}
 				result.name_on_card = req.name_on_card;
 				result.exp_month = req.exp_month;
 				result.exp_year = req.exp_year;
@@ -161,15 +143,9 @@ exports.editCard = function(req, res){
 						//console.log("Address edited");
 
 						console.log(doc);
-						res(null,resGen.responseGenerator(200,doc));
+						res(null,JSON.stringify(doc));
 					}
 				});
-			}
-			else {
-				console.log("Invalid Credit Card Number");
-				res(null,resGen.responseGenerator(400,"Invalid Credit Card"));
-			}
-				
 			}
 			else
 			{

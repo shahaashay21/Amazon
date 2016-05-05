@@ -174,8 +174,6 @@ app.post('/user/address/update',user.editAddress);
 app.post('/user/card/update',user.editCard);
 app.get('/user/address',user.getAddress);
 app.get('/user/orders',order.orderDetails);
-app.post('/user/assignCancelled', order.assignCancelled);
-
  //app.get('/user/orders',user.getOrders);
 
 

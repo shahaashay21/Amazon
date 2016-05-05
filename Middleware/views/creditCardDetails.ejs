@@ -7,7 +7,7 @@
 
                   <script>
                 angular.module('cardModule', []).controller('cardController', function($scope, $http, $location) {
-                  $scope.InvalidCard = false;
+                  
                   $scope.updateCardDetails = function(){
                     console.log($scope.zipCode);
                     var data = {
@@ -23,11 +23,9 @@
                       url: '/user/card/update',
                       data: data
                     }).success(function(res){
-                      if(res.status==200){
+                      if(res){
                         console.log(res.data);
                         window.location.assign('/customerAccount');
-                      } else{ 
-                        $scope.InvalidCard = true;
                       }
                     });
                   }
@@ -85,8 +83,6 @@
                                   Invalid Card Number</span>
                                 <span class="error" ng-show="myCredit.card_number.$error.maxlength" style="color:red;">
                                   Invalid Card Number</span>
-                                  <span class="error" ng-show="InvalidCard" style="color:blue;">
-                                  Not a Legal Credit Card Number</span><br>
                               <span class="error" ng-show="myCredit.card_number.$error.required" style="color:red;"> Card Number is Required!</span>
                              </div>
 
