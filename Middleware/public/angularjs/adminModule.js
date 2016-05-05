@@ -684,6 +684,9 @@ user.controller('adminController',['$scope','$http','$sce','$filter', 'Upload', 
 		}*/
 	}
 
+
+
+
 	$scope.getComplete = function() {
 		$scope.isButtonClicked = true;
 		$scope.isPendingClicked = false;

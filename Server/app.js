@@ -356,6 +356,18 @@ cnn.on('ready', function(){
 					break;
 
 
+
+					case 'assignCancelled':
+					util.log("assignCancelled");
+					order.assignComplete(message, function(err, res){
+						cnn.publish(m.replyTo, JSON.stringify(res), {
+							contentType: 'application/json',
+							contentEncoding: 'utf-8',
+							correlationId: m.correlationId
+						});
+					});
+					break;
+
 			case "editAddress":
 				//util.log("editAddress");
 				user.editAddress(message, function(err,res){
@@ -416,6 +428,7 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+
 
 				case 'deleteCustomer':
 					util.log("deleteCustomer");
@@ -533,6 +546,8 @@ cnn.on('ready', function(){
 						});
 					});
 					break;
+
+					
 
 				case 'getComplete':
 					util.log("getComplete");
