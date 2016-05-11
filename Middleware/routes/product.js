@@ -79,16 +79,16 @@ exports.getCategory = function(req,res){
 exports.suggest = function(req, res){
 	//Without REDIS
 	q = req.param('q');
-	var msg_payload = {'service': 'suggest', 'q': q};
+/*	var msg_payload = {'service': 'suggest', 'q': q};
 	//console.log(q);
 	mq.make_request('product_queue', msg_payload, function(err, done){
 		res.send(done);
 	})
 
-
- /*   //With REDIS
+*/
+    //With REDIS
     var msg_payload = {
-        "q" : request.param("q"),
+        "q" : q,
         "service" : "suggest",
         "reqtype": "/reddis/search",
         "httpreqtype" : "GET",
@@ -98,14 +98,14 @@ exports.suggest = function(req, res){
         }
     };
     console.log("Requsted to Reddis");
-    mq_client.make_request('product_queue', msg_payload, function(err,results) {
+    mq.make_request('product_queue', msg_payload, function(err,results) {
         console.log(results);
         if (err) {
             console.log(err);
         } else {
             res.send(results);
         }
-    });*/
+    });
 
 }
 

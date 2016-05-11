@@ -2,9 +2,9 @@ var amqp = require('amqp');
 
 var connection = amqp.createConnection({host:'127.0.0.1'});
 var rpc = new (require('./amqprpc'))(connection);
-//var rediscache = require('../routes/redisresponsecache')
+var rediscache = require('../routes/redisresponsecache')
 
-/*var outstanding = 0; // counter of outstanding requests
+var outstanding = 0; // counter of outstanding requests
 
 function make_request(queue_name, msg_payload, callback) {
 	outstanding += 1;
@@ -69,10 +69,10 @@ function isAllDone() {
 	}
 }
 
-exports.make_request = make_request;*/
+exports.make_request = make_request;
 
 //make request to rabbitmq
-function make_request(queue_name, msg_payload, callback){
+/*function make_request(queue_name, msg_payload, callback){
 	rpc.makeRequest(queue_name, msg_payload, function(err, response){
 		if(err)
 			console.error(err);
@@ -85,5 +85,4 @@ function make_request(queue_name, msg_payload, callback){
 
 exports.make_request = make_request;
 
-
-
+*/
