@@ -5,13 +5,30 @@
 
 //Required Files
 var mq = require('../rpc/client');
+var Admin = require('./model/admin');
 
 //admin login page
 exports.login = function(req, res) {
-	if(req.session.email)
-  		res.redirect('admin/home');
-	else
-		res.render('admin-login');
+
+  Admin.find(function(err,data){
+
+    if(data.length <= 0){
+      adminData = new Admin();
+      adminData.fname = "demo";
+      adminData.lname = "demo";
+      adminData.email = "demo@demo.demo";
+      adminData.pass = "demo";
+      adminData.save(function(err){
+        res.render('admin-login');
+      })
+    }else{
+      if(req.session.email)
+          res.redirect('admin/home');
+      else
+        res.render('admin-login');
+    }
+  });
+
 }
 
 exports.profile = function(req, res) {
